@@ -1,37 +1,33 @@
-# [Source codes for the dcGO database in 2023](https://github.com/hfang-bristol/dcGO)
+# [Source codes for the XGR+ web server](https://github.com/hfang-bristol/XGRplus)
 
 ## @ Overview
 
-> The [dcGO](http://www.protdomainonto.pro/dcGO) database offers a comprehensive mapping of `protein domains` to `ontologies`.
+> The [XGR+](http://www.genomicsummary.com/XGRplus) web server offers real-time enrichment and subnetwork analyses for a user-input list of `genes`, `SNPs`, `genomic regions`, or `protein domains`, through leveraging ontologies, networks and many others (such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps).
 
-> The dcGO update in 2023 extends annotations for protein domains from different definitions/levels (SCOP, Pfam, and InterPro) using commonly-used ontologies (categorised into functions, phenotypes, diseases, drugs, pathways, regulators, and hallmarks). This update adds new dimensions to the utility of both ontology and protein domain resources.
+> The web server provides users with a more integrated and user-friendly experience, featuring: [ENRICHMENT ANALYSER (GENES) - EAG](http://www.genomicsummary.pro/XGRplus/EAgene) identifying enriched ontology terms from input gene list; [ENRICHMENT ANALYSER (SNPS) - EAS](http://www.genomicsummary.pro/XGRplus/EAsnp) identifying enriched ontology terms for genes linked from input SNP list; [ENRICHMENT ANALYSER (REGIONS) - EAR](http://www.genomicsummary.pro/XGRplus/EAregion) identifying enriched ontology terms for genes linked from input genomic region list; [ENRICHMENT ANALYSER (DOMAINS) - EAD](http://www.genomicsummary.pro/XGRplus/EAdomain) identifying enriched ontology terms from input protein domain list; [SUBNETWORK ANALYSER (GENES) - SAG](http://www.genomicsummary.pro/XGRplus/SAgene) identifying a gene subnetwork based on input gene-level summary data; [SUBNETWORK ANALYSER (SNPS) - SAS](http://www.genomicsummary.pro/XGRplus/SAsnp) identifying a gene subnetwork based on genes linked from input SNP-level summary data; and [SUBNETWORK ANALYSER (REGIONS) - SAR](http://www.genomicsummary.pro/XGRplus/SAregion) identifying a gene subnetwork based on genes linked from input genomic region-level summary data.
 
-> A new website has been launched to provide users with a more integrated and user-friendly experience. This website features: enhanced [faceted search](http://www.protdomainonto.pro:3080/dcGO) capabilities that return term- and domain-specific information pages; improved [ontology hierarchy](http://www.protdomainonto.pro:3080/dcGO/hie) capabilities that browse both ontology terms and their annotated domains; and a newly added facility that  supports [domain-based ontology enrichment analysis](http://www.protdomainonto.pro:3080/dcGO/enrichment).
-
-> To learn how to use the dcGO database, a User manual has been made available [here](http://www.protdomainonto.pro:3080/dcGObooklet/index.html) with step-by-step instructions.
+> To learn how to use the XGR+ web server, a user manual has been made available [here](http://www.genomicsummary.pro/XGRplusbooklet/index.html) with step-by-step instructions.
 
 ## @ Development
 
-> The dcGO website was developed using a Perl real-time web framework [Mojolicious](https://www.mojolicious.org).
+> The XGR+ web server was developed using a Perl real-time web framework [Mojolicious](https://www.mojolicious.org) and [Bootstrap](https://getbootstrap.com), supporting a mobile-first and responsive webserver across all major platform browsers.
 
-> The dcGO website was also developed using [Bootstrap](https://getbootstrap.com) that supports a mobile-first and responsive webserver across all major platform browsers.
-
-> The folder `my_dcgo` has a tree-like directory structure with three levels:
+> The folder `my_xgrplus` has a tree-like directory structure with three levels:
 ```ruby
-my_dcgo
+my_xgrplus
 ├── lib
-│   └── My_dcgo
+│   └── My_xgrplus
 │       └── Controller
 ├── public
+│   ├── XGRplusbooklet
+│   │   ├── index_files
+│   │   └── libs
 │   ├── app
 │   │   ├── ajex
 │   │   ├── css
 │   │   ├── examples
 │   │   ├── img
 │   │   └── js
-│   ├── dcGObooklet
-│   │   ├── index_files
-│   │   └── libs
 │   └── dep
 │       ├── HighCharts
 │       ├── Select2
@@ -81,9 +77,9 @@ sudo su
 # here enter your password
 
 # install R
-wget http://www.stats.bris.ac.uk/R/src/base/R-4/R-4.2.0.tar.gz
-tar xvfz R-4.2.0.tar.gz
-cd ~/R-4.2.0
+wget http://www.stats.bris.ac.uk/R/src/base/R-4/R-4.2.1.tar.gz
+tar xvfz R-4.2.1.tar.gz
+cd ~/R-4.2.1
 ./configure
 make
 make check
@@ -111,12 +107,12 @@ rmarkdown::render(YOUR_RMD_FILE, bookdown::html_document2(number_sections=F, the
 
 ## @ Deployment
 
-Assume you place `my_dcgo` under your `home` directory
+Assume you place `my_xgrplus` under your `home` directory
 
 ```ruby
-cd ~/my_dcgo
-systemctl restart apache2.service
-morbo -l 'http://*:3080/' script/my_dcgo
+cd ~/my_xgrplus
+systemctl stop apache2.service
+morbo -l 'http://*:80/' script/my_xgrplus
 ```
 
 ## @ Contact
