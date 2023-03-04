@@ -43,7 +43,7 @@ grid.raster(img)
 
 > **Motivation**
 
-We are pleased to introduce an updated version of our XGR software, which has gained increasing popularity in genomics research since its first release (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)). This update features a newly designed web server, called XGR Plus or XGR+, now made available [here](http://www.genomicsummary.pro/XGRplus) to all users for free and without any login requirements. It enables almost real-time enrichment and subnetwork analyses for user-input lists of genes, SNPs, genomic regions, or protein domains, leveraging ontologies, networks, and mangy other knowledgebase resources, such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps.
+We are pleased to introduce an updated version of our XGR software, which has gained increasing popularity in genomics research since its first release (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)). This update features a newly designed web server, called XGR Plus or XGR+, now made available [here](http://www.genomicsummary.pro/XGRplus) to all users for free and without any login requirements. It enables almost real-time enrichment and subnetwork analyses for user-input lists of genes, SNPs, genomic regions, or protein domains, leveraging ontologies, networks, and many other knowledgebase resources, such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps.
 
 One of the major challenges in genomics research is how to bridge the gap between generated genomic summary data and downstream knowledge discovery. We define genomic summary data as a list of genes or SNPs (more generally, genomic regions), along with their significance levels (e.g., p-values). We are leading the field in making sense of genomic summary data for knowledge discovery through developing approaches and tools that have been verified to be efficient and effective, including XGR (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)), dnet (see [Genome Medicine 2014](https://www.ncbi.nlm.nih.gov/pubmed/25246945)), Priority index (see [Nature Genetics 2019](https://www.ncbi.nlm.nih.gov/pubmed/31253980)), and dcGO (see [Nucleic Acids Research 2013](https://www.ncbi.nlm.nih.gov/pubmed/23161684)).
 
@@ -565,7 +565,7 @@ grid.raster(img)
 
 > **Output**
 
-- [Example Output](/app/examples/_tmp_RMD_SAsnp.html) includes interactive tables nd and high-quality figures for the resulting subnetwork. A summary of input data and the runtime (computed on the server side) is also returned for reference.
+- [Example Output](/app/examples/_tmp_RMD_SAsnp.html) includes interactive tables and high-quality figures for the resulting subnetwork. A summary of input data and the runtime (computed on the server side) is also returned for reference.
 
 <hr>
 
