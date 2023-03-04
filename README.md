@@ -1,8 +1,8 @@
-# [Source codes for the XGR+ web server](https://github.com/hfang-bristol/XGRplus)
+# [Source code for the XGR+ web server](https://github.com/hfang-bristol/XGRplus)
 
 ## @ Overview
 
-> The [XGR+](http://www.genomicsummary.com/XGRplus) web server offers real-time enrichment and subnetwork analyses for a user-input list of `genes`, `SNPs`, `genomic regions`, or `protein domains`, through leveraging ontologies, networks and many others (such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps).
+> The [XGR+](http://www.genomicsummary.com/XGRplus) web server offers real-time enrichment and subnetwork analyses for a user-input list of `genes`, `SNPs`, `genomic regions`, or `protein domains`, through leveraging ontologies, networks, and many others (such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps).
 
 > The web server provides users with a more integrated and user-friendly experience, featuring: [ENRICHMENT ANALYSER (GENES) - EAG](http://www.genomicsummary.pro/XGRplus/EAgene) identifying enriched ontology terms from input gene list; [ENRICHMENT ANALYSER (SNPS) - EAS](http://www.genomicsummary.pro/XGRplus/EAsnp) identifying enriched ontology terms for genes linked from input SNP list; [ENRICHMENT ANALYSER (REGIONS) - EAR](http://www.genomicsummary.pro/XGRplus/EAregion) identifying enriched ontology terms for genes linked from input genomic region list; [ENRICHMENT ANALYSER (DOMAINS) - EAD](http://www.genomicsummary.pro/XGRplus/EAdomain) identifying enriched ontology terms from input protein domain list; [SUBNETWORK ANALYSER (GENES) - SAG](http://www.genomicsummary.pro/XGRplus/SAgene) identifying a gene subnetwork based on input gene-level summary data; [SUBNETWORK ANALYSER (SNPS) - SAS](http://www.genomicsummary.pro/XGRplus/SAsnp) identifying a gene subnetwork based on genes linked from input SNP-level summary data; and [SUBNETWORK ANALYSER (REGIONS) - SAR](http://www.genomicsummary.pro/XGRplus/SAregion) identifying a gene subnetwork based on genes linked from input genomic region-level summary data.
 
@@ -10,7 +10,7 @@
 
 ## @ Development
 
-> The XGR+ web server was developed using a Perl real-time web framework [Mojolicious](https://www.mojolicious.org) and [Bootstrap](https://getbootstrap.com), supporting a mobile-first and responsive webserver across all major platform browsers.
+> The XGR+ web server was developed using [Mojolicious](https://www.mojolicious.org) and [Bootstrap](https://getbootstrap.com), supporting a mobile-first and responsive webserver across all major platform browsers.
 
 > The folder `my_xgrplus` has a tree-like directory structure with three levels:
 ```ruby

@@ -73,7 +73,7 @@
 				<br>
 				
 				<fieldset>
-				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;Please refer to <a href="/XGRplusbooklet/index.html" target="use manual"><i class="fa fa-book fa-1x"></i>&nbsp;User Manual</a> for detailed instructions on how to use XGR+.</h5>
+				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;Please refer to <a href="https://hfang-bristol.github.io/XGRplus" target="github"><i class="fa fa-github fa-1x"></i>&nbsp;Source Code</a> and <a href="/XGRplusbooklet/index.html" target="use manual"><i class="fa fa-book fa-1x"></i>&nbsp;User Manual</a> for step-by-step instructions on how to build and use XGR+, respectively.</h5>
 				</fieldset>
 				
 				<br>

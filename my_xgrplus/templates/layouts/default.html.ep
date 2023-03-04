@@ -101,11 +101,17 @@
 						<li <%== ($tab=~/XGRplus\/help/i)? 'class="active"':'' %>>
 							<a href="/XGRplus/help" class="my-tooltip" data-toggle="tooltip" data-placement="auto bottom" title="Providing the information about XGR+"><i class="fa fa-info-circle fa-lg"></i>&nbsp;&nbsp;&nbsp;About XGR+</a>
 						</li>
+
+				  		<br>
+				  		
+				  		<li>
+				  		<a href="https://hfang-bristol.github.io/XGRplus" class="my-tooltip" data-toggle="tooltip" data-placement="auto bottom" title="Providing the source code for XGR+" target="github"><i class="fa fa-github fa-lg"></i>&nbsp;&nbsp;&nbsp;Source Code</a>
+				  		</li>
 				  		
 				  		<br>
 				  		
 				  		<li>
-				  		<a href="/XGRplusbooklet/index.html" class="my-tooltip" data-toggle="tooltip" data-placement="auto bottom" title="Providing the user manual for XGR+"><i class="fa fa-book fa-lg"></i>&nbsp;&nbsp;&nbsp;User Manual</a>
+				  		<a href="/XGRplusbooklet/index.html" class="my-tooltip" data-toggle="tooltip" data-placement="auto bottom" title="Providing the user manual for XGR+" target="manual"><i class="fa fa-book fa-lg"></i>&nbsp;&nbsp;&nbsp;User Manual</a>
 				  		</li>
 						
 						<li role="separator" class="divider"></li>
