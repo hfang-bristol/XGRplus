@@ -1,0 +1,680 @@
+---
+documentclass: book
+classoption: oneside
+title: "XGR+ User Manual"
+date: "`r Sys.Date()`"
+vignette: >
+ %\VignetteIndexEntry{XGRplus Booklet}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+output: 
+  BiocStyle::html_document:
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        theme: journal
+        highlight: monochrome
+        toc_float: true
+        code_folding: hide
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse=TRUE, comment="##")
+knitr::opts_chunk$set(dpi=300)
+knitr::opts_chunk$set(cache=FALSE)
+knitr::opts_chunk$set(echo=TRUE)
+knitr::opts_chunk$set(warning=FALSE)
+knitr::opts_chunk$set(message=FALSE)
+knitr::opts_chunk$set(fig_cap="yes")
+knitr::opts_chunk$set(eval=F)
+```
+
+
+# OVERVIEW {#index}
+
+```{r logo, fig.cap="The logo for eXploring Genomic Relations + (XGR PLUS).", fig.width=10, fig.height=5.5, echo=FALSE, eval=T, fig.align="center",out.width="25%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.logo.png")
+grid.raster(img)
+```
+
+<hr>
+
+> **Motivation**
+
+We are pleased to introduce an updated version of our XGR software, which has gained increasing popularity in genomics research since its first release (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)). This update features a newly designed web server, called XGR Plus or XGR+, now made available [here](http://www.genomicsummary.pro/XGRplus) to all users for free and without any login requirements. It enables almost real-time enrichment and subnetwork analyses for user-input lists of genes, SNPs, genomic regions, or protein domains, leveraging ontologies, networks, and mangy other knowledgebase resources, such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps.
+
+One of the major challenges in genomics research is how to bridge the gap between generated genomic summary data and downstream knowledge discovery. We define genomic summary data as a list of genes or SNPs (more generally, genomic regions), along with their significance levels (e.g., p-values). We are leading the field in making sense of genomic summary data for knowledge discovery through developing approaches and tools that have been verified to be efficient and effective, including XGR (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)), dnet (see [Genome Medicine 2014](https://www.ncbi.nlm.nih.gov/pubmed/25246945)), Priority index (see [Nature Genetics 2019](https://www.ncbi.nlm.nih.gov/pubmed/31253980)), and dcGO (see [Nucleic Acids Research 2013](https://www.ncbi.nlm.nih.gov/pubmed/23161684)).
+
+Building upon our previous approaches that have stood the test of time (with most of citations received in the past two years), and also incorporating the growing knowledgebase of ontologies and networks, XGR+ offers seven analysers for enrichment and subnetwork analyses, each doing specific interpretations tailored to genomic summary data at the gene, SNP, genomic region, and protein domain levels.
+
+> **Enrichment Analysers**
+
+- [ENRICHMENT ANALYSER (GENES) - EAG], identifies ontology terms enriched for the input gene list; see [Example Output](/app/examples/_tmp_RMD_EAgene.html)
+
+- [ENRICHMENT ANALYSER (SNPS) - EAS], identifies ontology terms enriched for genes linked from the input SNP list; see [Example Output](/app/examples/_tmp_RMD_EAsnp.html)
+
+- [ENRICHMENT ANALYSER (REGIONS) - EAR], identifies ontology terms enriched for genes linked from the input genomic region list; see [Example Output](/app/examples/_tmp_RMD_EAregion.html)
+
+- [ENRICHMENT ANALYSER (DOMAINS) - EAD], identifies ontology terms enriched for the input protein domain list; see [Example Output](/app/examples/_tmp_RMD_EAdomain.html)
+
+> **Subnetwork Analysers**
+
+- [SUBNETWORK ANALYSER (GENES) - SAG], identifies a gene subnetwork based on input gene-level summary data; see [Example Output](/app/examples/_tmp_RMD_SAgene.html)
+
+- [SUBNETWORK ANALYSER (SNPS) - SAS], identifies a gene subnetwork based on genes linked from input SNP-level summary data; see [Example Output](/app/examples/_tmp_RMD_SAsnp.html)
+
+- [SUBNETWORK ANALYSER (REGIONS) - SAR], identifies a gene subnetwork based on genes linked from input genomic region-level summary data; see [Example Output](/app/examples/_tmp_RMD_SAregion.html)
+
+
+
+```{r, eval=FALSE, echo=FALSE}
+cd ~/Sites/XGR/XGRplus-site/BOOKLET
+################################################
+R
+library(tidyverse)
+
+## bookdown::render_book + bookdown::gitbook
+## use configuration in '_output.yml' and '_bookdown.yml'
+bookdown::render_book("now.XGRplus_booklet.Rmd", c("bookdown::gitbook","bookdown::pdf_book","bookdown::tufte_html_book")[1])
+
+bookdown::render_book("now.XGRplus_booklet.Rmd", c("bookdown::gitbook","bookdown::pdf_book","bookdown::tufte_html_book")[2])
+
+q('no')
+####################################################
+```
+
+# COMPATIBILITY & RUNTIME
+
+```{r, eval=TRUE, echo=FALSE}
+c1 <- c("MacOS (Big Sur)","Windows (10)","Linux (Ubuntu)")
+c2 <- c("15.6.1","N/A","N/A")
+c3 <- c("N/A","108.0.1462.54","N/A")
+c4 <- c("108.0.5359.124","108.0.5359.124","108.0.5359.124")
+c5 <- c("108.0.1","108.0.1","108.0.1")
+if(1){
+	df_OS <- rbind(c2,c3,c4,c5)
+	colnames(df_OS) <- c1
+	rownames(df_OS) <- c('Safari','Edge','Chrome','Firefox')
+	knitr::kable(df_OS, caption="A summary of the XGR+ browser compatibility.", row.names=T, align='c')
+}
+```
+
+<hr>
+
+```{r, eval=TRUE, echo=FALSE}
+c1 <- c("ENRICHMENT ANALYSER (GENES) - EAG","ENRICHMENT ANALYSER (SNPS) - EAS","ENRICHMENT ANALYSER (REGIONS) - EAR","ENRICHMENT ANALYSER (DOMAINS) - EAD","SUBNETWORK ANALYSER (GENES) - SAG","SUBNETWORK ANALYSER (SNPS) - SAS","SUBNETWORK ANALYSER (REGIONS) - SAR")
+c2 <- c("~9 seconds","~55 seconds","~20 seconds","~2 seconds","~47 seconds","~55 seconds","~23 seconds")
+df_runtime <- tibble(Analysers=c1, 'Runtime (Server)'=c2)
+knitr::kable(df_runtime, caption="A summary of the runtime (on the server side) per tool estimated using Google Chrome.", row.names=FALSE, align='c')
+```
+
+
+# LANDING FRONTPAGE
+
+```{r app-front, fig.cap="The landing frontpage of the XGR+ webserver.", fig.width=10, fig.height=5.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.app.front.png")
+grid.raster(img)
+```
+
+# MOBILE-FIRST WEBSERVER
+
+The XGR+ is designed as a mobile-first and responsive webserver (`frontend`). It is backed by a real-time Perl web framework (`backend`) that facilitates nearly zero-effort interface updates and maintenance.
+
+<hr>
+
+```{r app-iphone, fig.cap="The screenshots for the XGR+ visited using Google Chrome in iPhone. Left: the frontpage; Right: the help page.", fig.width=10, fig.height=7.4, echo=FALSE, eval=TRUE, fig.align="center",out.width="80%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.app.iphone.png")
+grid.raster(img)
+```
+
+# HELP BUTTONS
+
+Each user-request interface features a toggle button labelled `Show/Hide Info`. This button contains information on how to use the interface, including details on input, output, and other relevant information. Additionally, there is an `Example Input/Output` button that showcases example inputs and outputs. For example, the screenshot below displays the `SUBNETWORK ANALYSER (REGIONS)` interface.
+
+<hr>
+
+```{r SAregion-help, fig.cap="The screenshots for the `Show/Hide Info` toggle button in the `SUBNETWORK ANALYSER (REGIONS)` interface.", fig.width=10, fig.height=6.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAregion.help.png")
+grid.raster(img)
+```
+
+# ERROR MESSAGES
+
+The error messages will be displayed, for example, if the input into the `SUBNETWORK ANALYSER (REGIONS)` is invalid (see the screenshot below). Notably, in the results page, a summary of input data is also returned to the users for reference.
+
+<hr>
+
+```{r SAregion-error, fig.cap="The screenshot for the error messages shown when the input is invalid, for example, in the `SUBNETWORK ANALYSER (REGIONS)` interface.", fig.width=10, fig.height=3.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAregion.error.png")
+grid.raster(img)
+```
+
+
+
+# ENRICHMENT ANALYSER (GENES) - EAG
+
+## Input Interface
+
+> **Input**
+
+- `Step 1`: Enter a list of genes. Please ensure that the input gene identifiers are official symbols; otherwise, the error messages will be prompted.
+
+- `Step 2`: Select from a list of supported ontologies.
+
+- `More Controls`: Use additional parameters to fine-tune the above steps.
+
+> **Output**
+
+- [Example Output](/app/examples/_tmp_RMD_EAgene.html) includes interactive tables and high-quality figures for enrichment results. A summary of input data and the server-side computation runtime is also returned for reference.
+
+<hr>
+
+
+```{r EAgene-interface, fig.cap="The interface of `ENRICHMENT ANALYSER (GENES) - EAG`, including the `Show/Hide Info` toggle button that contains the help information on inputs, outputs, and other information.", fig.width=10, fig.height=6, echo=FALSE, eval=TRUE, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAgene.interface.png")
+grid.raster(img)
+```
+
+
+## Enrichment Results
+
+- Under the `Input gene information` tab, `An interactive table` displays the user-input gene list.
+
+```{r EAgene-results-input, fig.cap="The user-input data displayed under the `Input gene information` tab returned for exploration.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAgene.results_input.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: enriched terms` tab, `An interactive table` lists enriched ontology terms.
+
+```{r EAgene-results-output, fig.cap="An interactive table listing enriched ontology terms under the `Output: enriched terms` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAgene.results_output.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. The downloadable PDF file is also provided.
+
+```{r EAgene-results-forestplot, fig.cap="A forest plot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAgene.results_forestplot.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the tab `Output: dotplot`, `An dotplot` illustrates enriched ontology terms. The downloadable PDF file is also provided.
+
+```{r EAgene-results-dotplot, fig.cap="A dotplot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAgene.results_dotplot.png")
+grid.raster(img)
+```
+
+
+
+# ENRICHMENT ANALYSER (SNPS) - EAS
+
+## Input Interface
+
+> **Input**
+
+- `Step 1`: Enter a list of SNPs, where the 1st column contains dbSNP rsIDs and the 2nd column for the significance information (p-values ranging between 0 and 1).
+
+- `Step 2`: Specify the population to include SNPs in linkage disequilibrium. By default, input SNPs with p-values < 5e−8 are considered, and additional SNPs in linkage disequilibrium (R2 >= 0.8) can be included according to the specified population.
+
+- `Step 3`: Use genomic proximity, quantitative trait locus mapping, or promoter capture Hi-C to identify linked genes.
+
+- `Step 4`: Select from a list of supported ontologies.
+
+- `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+> **Output**
+
+- [Example Output](/app/examples/_tmp_RMD_EAsnp.html) includes interactive tables and high-quality figures for enrichment results. A summary of input data and the runtime (computed on the server side) is also returned for reference.
+
+<hr>
+
+
+```{r EAsnp-interface, fig.cap="The interface of `ENRICHMENT ANALYSER (SNPS) - EAS`. The `Show/Hide Info` toggle button contains the help information on inputs, outputs, and other information.", fig.width=10, fig.height=7.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAsnp.interface.png")
+grid.raster(img)
+```
+
+
+## Enrichment Results
+
+- Under the `Input SNP information` tab, `An interactive table` lists the user-input SNPs.
+
+```{r EAsnp-results-input, fig.cap="The user-input data under the `Input SNP information` tab returned for exploration.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAsnp.results_input.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: linked genes` tab, `An interactive table` lists genes linked from the input SNPs.
+
+```{r EAsnp-results-link, fig.cap="An interactive table listing genes linked from the input SNPs under the `Output: linked genes` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAsnp.results_link.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: enriched terms` tab, `An interactive table` lists enriched ontology terms.
+
+```{r EAsnp-results-output, fig.cap="An interactive table lists enriched ontology terms under the `Output: enriched terms` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAsnp.results_output.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable PDF file is also provided.
+
+```{r EAsnp-results-forestplot, fig.cap="A forest plot for enriched ontology terms under the `Output: forest plot` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAsnp.results_forestplot.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable PDF file is also provided.
+
+```{r EAsnp-results-dotplot, fig.cap="A dotplot for enriched ontology terms under the `Output: dotplot` tab.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAsnp.results_dotplot.png")
+grid.raster(img)
+```
+
+
+
+# ENRICHMENT ANALYSER (REGIONS) - EAR
+
+## Input Interface
+
+> **Input**
+
+- `Step 1` and `Step 2`: Enter a list of genomic regions. Please ensure that input genomic coordinates (`Step 2`) are consistent with the genome build (`Step 1`)
+
+- `Step 3`: Use genomic proximity, quantitative trait locus mapping, or promoter capture Hi-C to identify linked genes.
+
+- `Step 4`: Select from a list of supported ontologies.
+
+- `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+> **Output**
+
+- [Example Output](/app/examples/_tmp_RMD_EAregion.html) includes interactive tables and high-quality figures for enrichment results. A summary of input data and the runtime (computed on the server side) is also provided for reference.
+
+<hr>
+
+
+```{r EAregion-interface, fig.cap="The interface of `ENRICHMENT ANALYSER (REGIONS) - EAR`. The `Show/Hide Info` toggle button contains the instructions on how to use it, including inputs, outputs, and other relevant information.", fig.width=10, fig.height=7.7, echo=FALSE, eval=TRUE, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAregion.interface.png")
+grid.raster(img)
+```
+
+
+## Enrichment Results
+
+- Under the `Input genomic region information` tab, `An interactive table` lists user-input genomic regions.
+
+```{r EAregion-results-input, fig.cap="The user-input data displayed under the `Input genomic region information` tab for exploration.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAregion.results_input.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: linked genes` tab, `An interactive table` lists genes linked from the input genomic regions.
+
+```{r EAregion-results-link, fig.cap="An interactive table listing genes linked from the input genomic regions under the `Output: linked genes` tab.", fig.width=10, fig.height=6.6, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAregion.results_link.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: enriched terms` tab, `An interactive table` lists enriched ontology terms.
+
+```{r EAregion-results-output, fig.cap="An interactive table listing enriched ontology terms displayed under the `Output: enriched terms` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAregion.results_output.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable PDF file is also provided.
+
+```{r EAregion-results-forestplot, fig.cap="A forest plot illustrating enriched ontology terms displayed under the `Output: forest plot` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAregion.results_forestplot.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable PDF file is also provided.
+
+```{r EAregion-results-dotplot, fig.cap="A dotplot illustrating enriched ontology terms displayed under the `Output: dotplot` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAregion.results_dotplot.png")
+grid.raster(img)
+```
+
+
+
+# ENRICHMENT ANALYSER (DOMAINS) - EAD
+
+## Input Interface
+
+> **Input**
+
+- `Step 1` and `Step 2`: Enter a list of protein domains and specify their domain type. It is important to ensure that the input domain identifiers (`Step 2`) are consistent with the specified domain level (`Step 1`); otherwise, the error messages will be prompted.
+
+- `Step 3`: Select from a list of supported ontologies.
+
+- `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+> **Output**
+
+- [Example Output](/app/examples/_tmp_RMD_EAdomain.html) includes interactive tables and high-quality figures for enrichment results. A summary of input data and the runtime, which is computed on the server side, is also provided for reference.
+
+<hr>
+
+
+```{r EAdomain-interface, fig.cap="The interface of `ENRICHMENT ANALYSER (DOMAINS) - EAD`. The `Show/Hide Info` toggle button contains the help information on how to use it, including inputs, outputs, and other relevant information.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAdomain.interface.png")
+grid.raster(img)
+```
+
+
+## Enrichment Results
+
+- Under the `Input domain information` tab, `An interactive table` lists the user-input domains.
+
+```{r EAdomain-results-input, fig.cap="The user-input data under the `Input domain information` tab, which is available for exploration.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAdomain.results_input.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: enriched terms` tab, `An interactive table` lists enriched ontology terms.
+
+```{r EAdomain-results-output, fig.cap="An interactive table that lists enriched ontology terms under the `Output: enriched terms` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAdomain.results_output.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable PDF file is also available.
+
+```{r EAdomain-results-forestplot, fig.cap="A forest plot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAdomain.results_forestplot.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable PDF file is also available.
+
+```{r EAdomain-results-dotplot, fig.cap="A dotplot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.EAdomain.results_dotplot.png")
+grid.raster(img)
+```
+
+
+
+# SUBNETWORK ANALYSER (GENES) - SAG
+
+## Input Interface
+
+> **Input**
+
+- `Step 1`: Enter a list of genes, with the 1st column for gene symbols and the 2nd column for the significance info (p-values between 0 and 1).
+
+- `Step 2` and `Step 3`: Identify a subnetwork of highly-scored genes from a gene network (`Step 2`), with the desired number of genes in the resulting subnetwork (`Step 3`). The significance (p-value) of observing the identified subnetwork by chance can also be estimated by a degree-preserving node permutation test.
+
+- `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+> **Output**
+
+- [Example Output](/app/examples/_tmp_RMD_SAgene.html) includes interactive tables and high-quality figures for the resulting subnetwork. A summary of input data and the runtime (computed on the server side) is also provided for reference.
+
+<hr>
+
+
+```{r SAgene-interface, fig.cap="The interface of `SUBNETWORK ANALYSER (GENES) - SAG`. The `Show/Hide Info` toggle button contains the help information on how to use it, including inputs, outputs, and other relevant information.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAgene.interface.png")
+grid.raster(img)
+```
+
+
+## Subnetwork Results
+
+- Under the `Input gene-level summary data` tab, `An interactive table` lists user-input summary data.
+
+```{r SAgene-results-input, fig.cap="The user-input summary under the `Input gene-level summary data` tab returned for exploration.", fig.width=10, fig.height=6.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAgene.results_input.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: subnetwork` tab, `A network visualisation` of the subnetwork is provided, along with `An interactive table` for the subnetwork genes.
+
+```{r SAgene-results-output, fig.cap="Visualisation of the identified subnetwork, with genes/nodes color-coded by input gene significance information under the `Output: subnetwork` tab.", fig.width=10, fig.height=6.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAgene.results_output.png")
+grid.raster(img)
+```
+
+
+
+# SUBNETWORK ANALYSER (SNPS) - SAS
+
+## Input Interface
+
+> **Input**
+
+- `Step 1`: Input a list of SNPs with dbSNP rsIDs in the first column and corresponding significance information (p-values between 0 and 1) in the second column.
+
+- `Step 2`: Specify the population to include SNPs in linkage disequilibrium. By default, input SNPs with p-values < 5e−8 are considered. Additional SNPs in linkage disequilibrium (R2 >= 0.8) can also be included according to the specified population.
+
+- `Step 3`: Use genomic proximity, quantitative trait locus mapping, or promoter capture Hi-C to identify linked genes.
+
+- `Step 4` and `Step 5`: A subnetwork of highly-scored genes is identified from a gene network (`Step 4`), with the desired number of genes in the resulting subnetwork (`Step 5`). The significance (p-value) of observing the identified subnetwork by chance can also be estimated by a degree-preserving node permutation test.
+
+- `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+> **Output**
+
+- [Example Output](/app/examples/_tmp_RMD_SAsnp.html) includes interactive tables nd and high-quality figures for the resulting subnetwork. A summary of input data and the runtime (computed on the server side) is also returned for reference.
+
+<hr>
+
+
+```{r SAsnp-interface, fig.cap="The interface of `SUBNETWORK ANALYSER (SNPS)  - SAS`. The `Show/Hide Info` toggle button contains instructions on how to use the interface, including inputs, outputs, and other relevant information.", fig.width=10, fig.height=9.1, echo=FALSE, eval=TRUE, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAsnp.interface.png")
+grid.raster(img)
+```
+
+
+## Subnetwork Results
+
+- Under the `Input SNP information` tab, `An interactive table` displays user-input summary data.
+
+```{r SAsnp-results-input, fig.cap="`An interactive table` displaying user-input summary under the `Input SNP information` tab returned for exploration.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAsnp.results_input.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the tab `Output: linked genes`, `An interactive table` lists genes linked from the input SNPs.
+
+```{r SAsnp-results-link, fig.cap="An interactive table listing genes linked from input SNPs under the `Output: linked genes` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAsnp.results_link.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: subnetwork` tab, `A network visualisation` of the subnetwork is provided, along with `An interactive table` for the subnetwork genes.
+
+```{r SAsnp-results-output, fig.cap="A network visualisation of the resulting subnetwork, with genes/nodes color-coded by linked gene scores (ranged from 1 to 10) under the `Output: subnetwork` tab.", fig.width=10, fig.height=7.7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAsnp.results_output.png")
+grid.raster(img)
+```
+
+
+
+# SUBNETWORK ANALYSER (REGIONS) - SAR
+
+## Input Interface
+
+> **Input**
+
+- `Step 1` and `Step 2`: Input a list of genomic regions with two columns. The 1st column contains genomic regions in the format of `chr:start-end`, and the 2nd column for the significance information (p-values between 0 and 1).
+
+- `Step 3`: Use genomic proximity, enhancer-gene maps, or promoter capture Hi-C to identify linked genes.
+
+- `Step 4` and `Step 5`: A subnetwork of highly-scored genes is identified from a gene network (`Step 4`), with the desired number of genes in the resulting subnetwork (`Step 5`). The significance (p-value) of observing the identified subnetwork by chance can also be estimated by a degree-preserving node permutation test.
+
+- `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+> **Output**
+
+- [Example Output](/app/examples/_tmp_RMD_SAregion.html) includes interactive tables and high-quality figures for the resulting subnetwork. A summary of input data and the runtime (computed on the server side) is also provided for reference.
+
+<hr>
+
+
+```{r SAregion-interface, fig.cap="The interface of `SUBNETWORK ANALYSER (REGIONS) - SAG`, including the `Show/Hide Info` toggle button with the help information on how to use the interface.", fig.width=10, fig.height=9.1, echo=FALSE, eval=TRUE, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAregion.interface.png")
+grid.raster(img)
+```
+
+
+## Subnetwork Results
+
+- Under the `Input genomic region information` tab, `An interactive table` lists user-input summary data.
+
+```{r SAregion-results-input, fig.cap="User-input summary data under the `Input genomic regions information` tab returned for exploration.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAregion.results_input.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: linked genes` tab, `An interactive table` lists genes linked from the input genomic regions.
+
+```{r SAregion-results-link, fig.cap="An interactive table listing genes linked from the input genomic regions under the `Output: linked genes` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAregion.results_link.png")
+grid.raster(img)
+```
+
+<br>
+<hr>
+
+- Under the `Output: subnetwork` tab, `A network visualisation` of the identified subnetwork is provided, along with `An interactive table` for the subnetwork genes.
+
+```{r SAregion-results-output, fig.cap="A network visualisation of the resulting subnetwork under the `Output: subnetwork` tab, with genes/nodes color-coded by linked gene scores, which range from 1 to 10.", fig.width=10, fig.height=7.7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.SAregion.results_output.png")
+grid.raster(img)
+```

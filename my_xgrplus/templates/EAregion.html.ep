@@ -1,0 +1,581 @@
+% layout 'default', tab => '/XGRplus/EAregion';
+% title 'EAregion - genomic regions linked to genes for enrichment analysis';
+
+% content_for css => begin
+	
+	<link type="text/css" href="https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css" rel="stylesheet">
+	<style>
+		td.highlight {
+			font-weight: bold;
+			color: blue;
+		}
+	</style>
+% end
+% content_for scripts => begin
+	
+	<script type="text/javascript">
+	
+		$(document).ready(function(){
+			
+			// For results container
+			var jfile = '<%= $ajax_txt_file %>';
+			var post_flag = '<%= $post_flag %>';
+			if(jfile != ''){
+				// show results
+				$("#results-container").addClass("in");
+				// hide form
+				$("#form-container").removeClass("in");
+			}else{
+				// error only occurs after the submit
+				if(post_flag==1){
+					// show error
+					$("#error-container").addClass("in");
+				}
+			}
+
+		});
+	</script>
+	
+% end
+
+
+<%
+my $ajax_txt_file='';
+my $post_flag='';
+
+my $info='
+<h5>Input</h5>
+<ul>
+<li>(<b>Steps 1 and 2</b>): Specify the genome build (<b>Step 1</b>) and provide a list of user-input genomic regions (<b>Step 2</b>). For example, <a href="/app/examples/eg_EAregion.txt" download="/app/examples/eg_EAregion.txt" target="/app/examples/eg_EAregion.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspExample Input</a>. Please make sure that the input genomic coordinates are consistent with the specified genome build.
+<li>(<b>Step 3</b>): Use genomic proximity, enhancer-gene maps, or promoter capture Hi-C to identify linked genes.
+<li>(<b>Step 4</b>): Choose from a list of supported ontologies.
+<li>(<b>More Controls</b>): Use additional parameters to fine-tune the steps described above.
+</ul>
+
+<h5>Output</h5>
+<ul>
+<li>(<a href="/app/examples/_tmp_RMD_EAregion.html" download="/app/examples/_tmp_RMD_EAregion.html" target="/app/examples/_tmp_RMD_EAregion.html"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspExample Output</a>) includes interactive tables and high-quality figures for enrichment results. A summary of the input data and the runtime (computed on the server side) is also returned for reference.
+</ul>
+
+<h5>Other information</h5>
+<ul>
+<li>The text box at <b>Step 2</b> is pre-filled with the provided example when the interface page is first-visited or refreshed.
+<li>Before clicking the <b>SUBMIT</b> button, please replace the example with your own data <b>EVERY TIME</b>.
+<li>For bug reports and inquiries, please send an email <a href="mailto:fh12355@rjh.com.cn"><i class="fa fa-envelope-o"></i></a> to get your feedback (also we want to learn about strengths and weaknesses). 
+</ul>
+';
+
+my $default_crosslink='RGB_ABC_Encode_Combined';
+my $i=0;
+my $crosslink_order;
+$crosslink_order->{'proximity_5000'}=$i++;
+$crosslink_order->{'proximity_20000'}=$i++;
+$crosslink_order->{'proximity_50000'}=$i++;
+$crosslink_order->{'proximity_500000'}=$i++;
+$crosslink_order->{'proximity_1000000'}=$i++;
+
+$crosslink_order->{'RGB_ABC_Encode_Combined'}=$i++;
+$crosslink_order->{'RGB_ABC_Roadmap_Combined'}=$i++;
+
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Activated_total_CD4_T_cells'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Endothelial_precursors'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Erythroblasts'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Fetal_thymus'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Macrophages_M0'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Macrophages_M1'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Macrophages_M2'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Megakaryocytes'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Monocytes'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Naive_B_cells'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Naive_CD4_T_cells'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Naive_CD8_T_cells'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Neutrophils'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Nonactivated_total_CD4_T_cells'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Total_B_cells'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Total_CD8_T_cells'}=$i++;
+
+$crosslink_order->{'RGB_PCHiC_PMID31501517_DorsolateralPrefrontalCortex'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID31501517_H1NeuralProgenitorCell'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID31501517_Hippocampus'}=$i++;
+
+$crosslink_order->{'RGB_PCHiC_PMID31367015_astrocytes'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID31367015_excitatory'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID31367015_hippocampal'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID31367015_motor'}=$i++;
+
+$crosslink_order->{'RGB_PCHiC_PMID25938943_CD34'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID25938943_GM12878'}=$i++;
+my $crosslinks={
+	proximity_5000 => "Within 5Kb",
+	proximity_20000 => "Within 20Kb",
+	proximity_50000 => "Within 50Kb",
+	proximity_500000 => "Within 500Kb",
+	proximity_1000000 => "Within 1Mb",
+	
+	RGB_ABC_Encode_Combined => "All 39 ENCODE cell types from PMID33828297",
+	RGB_ABC_Roadmap_Combined => "All 40 Roadmap cell types from PMID33828297",
+	
+	RGB_PCHiC_PMID27863249_Activated_total_CD4_T_cells => "Activated total CD4+ T cells (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Endothelial_precursors => "Endothelial precursors (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Erythroblasts => "Erythroblasts (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Fetal_thymus => "Fetal thymus (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Macrophages_M0 => "Macrophages M0 (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Macrophages_M1 => "Macrophages M1 (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Macrophages_M2 => "Macrophages M2 (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Megakaryocytes => "Megakaryocytes (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Monocytes => "Monocytes (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Naive_B_cells => "Naive B cells (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Naive_CD4_T_cells => "Naive CD4+ T cells (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Naive_CD8_T_cells => "Naive CD8+ T cells (PMID27863249))",
+	RGB_PCHiC_PMID27863249_Neutrophils => "Neutrophils (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Nonactivated_total_CD4_T_cells => "Nonactivated total CD4+ T cells (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Total_B_cells => "Total B cells (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Total_CD8_T_cells => "Total CD8+ T cells (PMID27863249)",
+	
+	RGB_PCHiC_PMID31501517_DorsolateralPrefrontalCortex => "Dorsolateral prefrontal cortex (PMID31501517)",
+	RGB_PCHiC_PMID31501517_H1NeuralProgenitorCell => "H1 neural progenitor cells (PMID31501517)",
+	RGB_PCHiC_PMID31501517_Hippocampus => "Hippocampus (PMID31501517)",
+	
+	RGB_PCHiC_PMID31367015_astrocytes => "Astrocytes (PMID31367015)",
+	RGB_PCHiC_PMID31367015_excitatory => "Excitatory (PMID31367015)",
+	RGB_PCHiC_PMID31367015_hippocampal => "Hippocampa (PMID31367015)",
+	RGB_PCHiC_PMID31367015_motor => "Motor (PMID31367015)",
+    
+    RGB_PCHiC_PMID25938943_CD34 => "CD34+ cells (PMID25938943)",
+    RGB_PCHiC_PMID25938943_GM12878 => "GM12878 cells (PMID25938943)",
+};
+
+my $default_obo='REACTOME';
+$i=0;
+my $obo_order;
+$obo_order->{"GOBP"}=$i++;
+$obo_order->{"GOMF"}=$i++;
+$obo_order->{"GOCC"}=$i++;
+$obo_order->{"KEGG"}=$i++;
+$obo_order->{"REACTOME"}=$i++;
+$obo_order->{"MsigdbC2CPall"}=$i++;
+$obo_order->{"MitoPathway"}=$i++;
+$obo_order->{"EnrichrConsensusTFs"}=$i++;
+$obo_order->{"EnrichrTRRUST"}=$i++;
+$obo_order->{"MDODD"}=$i++;
+$obo_order->{"DO"}=$i++;
+$obo_order->{"EF"}=$i++;
+$obo_order->{"HPPA"}=$i++;
+$obo_order->{"MP"}=$i++;
+$obo_order->{"DGIdb"}=$i++;
+$obo_order->{"Bucket"}=$i++;
+$obo_order->{"ChEMBL"}=$i++;
+$obo_order->{"SF"}=$i++;
+$obo_order->{"FA"}=$i++;
+$obo_order->{"Pfam"}=$i++;
+$obo_order->{"IPR"}=$i++;
+$obo_order->{"IDPO"}=$i++;
+$obo_order->{"MsigdbH"}=$i++;
+$obo_order->{"PSG"}=$i++;
+
+my $obos={
+    GOBP => "Gene Ontology Biological Process (GOBP)",
+    GOMF => "Gene Ontology Molecular Function (GOMF)",
+    GOCC => "Gene Ontology Cellular Component (GOCC)",
+    
+    KEGG => "KEGG pathways (KEGG)",
+    REACTOME => "REACTOME pathways (REACTOME)",
+	MsigdbC2CPall => "MSIGDB pathways (MSIGDBpath)",
+	MitoPathway => "MitoPathway pathways (MITOPATH)",
+    
+	EnrichrConsensusTFs => "ENRICHR Consensus TFs (CTF)",
+	EnrichrTRRUST => "ENRICHR TRRUST TFs (TRRUST)",
+    
+    MDODD => "Mondo Disease Ontology (MONDO)",
+    DO => "Disease Ontology (DO)",
+    EF => "Experimental Factor Ontology (EFO)",
+    
+    HPPA => "Human Phenotype Ontology (HPO)",
+    MP => "Mammalian Phenotype Ontology (MPO)",
+    
+    DGIdb => "DGIdb druggable categories (DGIdb)",
+    Bucket => "Target tractability buckets (Bucket)",
+    ChEMBL => "ChEMBL drug indications buckets (ChEMBL)",
+
+    SF => "SCOP superfamily domains (SCOPsf)",
+    FA => "SCOP family domains (SCOPfa)",
+    Pfam => "Pfam domains (Pfam)",
+    IPR => "InterPro domains (InterPro)",
+    IDPO => "Intrinsically Disordered Proteins Ontology (IDPO)",
+    
+    MsigdbH => "MSIGDB hallmarks (MSIGDBh)",
+    PSG => "Phylostratigraphy (PSG)",
+};
+
+my $example_regions='
+chr	start	end
+chr1	25305113	25305114
+chr1	67705957	67705958
+chr1	67705957	67705958
+chr1	67747435	67747436
+chr1	154426263	154426264
+chr1	161479744	161479745
+chr1	200877849	200877850
+chr10	81060316	81060317
+chr10	81060316	81060317
+chr10	81060316	81060317
+chr10	101278724	101278725
+chr12	6446776	6446777
+chr12	111862574	111862575
+chr14	88488820	88488821
+chr16	28617884	28617885
+chr17	26148166	26148167
+chr17	45575205	45575206
+chr19	10525180	10525181
+chr2	62551471	62551472
+chr2	62521243	62521244
+chr2	62568444	62568445
+chr2	62551471	62551472
+chr2	102663627	102663628
+chr2	182048451	182048452
+chr2	241563738	241563739
+chr21	40465177	40465178
+chr21	40466743	40466744
+chr21	45615740	45615741
+chr21	45615740	45615741
+chr5	96147732	96147733
+chr5	96094693	96094694
+chr5	96129511	96129512
+chr5	96252588	96252589
+chr5	96124329	96124330
+chr5	158826791	158826792
+chr5	158826791	158826792
+chr6	25925986	25925987
+chr9	139253838	139253839
+chr1	8268094	8268095
+chr1	24518642	24518643
+chr1	25293083	25293084
+chr1	67705957	67705958
+chr1	67705957	67705958
+chr1	67726103	67726104
+chr1	152551275	152551276
+chr1	152551275	152551276
+chr1	152590186	152590187
+chr10	81032531	81032532
+chr10	81032531	81032532
+chr11	109962431	109962432
+chr11	128406437	128406438
+chr12	56737972	56737973
+chr12	56750203	56750204
+chr12	112059556	112059557
+chr14	35832665	35832666
+chr14	35832665	35832666
+chr16	11365499	11365500
+chr16	31004811	31004812
+chr17	26124907	26124908
+chr17	40561578	40561579
+chr17	78178892	78178893
+chr18	51819749	51819750
+chr19	10469974	10469975
+chr19	10469974	10469975
+chr19	10475651	10475652
+chr19	10472932	10472933
+chr19	10472932	10472933
+chr19	10463117	10463118
+chr19	10469974	10469975
+chr19	10469974	10469975
+chr19	10475651	10475652
+chr19	10818091	10818092
+chr2	61083505	61083506
+chr2	61081541	61081542
+chr2	61081541	61081542
+chr2	61124849	61124850
+chr2	62551471	62551472
+chr2	62551471	62551472
+chr2	163110535	163110536
+chr2	163124050	163124051
+chr2	163110535	163110536
+chr2	163260690	163260691
+chr2	163260690	163260691
+chr20	48556228	48556229
+chr20	48554976	48554977
+chr22	21979288	21979289
+chr5	96094693	96094694
+chr5	96124329	96124330
+chr5	96119272	96119273
+chr5	96101943	96101944
+chr5	96101943	96101944
+chr5	131996444	131996445
+chr5	150467188	150467189
+chr5	158829526	158829527
+chr5	158750768	158750769
+chr5	158750768	158750769
+chr5	158759899	158759900
+chr5	158787384	158787385
+chr6	577819	577820
+chr6	31274554	31274555
+chr6	31274554	31274555
+chr6	31918859	31918860
+chr6	31542307	31542308
+chr6	31320537	31320538
+chr6	32657435	32657436
+chr6	32413544	32413545
+chr6	32408496	32408497
+chr6	31266089	31266090
+chr6	32578051	32578052
+chr6	31354181	31354182
+chr6	31274379	31274380
+chr6	32586853	32586854
+chr6	32590952	32590953
+chr6	111673713	111673714
+chr6	111673713	111673714
+chr6	111913261	111913262
+chr6	111696090	111696091
+chr6	111696090	111696091
+chr6	111848190	111848191
+chr6	138197823	138197824
+chr6	159506599	159506600
+chr6	159506599	159506600
+chr7	37386236	37386237
+chr9	32523736	32523737
+chr9	110817019	110817020
+';
+%>
+
+<div class="container">
+	<div class="jumbotron">
+	
+		<div class="text-right">
+			% if(1){
+				<a href="javascript:newWin('/app/examples/_tmp_RMD_EAregion.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/enrichment-analyser-regions---ear.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+			% }else{
+				<a href="javascript:newWin('/app/examples/_tmp_RMD_EAregion.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/index.html#enrichment-analyser-regions', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+			% }
+		</div>
+	
+		<div class="text-center">
+			<h3><a href="/XGRplus/EAregion"><i class="fa fa-play-circle fa-lg"></i>&nbsp;&nbsp;ENRICHMENT ANALYSER (REGIONS) - EAR</a>&nbsp;:&nbsp;Identifying enriched ontology terms for genes linked from input genomic region list</h3>
+		</div>
+	</div>
+</div>
+
+<!-- error text -->
+<div id="error-container" class="container collapse">
+	<div id="errorText" style="display: block">
+		<p class="text_justify">
+		
+<h5>Error Messages: your input at Steps 1 and 2</h5>
+<ul>
+<li>Please check your input genomic regions with three columns (<b>chromosome</b>, <b>start</b>, and <b>end</b>); otherwise, they will be disregarded.
+<li>Before clicking the <strong>SUBMIT</strong> button, please paste your own data at Step 2 <strong>EVERY TIME</strong>. Note that the text box at Step 2 is pre-filled with the provided example when the interface page is first-visited or refreshed.
+<li>If the above issues are resolved, and you still receive the error messages, it simply means that no enrichment has been returned.
+</ul>
+
+		</p>
+	</div>
+</div>
+
+<hr>
+	
+<!-- progress bar -->
+<div id="progress-container" class="container collapse">
+	<div class="progress progress-striped active">
+		<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+			<i class="fa fa-cog fa-spin fa-lg"></i>&nbsp;&nbsp;EAR analysing your genomic region list ...
+		</div>
+	</div>
+</div>
+
+
+<!-- form -->
+<div id="form-container" class="container collapse in">
+	
+	<a id="displayText" href="javascript:toggle();" class="btn btn-primary btn-sm active">Show Info</a>
+	
+	<div id="toggleText" style="display: none">
+		<p class="text_justify">
+			<%== $info %>
+		</p>
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+			
+			<form id="submit-form" class="form-horizontal" enctype="multipart/form-data" method="POST">
+				
+				<p><strong>Step 1</strong>: Choose genome build (all genome coordinates converted to hg19).</p>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="build">Build:</label>
+					<div class="col-sm-7">
+						<select name="build" id="build" class="form-control">
+							<option value="NA" selected>hg19 (GRCh37)</a>
+							<option value="hg38.to.hg19">hg38 (GRCh38)</a>
+							<option value="hg18.to.hg19">hg18</a>
+						</select>
+					</div>
+				</div>
+				
+				<p><strong>Step 2</strong>: Paste your genomic regions (1st column for the chromosome, 2nd for the start position, 3rd for the end position).</p>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<textarea id="regionlist" name="regionlist" class="form-control table" rows="4" required="required"><%== $example_regions %></textarea>
+					</div>
+				</div>
+				
+				<p><strong>Step 3</strong>: Identify linked genes based on genomic proximity, enhancer-gene maps, or promoter capture Hi-C.</p>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="distance">Linked genes supported by:</label>
+					<div class="col-sm-7">
+						<select name="crosslink" id="crosslink" class="form-control">
+							% foreach my $crosslink (sort{$crosslink_order->{$a} <=> $crosslink_order->{$b}} keys %$crosslink_order) {
+							% my $selected = ($crosslink eq $default_crosslink)? ' SELECTED':'';
+							% if ($crosslink eq 'proximity_5000'){
+								<OPTGROUP LABEL="Genomic proximity (distance-to-SNP window)">
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+							% }elsif ($crosslink eq 'RGB_ABC_Encode_Combined'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Enhancer-gene map (ABC) databasets">
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+							% }elsif ($crosslink eq 'RGB_PCHiC_PMID27863249_Activated_total_CD4_T_cells'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Promoter capture Hi-C datasets">
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+							% }elsif ($crosslink eq 'RGB_PCHiC_PMID25938943_GM12878'){
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+								</OPTGROUP>
+							% }else{
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+							% }
+							%}
+						</select>
+					</div>
+				</div>
+
+				<p><strong>Step 4</strong>: Choose which ontology to use.</p>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="obo">Ontology:</label>
+					<div class="col-sm-7">
+						<select name="obo" id="obo" class="form-control">
+							% foreach my $obo (sort{$obo_order->{$a} <=> $obo_order->{$b}} keys %$obo_order) {
+							% my $selected = ($obo eq $default_obo)? ' SELECTED':'';
+							% if ($obo eq 'GOBP'){
+								<OPTGROUP LABEL="Functions">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'KEGG'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Pathways">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'EnrichrConsensusTFs'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Regulators">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>	
+							% }elsif ($obo eq 'MDODD'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Diseases">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'HPPA'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Phenotypes">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'DGIdb'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Drugs">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'SF'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Domains & Disorders">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'MsigdbH'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Hallmarks & Evolution">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'PSG'){
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+								</OPTGROUP>
+							% }else{
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }
+							%}
+						</select>
+					</div>
+				</div>
+				
+				<!-- Advanced begin ################### -->
+				<div class="form-group" id="advanced-toggle">
+					<div class="col-md-12">
+						 
+						<button type="button" class="btn btn-default btn-block" style="text-align:left" data-toggle="collapse" data-target="#more-options">
+							<i class="fa fa-chevron-circle-down fa-lg"></i> <strong class="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="Specify additional parameters for more controls">More Controls</strong></a>
+						</button>
+						
+						<div id="more-options" class="row collapse">
+							<div class="col-md-12" style="border: 1px solid #fff">
+
+								<!-- min overlap -->
+								<i class="fa fa-hand-o-right fa-lg"></i> Minimum number of overlapped genes.
+								<div class="form-group">
+									<label class="control-label col-sm-5">Number of genes:</label>
+									<div class="col-sm-7">
+										<select name="min_overlap" class="form-control">
+											<option value="3" selected>3</a>
+											<option value="5">5</a>
+											<option value="10">10</a>
+										</select>
+									</div>			
+								</div>
+
+								<!-- FDR cutoff -->
+								<i class="fa fa-hand-o-right fa-lg"></i> Term significance.
+								<div class="form-group">
+									<label class="control-label col-sm-5">False Discovery Rate (FDR):</label>
+									<div class="col-sm-7">
+										<select name="FDR_cutoff" class="form-control">
+											<option value="5e-2">5e-2</a>
+											<option value="1e-2">1e-2</a>
+											<option value="NULL" selected>None</a>
+										</select>
+									</div>									
+								</div>
+								
+							</div>
+						</div>
+
+						
+					</div>
+				</div>
+				<!-- Advanced end ################### -->
+				
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-12 control-label" for="submit"></label>
+					<div class="col-md-12">
+						<input class="btn btn-primary btn-block active" id="submit" type="submit" value="Submit" />
+					</div>
+				</div>
+				
+			</form>
+			
+		</div>
+		
+	</div>
+	
+</div>
+
+
+<div id="results-container" class="container collapse">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h3 class="my-fontfamily">Enrichment Results&nbsp;<a class="btn btn-primary btn-sm active" role="button" href="javascript:newWin('<%= $ajax_rmd_html_file %>', 'ZOOM', '909', '1169')"><i class="fa fa-search-plus fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;ZOOM</a>&nbsp;<a class="btn btn-primary btn-sm active" role="button" href="<%= $ajax_rmd_html_file %>" download="<%= $ajax_rmd_html_file %>" target="<%= $ajax_rmd_html_file %>"><i class="fa fa-cloud-download fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;DOWNLOAD .html</a></h3>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="form-group">
+			<div class="col-lg-12">
+				<div class="embed-responsive embed-responsive-4by3">
+					<iframe class="embed-responsive-item" src="<%= $ajax_rmd_html_file %>"></iframe>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+  	
+</div>
+

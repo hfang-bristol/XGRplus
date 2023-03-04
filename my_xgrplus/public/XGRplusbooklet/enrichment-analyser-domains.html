@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 10 ENRICHMENT ANALYSER (DOMAINS) | XGR+ User Manual</title>
+  <meta name="description" content="Section 10 ENRICHMENT ANALYSER (DOMAINS) | XGR+ User Manual" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 10 ENRICHMENT ANALYSER (DOMAINS) | XGR+ User Manual" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 10 ENRICHMENT ANALYSER (DOMAINS) | XGR+ User Manual" />
+  
+  
+  
+
+
+
+<meta name="date" content="2023-02-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="enrichment-analyser-regions.html"/>
+<link rel="next" href="subnetwork-analyser-genes.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./index.html">XGR+ User Manual</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> OVERVIEW</a></li>
+<li class="chapter" data-level="2" data-path="compatibility-runtime.html"><a href="compatibility-runtime.html"><i class="fa fa-check"></i><b>2</b> COMPATIBILITY &amp; RUNTIME</a></li>
+<li class="chapter" data-level="3" data-path="landing-frontpage.html"><a href="landing-frontpage.html"><i class="fa fa-check"></i><b>3</b> LANDING FRONTPAGE</a></li>
+<li class="chapter" data-level="4" data-path="mobile-first-webserver.html"><a href="mobile-first-webserver.html"><i class="fa fa-check"></i><b>4</b> MOBILE-FIRST WEBSERVER</a></li>
+<li class="chapter" data-level="5" data-path="help-buttons.html"><a href="help-buttons.html"><i class="fa fa-check"></i><b>5</b> HELP BUTTONS</a></li>
+<li class="chapter" data-level="6" data-path="error-messages.html"><a href="error-messages.html"><i class="fa fa-check"></i><b>6</b> ERROR MESSAGES</a></li>
+<li class="chapter" data-level="7" data-path="enrichment-analyser-genes.html"><a href="enrichment-analyser-genes.html"><i class="fa fa-check"></i><b>7</b> ENRICHMENT ANALYSER (GENES)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="enrichment-analyser-genes.html"><a href="enrichment-analyser-genes.html#input-interface"><i class="fa fa-check"></i><b>7.1</b> Input Interface</a></li>
+<li class="chapter" data-level="7.2" data-path="enrichment-analyser-genes.html"><a href="enrichment-analyser-genes.html#enrichment-results"><i class="fa fa-check"></i><b>7.2</b> Enrichment Results</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="enrichment-analyser-snps.html"><a href="enrichment-analyser-snps.html"><i class="fa fa-check"></i><b>8</b> ENRICHMENT ANALYSER (SNPS)</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="enrichment-analyser-snps.html"><a href="enrichment-analyser-snps.html#input-interface-1"><i class="fa fa-check"></i><b>8.1</b> Input Interface</a></li>
+<li class="chapter" data-level="8.2" data-path="enrichment-analyser-snps.html"><a href="enrichment-analyser-snps.html#enrichment-results-1"><i class="fa fa-check"></i><b>8.2</b> Enrichment Results</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="enrichment-analyser-regions.html"><a href="enrichment-analyser-regions.html"><i class="fa fa-check"></i><b>9</b> ENRICHMENT ANALYSER (REGIONS)</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="enrichment-analyser-regions.html"><a href="enrichment-analyser-regions.html#input-interface-2"><i class="fa fa-check"></i><b>9.1</b> Input Interface</a></li>
+<li class="chapter" data-level="9.2" data-path="enrichment-analyser-regions.html"><a href="enrichment-analyser-regions.html#enrichment-results-2"><i class="fa fa-check"></i><b>9.2</b> Enrichment Results</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="enrichment-analyser-domains.html"><a href="enrichment-analyser-domains.html"><i class="fa fa-check"></i><b>10</b> ENRICHMENT ANALYSER (DOMAINS)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="enrichment-analyser-domains.html"><a href="enrichment-analyser-domains.html#input-interface-3"><i class="fa fa-check"></i><b>10.1</b> Input Interface</a></li>
+<li class="chapter" data-level="10.2" data-path="enrichment-analyser-domains.html"><a href="enrichment-analyser-domains.html#enrichment-results-3"><i class="fa fa-check"></i><b>10.2</b> Enrichment Results</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="subnetwork-analyser-genes.html"><a href="subnetwork-analyser-genes.html"><i class="fa fa-check"></i><b>11</b> SUBNETWORK ANALYSER (GENES)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="subnetwork-analyser-genes.html"><a href="subnetwork-analyser-genes.html#input-interface-4"><i class="fa fa-check"></i><b>11.1</b> Input Interface</a></li>
+<li class="chapter" data-level="11.2" data-path="subnetwork-analyser-genes.html"><a href="subnetwork-analyser-genes.html#subnetwork-results"><i class="fa fa-check"></i><b>11.2</b> Subnetwork Results</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="subnetwork-analyser-snps.html"><a href="subnetwork-analyser-snps.html"><i class="fa fa-check"></i><b>12</b> SUBNETWORK ANALYSER (SNPS)</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="subnetwork-analyser-snps.html"><a href="subnetwork-analyser-snps.html#input-interface-5"><i class="fa fa-check"></i><b>12.1</b> Input Interface</a></li>
+<li class="chapter" data-level="12.2" data-path="subnetwork-analyser-snps.html"><a href="subnetwork-analyser-snps.html#subnetwork-results-1"><i class="fa fa-check"></i><b>12.2</b> Subnetwork Results</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="subnetwork-analyser-regions.html"><a href="subnetwork-analyser-regions.html"><i class="fa fa-check"></i><b>13</b> SUBNETWORK ANALYSER (REGIONS)</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="subnetwork-analyser-regions.html"><a href="subnetwork-analyser-regions.html#input-interface-6"><i class="fa fa-check"></i><b>13.1</b> Input Interface</a></li>
+<li class="chapter" data-level="13.2" data-path="subnetwork-analyser-regions.html"><a href="subnetwork-analyser-regions.html#subnetwork-results-2"><i class="fa fa-check"></i><b>13.2</b> Subnetwork Results</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="/XGRplus" target="blank">XGR+</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">XGR+ User Manual</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="enrichment-analyser-domains" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Section 10</span> ENRICHMENT ANALYSER (DOMAINS)<a href="enrichment-analyser-domains.html#enrichment-analyser-domains" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="input-interface-3" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Input Interface<a href="enrichment-analyser-domains.html#input-interface-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p><strong>Input</strong></p>
+</blockquote>
+<ul>
+<li><p><code>Step 1</code> and <code>Step 2</code>: User-input domain list, together with the domain type specified. Make sure that the input domain identifiers (<code>Step 2</code>) are consistent with the domain level (<code>Step 1</code>); otherwise, the error messages will be prompted</p></li>
+<li><p><code>Step 3</code>: List of ontologies supported.</p></li>
+<li><p><code>More Controls</code>: More parameters to fine-tune steps described above.</p></li>
+</ul>
+<blockquote>
+<p><strong>Output</strong></p>
+</blockquote>
+<ul>
+<li><a href="/app/examples/_tmp_RMD_EAdomain.html">Example Output</a> includes interactive tables nd and high-quality figures for enrichment results. A summary of input data and the runtime (computed on the server side) is also returned for the reference.</li>
+</ul>
+<hr>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:EAdomain-interface"></span>
+<img src="index_files/figure-html/EAdomain-interface-1.png" alt="The interface of enrichment analysis. The `Show/Hide Info` toggle button contains the help information on how to use , including input, output and other information." width="90%" />
+<p class="caption">
+FIGURE 10.1: The interface of enrichment analysis. The <code>Show/Hide Info</code> toggle button contains the help information on how to use , including input, output and other information.
+</p>
+</div>
+</div>
+<div id="enrichment-results-3" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Enrichment Results<a href="enrichment-analyser-domains.html#enrichment-results-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Under the tab <code>Input domain information</code>, <code>An interactive table</code> lists user-input domains.</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:EAdomain-results-input"></span>
+<img src="index_files/figure-html/EAdomain-results-input-1.png" alt="The user-input data under the tab `Input domain information` returned for the exploration." width="95%" />
+<p class="caption">
+FIGURE 10.2: The user-input data under the tab <code>Input domain information</code> returned for the exploration.
+</p>
+</div>
+<br>
+<hr>
+<ul>
+<li>Under the tab <code>Output: enriched terms</code>, <code>An interactive table</code> lists enriched ontology terms.</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:EAdomain-results-output"></span>
+<img src="index_files/figure-html/EAdomain-results-output-1.png" alt="An interactive table listing enriched ontology terms under the tab `Output: enriched terms`." width="95%" />
+<p class="caption">
+FIGURE 10.3: An interactive table listing enriched ontology terms under the tab <code>Output: enriched terms</code>.
+</p>
+</div>
+<br>
+<hr>
+<ul>
+<li>Under the tab <code>Output: forest plot</code>, <code>A forest plot</code> illustrates enriched ontology terms. Also provided is the downloadable PDF file.</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:EAdomain-results-forestplot"></span>
+<img src="index_files/figure-html/EAdomain-results-forestplot-1.png" alt="A forestplot for enriched ontology terms." width="95%" />
+<p class="caption">
+FIGURE 10.4: A forestplot for enriched ontology terms.
+</p>
+</div>
+<br>
+<hr>
+<ul>
+<li>Under the tab <code>Output: dotplot</code>, <code>An dotplot</code> illustrates enriched ontology terms. Also provided is the downloadable PDF file.</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:EAdomain-results-dotplot"></span>
+<img src="index_files/figure-html/EAdomain-results-dotplot-1.png" alt="A dotplot for enriched ontology terms." width="95%" />
+<p class="caption">
+FIGURE 10.5: A dotplot for enriched ontology terms.
+</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="enrichment-analyser-regions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="subnetwork-analyser-genes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

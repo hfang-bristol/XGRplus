@@ -1,0 +1,365 @@
+% layout 'default', tab => '/XGRplus/help';
+% title 'XGR+ - Providing the help';
+
+% content_for css => begin
+	
+% end
+
+
+% content_for scripts => begin
+
+% end
+
+
+<div class="jumbotron">
+
+		<div class="text-right">
+			% if(1){
+				<a href="javascript:newWin('/XGRplusbooklet/index.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+			% }
+		</div>
+
+	<div class="text-center">
+		<h3><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;ABOUT XGR+</h3>
+	</div>
+    
+</div>
+
+<hr>
+
+<!-- results -->
+<div id="results-container" class="container collapse in">
+	
+	<div class="panel-group" id="accordion">
+		
+	   <!-- panel 1 -->
+	   <div class="panel panel-primary" id="panel1">
+		  <div class="panel-heading">
+			 <h4 class="panel-title" id="bookmark1">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+				   <i class="fa fa-minus-circle"></i><strong class ="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="Overview of the XGR+ development and deployment">&nbsp;&nbsp;ABOUT</strong></a>
+				</a>
+			 </h4>
+		  </div>
+		  <div id="collapse1" class="panel-collapse collapse in">
+			 <div class = "panel-body">
+				
+				<fieldset>
+				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;We are pleased to introduce XGR+, an updated version of our previously established XGR software that has gained increasing popularity. XGR+ is a newly designed web server that offers real-time enrichment and subnetwork analyses for a user-input list of genes, SNPs, genomic regions, or protein domains, through leveraging ontologies, networks and many others (such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps). This new website is free and open to all users, and does not require users to log in.</h5>
+				</fieldset>
+				
+				<br>
+				
+				<fieldset>
+				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;One of the major bottlenecks for genomics research is how to bridge the widening gap between generated genomic summary data and downstream knowledge discovery. We define genomic summary data as a list of genes or SNPs (more generally, genomic regions), along with their significance level (e.g. p-values). We are at the forefront of making sense of genomic summary data for knowledge discovery through developing approaches and tools that have been shown to be efficient and effective; these tool include dcGO, dnet, XGR, and Pi.</h5>
+				</fieldset>
+				
+				<br>
+				
+				<fieldset>
+				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;XGR+ builds upon our previous approaches (with most of citations received in the past two years) and the expanding knowledgebase of ontologies and networks. It includes seven analysers, each doing specific interpretations tailored to genomic summary data at the gene, SNP, genomic region, or protein domain level. These includes four enrichment analysers that identify enriched ontology terms and three subnetwork analysers that identify gene subnetworks, described below:
+				<ul>
+				<li><a href="/XGRplus/EAgene" target="EAgene"><i class="fa fa-play-circle fa-1x"></i>&nbsp;ENRICHMENT ANALYSER (GENES) - EAG</a>, identifying enriched ontology terms from input gene list;
+				<li><a href="/XGRplus/EAsnp" target="EAsnp"><i class="fa fa-play-circle fa-1x"></i>&nbsp;ENRICHMENT ANALYSER (SNPS) - EAS</a>, identifying enriched ontology terms for genes linked from input SNP list;
+				<li><a href="/XGRplus/EAregion" target="EAregion"><i class="fa fa-play-circle fa-1x"></i>&nbsp;ENRICHMENT ANALYSER (REGIONS) - EAR</a>, identifying enriched ontology terms for genes linked from input genomic region list;
+				<li><a href="/XGRplus/EAdomain" target="EAdomain"><i class="fa fa-play-circle fa-1x"></i>&nbsp;ENRICHMENT ANALYSER (DOMAINS) - EAD</a>, identifying enriched ontology terms from input protein domain list;
+				<li><a href="/XGRplus/SAgene" target="SAgene"><i class="fa fa-share-alt-square fa-1x"></i>&nbsp;SUBNETWORK ANALYSER (GENES) - SAG</a>, identifying a gene subnetwork based on input gene-level summary data;
+				<li><a href="/XGRplus/SAsnp" target="SAsnp"><i class="fa fa-share-alt-square fa-1x"></i>&nbsp;SUBNETWORK ANALYSER (SNPS) - SAS</a>, identifying a gene subnetwork based on genes linked from input SNP-level summary data;
+				<li><a href="/XGRplus/SAregion" target="SAregion"><i class="fa fa-share-alt-square fa-1x"></i>&nbsp;SUBNETWORK ANALYSER (REGIONS) - SAR</a>, identifying a gene subnetwork based on genes linked from input genomic region-level summary data.
+				</ul>
+				</h5>
+				</fieldset>
+				
+				<br>
+				
+				<fieldset>
+				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;Please refer to <a href="/XGRplusbooklet/index.html" target="use manual"><i class="fa fa-book fa-1x"></i>&nbsp;User Manual</a> for detailed instructions on how to use XGR+.</h5>
+				</fieldset>
+				
+				<br>
+				
+				<fieldset>
+<table cellspacing='0' cellpadding='0' width=90%>
+<tr>
+<td align=center><IMG src="/app/img/XGRplus.about.png" class="img_responsive">
+</td>
+</tr>
+<tr>
+<td align=center>
+<P class="text_center">
+<I><B></B></I></P>
+</td>
+</tr>
+</table>
+				</fieldset>
+				
+				<br>
+				
+			 </div>
+		  </div>
+	   </div>
+	   
+	   <!-- panel 3 -->
+	   <div class="panel panel-primary" id="panel3">
+		  <div class="panel-heading">
+			 <h4 class="panel-title" id="bookmark3">
+				<a id="barplot-button" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+				   <i class="fa fa-plus-circle"></i><strong class ="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="List of fundings supporting the XGR+ development and deployment">&nbsp;&nbsp;FUNDINGS</strong></a>
+				</a>
+			 </h4>
+		  </div>
+		  <div id="collapse3" class="panel-collapse collapse">
+			<ul>
+	
+			<fieldset>
+				<h5 class="citation_title"><strong>National Natural Science Foundation of China (32170663)</strong></h5>
+				<p>2022 - 2025</p>
+			</fieldset>
+	
+			<fieldset>
+				<h5 class="citation_title"><strong>Innovative Research Team of High-Level Local Universities in Shanghai</strong></h5>
+				<p>2022 - 2024</p>
+			</fieldset>
+	
+			<fieldset>
+				<h5 class="citation_title"><strong>Shanghai Pujiang Program (21PJ1409600)</strong></h5>
+				<p>2021 - 2023</p>
+			</fieldset>
+	
+			<fieldset>
+				<h5 class="citation_title"><strong>Program for Professor of Special Appointment (Eastern Scholar) at Shanghai Institutions of Higher Learning</strong></h5>
+				<p>2020 - 2022</p>
+			</fieldset>
+			
+			<br>
+			</ul>
+		  </div>
+	   </div>
+	  
+	   <!-- panel 4 -->
+	   <div class="panel panel-primary" id="panel4">
+		  <div class="panel-heading">
+			 <h4 class="panel-title" id="bookmark4">
+				<a id="barplot-button" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+				   <i class="fa fa-plus-circle"></i><strong class ="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="Key publications related to XGR+">&nbsp;&nbsp;PUBLICATIONS (KEY OR RELATED)</strong></a>
+				</a>
+			 </h4>
+		  </div>
+		  <div id="collapse4" class="panel-collapse collapse">
+			<ul>
+	
+			<fieldset>
+			<h5 class="citation_title">XGR software for enhanced interpretation of genomic summary data, illustrated by application to immunological traits</h5>
+			<a href="https://f1000.com/prime/727108713" target="_blank"><img src="http://cdn.f1000.com.s3.amazonaws.com/images/badges/badgef1000.gif" alt="Access the recommendation on F1000Prime" id="bg" /></a>
+			<p><em>Genome Medicine</em> 2016</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1186/s13073-016-0384-y" target="10.1186/s13073-016-0384-y">10.1186/s13073-016-0384-y</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1186/s13073-016-0384-y" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			<br>
+			
+			<fieldset>
+			<h5 class="citation_title">A genetics-led approach defines the drug target landscape of 30 immune-related traits</h5>
+			<a href="https://f1000.com/prime/736064114" target="_blank"><img src="http://cdn.f1000.com.s3.amazonaws.com/images/badges/badgef1000.gif" alt="Access the recommendation on F1000Prime" id="bg" /></a>
+			<p><em>Nature Genetics</em> 2019</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1038/s41588-019-0456-1" target="10.1038/s41588-019-0456-1">10.1038/s41588-019-0456-1</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1038/s41588-019-0456-1" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			<br>
+			
+			<fieldset>
+			<h5 class="citation_title">dcGO: database of domain-centric ontologies on functions, phenotypes, diseases and more</h5>
+			<p><em>Nucleic Acids Research</em> 2013</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1093/nar/gks1080" target="10.1093/nar/gks1080">10.1093/nar/gks1080</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1093/nar/gks1080" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			<br>
+			
+			<fieldset>
+			<h5 class="citation_title">SUPERFAMILY 1.75 including a domain-centric gene ontology method</h5>
+			<p><em>Nucleic Acids Research</em> 2011</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1093/nar/gkq1130" target="10.1093/nar/gkq1130">10.1093/nar/gkq1130</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1093/nar/gkq1130" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			<br>
+			
+			<fieldset>
+			<h5 class="citation_title">The dnet approach promotes emerging research on cancer patient survival</h5>
+			<p><em>Genome Medicine</em> 2014</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1186/s13073-014-0064-8" target="10.1186/s13073-014-0064-8">10.1186/s13073-014-0064-8</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1186/s13073-014-0064-8" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			<br>
+
+			</ul>
+		  </div>
+	   </div>
+	   
+	   <!-- panel 5 -->
+	   <div class="panel panel-primary" id="panel5">
+		  <div class="panel-heading">
+			 <h4 class="panel-title" id="bookmark5">
+				<a id="barplot-button" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+				   <i class="fa fa-plus-circle"></i><strong class ="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="Selected citations for the XGR software paper">&nbsp;&nbsp;SELECTED CITATIONS (LAST TWO YEARS)</strong></a>
+				</a>
+			 </h4>
+		  </div>
+		  <div id="collapse5" class="panel-collapse collapse">
+			<ul>
+
+			<fieldset>
+			<h5 class="citation_title">Brain Catalog: a comprehensive resource for the genetic landscape of brain-related traits</h5>
+			<p><em>Nucleic Acids Research</em> 2023</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1093/nar/gkac895" target="10.1093/nar/gkac895">10.1093/nar/gkac895</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1093/nar/gkac895" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+
+			<fieldset>
+			<h5 class="citation_title">Proteomic characterization of atopic dermatitis blood from infancy to adulthood</h5>
+			<p><em>Journal of the American Academy of Dermatology</em> 2023</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1016/j.jaad.2022.12.050" target="10.1016/j.jaad.2022.12.050">10.1016/j.jaad.2022.12.050</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1016/j.jaad.2022.12.050" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+
+			<fieldset>
+			<h5 class="citation_title">Transcriptional reprogramming from innate immune functions to a pro-thrombotic signature by monocytes in COVID-19</h5>
+			<p><em>Nature Communications</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1038/s41467-022-35638-y" target="10.1038/s41467-022-35638-y">10.1038/s41467-022-35638-y</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1038/s41467-022-35638-y" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+
+			<fieldset>
+			<h5 class="citation_title">IL7 genetic variation and toxicity to immune checkpoint blockade in patients with melanoma</h5>
+			<p><em>Nature Medicine</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1038/s41591-022-02095-5" target="10.1038/s41591-022-02095-5">10.1038/s41591-022-02095-5</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1038/s41591-022-02095-5" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+
+			<fieldset>
+			<h5 class="citation_title">An immune dysfunction score for stratification of patients with acute infection based on whole-blood gene expression</h5>
+			<p><em>Science Translational Medicine</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1126/scitranslmed.abq4433" target="10.1126/scitranslmed.abq4433">10.1126/scitranslmed.abq4433</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1126/scitranslmed.abq4433" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+
+			<fieldset>
+			<h5 class="citation_title">Immune dysfunction signatures predict outcomes and define checkpoint blockade–unresponsive microenvironments in acute myeloid leukemia</h5>
+			<p><em>Journal of Clinical Investigation</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1172/jci159579" target="10.1172/jci159579">10.1172/jci159579</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1172/jci159579" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">Lineage-specific rearrangement of chromatin loops and epigenomic features during adipocytes and osteoblasts commitment</h5>
+			<p><em>Cell Death & Differentiation</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1038/s41418-022-01035-7" target="10.1038/s41418-022-01035-7">10.1038/s41418-022-01035-7</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1038/s41418-022-01035-7" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">Natural Killer cells demonstrate distinct eQTL and transcriptome-wide disease associations, highlighting their role in autoimmunity</h5>
+			<p><em>Nature Communications</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1038/s41467-022-31626-4" target="10.1038/s41467-022-31626-4">10.1038/s41467-022-31626-4</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1038/s41467-022-31626-4" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">Genome-wide association analysis and replication in 810,625 individuals with varicose veins</h5>
+			<p><em>Nature Communications</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1038/s41467-022-30765-y" target="10.1038/s41467-022-30765-y">10.3390/ijms23158503</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1038/s41467-022-30765-y" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">PiER: web-based facilities tailored for genetic target prioritisation harnessing human disease genetics, functional genomics and protein interactions</h5>
+			<p><em>Nucleic Acids Research</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1093/nar/gkac379" target="10.1093/nar/gkac379">10.1093/nar/gkac379</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1093/nar/gkac379" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">Whole-genome sequencing reveals host factors underlying critical COVID-19</h5>
+			<p><em>Nature</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1038/s41586-022-04576-6" target="10.1038/s41586-022-04576-6">10.1038/s41586-022-04576-6</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1038/s41586-022-04576-6" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">Rapid synchronous type 1 IFN and virus-specific T cell responses characterize first wave non-severe SARS-CoV-2 infections</h5>
+			<p><em>Cell Reports Medicine</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1016/j.xcrm.2022.100557" target="10.1016/j.xcrm.2022.100557">10.1016/j.xcrm.2022.100557</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1016/j.xcrm.2022.100557" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">A blood atlas of COVID-19 defines hallmarks of disease severity and specificity</h5>
+			<p><em>Cell</em> 2022</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1016/j.cell.2022.01.012" target="10.1016/j.cell.2022.01.012">10.1016/j.cell.2022.01.012</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1016/j.cell.2022.01.012" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">GWAS of stool frequency provides insights into gastrointestinal motility and irritable bowel syndrome</h5>
+			<p><em>Cell Genomics</em> 2021</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1016/j.xgen.2021.100069" target="10.1016/j.xgen.2021.100069">10.1016/j.xgen.2021.100069</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1016/j.xgen.2021.100069" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">Determinants of anti-PD-1 response and resistance in clear cell renal cell carcinoma</h5>
+			<p><em>Cancer Cell</em> 2021</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1016/j.ccell.2021.10.001" target="10.1016/j.ccell.2021.10.001">10.1016/j.ccell.2021.10.001</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1016/j.ccell.2021.10.001" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">Human skeletal muscle CD90+ fibro-adipogenic progenitors are associated with muscle degeneration in type 2 diabetic patients</h5>
+			<p><em>Cell Metabolism</em> 2021</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1016/j.cmet.2021.10.001" target="10.1016/j.cmet.2021.10.001">10.1016/j.cmet.2021.10.001</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1016/j.cmet.2021.10.001" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">Immune checkpoint blockade sensitivity and progression-free survival associates with baseline CD8+ T cell clone size and cytotoxicity</h5>
+			<p><em>Science Immunology</em> 2021</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1126/sciimmunol.abj8825" target="10.1126/sciimmunol.abj8825">10.1126/sciimmunol.abj8825</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1126/sciimmunol.abj8825" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">echolocatoR: an automated end-to-end statistical and functional genomic fine-mapping pipeline</h5>
+			<p><em>Bioinformatics</em> 2021</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1093/bioinformatics/btab658" target="10.1093/bioinformatics/btab658">10.1093/bioinformatics/btab658</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1093/bioinformatics/btab658" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">High inflammation in hidradenitis suppurativa extends to perilesional skin and can be subdivided by lipocalin-2 expression</h5>
+			<p><em>Journal of Allergy and Clinical Immunology</em> 2021</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1016/j.jaci.2021.05.027" target="10.1016/j.jaci.2021.05.027">10.1016/j.jaci.2021.05.027</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1016/j.jaci.2021.05.027" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">In-Depth Analysis of the Hidradenitis Suppurativa Serum Proteome Identifies Distinct Inflammatory Subtypes</h5>
+			<p><em>Journal of Investigative Dermatology</em> 2021</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1016/j.jid.2021.02.742" target="10.1016/j.jid.2021.02.742">10.1016/j.jid.2021.02.742</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1016/j.jid.2021.02.742" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<fieldset>
+			<h5 class="citation_title">The molecular features of normal and atopic dermatitis skin in infants, children, adolescents, and adults</h5>
+			<p><em>Journal of Allergy and Clinical Immunology</em> 2021</p>
+			<strong>DOI:</strong> <a href="http://dx.doi.org/10.1016/j.jaci.2021.01.001" target="10.1016/j.jaci.2021.01.001">10.1016/j.jaci.2021.01.001</a>
+			<span class="__dimensions_badge_embed__" data-doi="10.1016/j.jaci.2021.01.001" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span>
+			</fieldset>
+			
+			<br>
+			</ul>
+		  </div>
+	   </div>
+	   
+	</div>
+
+</div>
+
+

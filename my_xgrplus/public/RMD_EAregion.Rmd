@@ -1,0 +1,141 @@
+---
+title: ""
+always_allow_html: yes
+output:
+  rmarkdown::html_document:
+        toc: false
+        toc_depth: 2
+        number_sections: false
+        theme: readable
+        highlight: default
+        toc_float: false
+        code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(results="asis")
+knitr::opts_chunk$set(cache=FALSE)
+knitr::opts_chunk$set(echo=FALSE)
+knitr::opts_chunk$set(warning=FALSE)
+knitr::opts_chunk$set(message=FALSE)
+knitr::opts_chunk$set(fig_cap="yes")
+```
+
+```{r, eval=FALSE, echo=FALSE}
+cd ~/Sites/XGR/XGRplus-site
+################################################
+R
+library(tidyverse)
+## rmarkdown::render + bookdown::html_document2
+rmarkdown::render("now.RMD_EAregion.Rmd", bookdown::html_document2(number_sections=F,theme=c("readable","united")[2], hightlight="default"), output_dir="/Users/hfang/Sites/XGR/XGRplus-site/app/examples")
+
+q('no')
+################################################
+```
+
+
+# {.tabset .tabset-fade}
+
+
+## **Input genomic region information**
+Completed on `r format(Sys.time(), "%a %b %d %X %Y")` (`r Sys.timezone()`), with the runtime of `r ls_rmd$runtime`.
+
+> **An interactive table** for user-input genomic regions (n=`r nrow(ls_rmd$data_input)`, being processed). The table includes three columns: 1st column `Input GR` for input genomic regions in the format of `chr:start-end` (the genome build `hg19`), 2nd column `Chromosome` for the chromosome, 3rd `Length` for the region length (bp).
+
+```{r}
+#input.file <- "~/Sites/XGR/XGRplus-site/my_xgrplus/public/app/examples/eg_Gene.txt"
+#data_input <- read_delim(input.file, delim="\t", col_names=F) %>% as_tibble() %>% set_names("Genes")
+
+data_input <- ls_rmd$data_input %>% mutate(chr=str_replace_all(dGR,':.*',''), start=str_replace_all(dGR,'.*:|-.*',''), end=str_replace_all(dGR,'.*-','')) %>% transmute(`Input GR`=dGR, Chromosome=chr, Length=as.numeric(end)-as.numeric(start) + 1)
+
+data_input %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
+```
+
+
+## **Output: linked genes**
+
+> **Linked Gene table** contains information on genes (n=`r ls_rmd$num_LG`, linked from input genomic regions), including the column `GScores` (ranged from 1 to 10) that quantifies the degree to which genes are likely modulated by input genomic regions. `Linked genes` are sorted by their linked gene scores and  are hyperlinked to [GeneCards](https://www.genecards.org) for further information. Please refer to **`Evidence table`** for details on the linking evidence.
+
+```{r}
+#filename <- str_c('/Users/hfang/Sites/XGR/PiER-site/app/examples/', 'eV2CG.xlsx')
+filename <- ls_rmd$xlsx_LG
+
+message(sprintf("'%s' '%s' (%s) ...", filename, getwd(), as.character(Sys.time())), appendLF=TRUE)
+
+tb <- openxlsx::read.xlsx(filename) %>% as_tibble() %>% mutate(`Linked genes`=sprintf("<a href='https://www.genecards.org/cgi-bin/carddisp.pl?gene=%s' target='%s''>%s</a>", Gene, Gene, Gene)) %>% transmute(`Linked genes`, GScores=signif(GScore,digits=4), Description)
+
+tb %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
+```
+
+> **Evidence table** displays information about the genomic regions (listed under the column `GR`) that overlap the input genomic regions (listed under the column `Input GR`). The overlapped regions are used to define linked genes (listed under the column `Linked genes`) based on the evidence provided (see the column `Evidence`). The column `Evidence` indicates the datasets used, such as  `Proximity` for genomic regions in proximity, the prefix `PCHiC_` for promoter capture Hi-C datasets, and the prefix `ABC_` for enhancer-gene map (ABC) datasets.
+
+```{r}
+#filename <- str_c('/Users/hfang/Sites/XGR/PiER-site/app/examples/', 'eV2CG_evidence.xlsx')
+filename <- ls_rmd$xlsx_LG_evidence
+
+message(sprintf("'%s' '%s' (%s) ...", filename, getwd(), as.character(Sys.time())), appendLF=TRUE)
+
+tb <- openxlsx::read.xlsx(filename) %>% as_tibble() %>% transmute(`Input GR`=dGR, GR, `Linked genes`=Gene, Evidence)
+
+tb %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
+```
+
+
+## **Output: enriched terms**
+
+> **An interactive table** that displays enriched ontology terms based on `r ls_rmd$num_LG` linked genes. Each enriched term (the columns `Ontology`, `Term ID` and `Term Name`) has the enrichment z-score (`Z-score`), the enrichment significance level (`FDR`), the number (`Num`) and list (`Members`) of member genes that overlap with linked genes.
+
+```{r}
+#filename <- str_c('~/Sites/XGR/XGRplus-site/app/examples/', 'dcGO_enrichment.xlsx')
+filename <- ls_rmd$xlsx_enrichment
+
+message(sprintf("'%s' '%s' (%s) ...", filename, getwd(), as.character(Sys.time())), appendLF=TRUE)
+
+#tb <- openxlsx::read.xlsx(filename) %>% as_tibble() %>% transmute(Ontology=namespace, `Term ID`=str_c("<a href='http://127.0.0.1:3010/dcGO/", namespace, "/", name, "' target='_blank'>&nbsp;", name, "</a>"), `Term Name`=id, `Z-score`=zscore, FDR=signif(adjp,digits=4), Num=nO, Members=overlap) %>% arrange(FDR)
+
+tb <- openxlsx::read.xlsx(filename) %>% as_tibble() %>% transmute(Ontology=namespace, `Term ID`=id, `Term Name`=name, `Z-score`=zscore, FDR=signif(adjp,digits=4), Num=nO, Members=overlap) %>% arrange(FDR)
+
+tb %>% DT::datatable(options=list(pageLength=1,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
+```
+
+
+## **Output: forest plot**
+
+> **A forest plot** of enriched ontology terms identified using Fisher's exact test. An editable PDF file is also available for download.
+
+```{r}
+#hlink_pdf <- oAuxEmbed("~Sites/XGR/XGRplus-site/app/examples/EAregion_enrichment_forestplot.pdf", link.text="Download PDF")
+hlink_pdf <- oAuxEmbed(ls_rmd$pdf_forestplot, link.text="Download PDF")
+```
+<div class="text-right">`r hlink_pdf`</div>
+
+
+```{r forest, fig.cap="Forest plot for enriched ontology terms (the top 10).", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
+library(png)
+library(grid)
+#filename <- str_c('"~Sites/XGR/XGRplus-site/app/examples/EAregion_enrichment_forestplot.png')
+filename <- ls_rmd$png_forestplot
+img <- readPNG(filename)
+grid.raster(img)
+```
+
+
+## **Output: dotplot**
+
+> **A dotplot** of enriched ontology terms identified using Fisher's exact test. An editable PDF file is also available for download.
+
+```{r}
+#hlink_pdf <- oAuxEmbed("~Sites/XGR/XGRplus-site/app/examples/EAregion_enrichment_dotplot.pdf", link.text="Download PDF")
+hlink_pdf <- oAuxEmbed(ls_rmd$pdf_dotplot, link.text="Download PDF")
+```
+<div class="text-right">`r hlink_pdf`</div>
+
+
+```{r dotplot, fig.cap="A dotplot of enriched ontology terms. The dots colored in dark red represent the terms with FDR < 0.05, indicating statistical significance. The top 5 significant terms are labelled for easier interpretation.", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
+library(png)
+library(grid)
+#filename <- str_c('~Sites/XGR/XGRplus-site/app/examples/EAregion_enrichment_dotplot.png')
+filename <- ls_rmd$png_dotplot
+img <- readPNG(filename)
+grid.raster(img)
+```

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Section 11 SUBNETWORK ANALYSER (GENES) | XGR+ User Manual</title>
+  <meta name="description" content="Section 11 SUBNETWORK ANALYSER (GENES) | XGR+ User Manual" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Section 11 SUBNETWORK ANALYSER (GENES) | XGR+ User Manual" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Section 11 SUBNETWORK ANALYSER (GENES) | XGR+ User Manual" />
+  
+  
+  
+
+
+
+<meta name="date" content="2023-02-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="enrichment-analyser-domains.html"/>
+<link rel="next" href="subnetwork-analyser-snps.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./index.html">XGR+ User Manual</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> OVERVIEW</a></li>
+<li class="chapter" data-level="2" data-path="compatibility-runtime.html"><a href="compatibility-runtime.html"><i class="fa fa-check"></i><b>2</b> COMPATIBILITY &amp; RUNTIME</a></li>
+<li class="chapter" data-level="3" data-path="landing-frontpage.html"><a href="landing-frontpage.html"><i class="fa fa-check"></i><b>3</b> LANDING FRONTPAGE</a></li>
+<li class="chapter" data-level="4" data-path="mobile-first-webserver.html"><a href="mobile-first-webserver.html"><i class="fa fa-check"></i><b>4</b> MOBILE-FIRST WEBSERVER</a></li>
+<li class="chapter" data-level="5" data-path="help-buttons.html"><a href="help-buttons.html"><i class="fa fa-check"></i><b>5</b> HELP BUTTONS</a></li>
+<li class="chapter" data-level="6" data-path="error-messages.html"><a href="error-messages.html"><i class="fa fa-check"></i><b>6</b> ERROR MESSAGES</a></li>
+<li class="chapter" data-level="7" data-path="enrichment-analyser-genes.html"><a href="enrichment-analyser-genes.html"><i class="fa fa-check"></i><b>7</b> ENRICHMENT ANALYSER (GENES)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="enrichment-analyser-genes.html"><a href="enrichment-analyser-genes.html#input-interface"><i class="fa fa-check"></i><b>7.1</b> Input Interface</a></li>
+<li class="chapter" data-level="7.2" data-path="enrichment-analyser-genes.html"><a href="enrichment-analyser-genes.html#enrichment-results"><i class="fa fa-check"></i><b>7.2</b> Enrichment Results</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="enrichment-analyser-snps.html"><a href="enrichment-analyser-snps.html"><i class="fa fa-check"></i><b>8</b> ENRICHMENT ANALYSER (SNPS)</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="enrichment-analyser-snps.html"><a href="enrichment-analyser-snps.html#input-interface-1"><i class="fa fa-check"></i><b>8.1</b> Input Interface</a></li>
+<li class="chapter" data-level="8.2" data-path="enrichment-analyser-snps.html"><a href="enrichment-analyser-snps.html#enrichment-results-1"><i class="fa fa-check"></i><b>8.2</b> Enrichment Results</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="enrichment-analyser-regions.html"><a href="enrichment-analyser-regions.html"><i class="fa fa-check"></i><b>9</b> ENRICHMENT ANALYSER (REGIONS)</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="enrichment-analyser-regions.html"><a href="enrichment-analyser-regions.html#input-interface-2"><i class="fa fa-check"></i><b>9.1</b> Input Interface</a></li>
+<li class="chapter" data-level="9.2" data-path="enrichment-analyser-regions.html"><a href="enrichment-analyser-regions.html#enrichment-results-2"><i class="fa fa-check"></i><b>9.2</b> Enrichment Results</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="enrichment-analyser-domains.html"><a href="enrichment-analyser-domains.html"><i class="fa fa-check"></i><b>10</b> ENRICHMENT ANALYSER (DOMAINS)</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="enrichment-analyser-domains.html"><a href="enrichment-analyser-domains.html#input-interface-3"><i class="fa fa-check"></i><b>10.1</b> Input Interface</a></li>
+<li class="chapter" data-level="10.2" data-path="enrichment-analyser-domains.html"><a href="enrichment-analyser-domains.html#enrichment-results-3"><i class="fa fa-check"></i><b>10.2</b> Enrichment Results</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="subnetwork-analyser-genes.html"><a href="subnetwork-analyser-genes.html"><i class="fa fa-check"></i><b>11</b> SUBNETWORK ANALYSER (GENES)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="subnetwork-analyser-genes.html"><a href="subnetwork-analyser-genes.html#input-interface-4"><i class="fa fa-check"></i><b>11.1</b> Input Interface</a></li>
+<li class="chapter" data-level="11.2" data-path="subnetwork-analyser-genes.html"><a href="subnetwork-analyser-genes.html#subnetwork-results"><i class="fa fa-check"></i><b>11.2</b> Subnetwork Results</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="subnetwork-analyser-snps.html"><a href="subnetwork-analyser-snps.html"><i class="fa fa-check"></i><b>12</b> SUBNETWORK ANALYSER (SNPS)</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="subnetwork-analyser-snps.html"><a href="subnetwork-analyser-snps.html#input-interface-5"><i class="fa fa-check"></i><b>12.1</b> Input Interface</a></li>
+<li class="chapter" data-level="12.2" data-path="subnetwork-analyser-snps.html"><a href="subnetwork-analyser-snps.html#subnetwork-results-1"><i class="fa fa-check"></i><b>12.2</b> Subnetwork Results</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="subnetwork-analyser-regions.html"><a href="subnetwork-analyser-regions.html"><i class="fa fa-check"></i><b>13</b> SUBNETWORK ANALYSER (REGIONS)</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="subnetwork-analyser-regions.html"><a href="subnetwork-analyser-regions.html#input-interface-6"><i class="fa fa-check"></i><b>13.1</b> Input Interface</a></li>
+<li class="chapter" data-level="13.2" data-path="subnetwork-analyser-regions.html"><a href="subnetwork-analyser-regions.html#subnetwork-results-2"><i class="fa fa-check"></i><b>13.2</b> Subnetwork Results</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="/XGRplus" target="blank">XGR+</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">XGR+ User Manual</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="subnetwork-analyser-genes" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Section 11</span> SUBNETWORK ANALYSER (GENES)<a href="subnetwork-analyser-genes.html#subnetwork-analyser-genes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="input-interface-4" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Input Interface<a href="subnetwork-analyser-genes.html#input-interface-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<blockquote>
+<p><strong>Input</strong></p>
+</blockquote>
+<ul>
+<li><p><code>Step 1</code>: User-input gene list, with 1st column for gene symbols and 2nd column for the significance info (p-values between 0 and 1).</p></li>
+<li><p><code>Step 2</code> and <code>Step 3</code>: The subnetwork of highly-scored genes is to be identified from which gene network (<code>Step 2</code>), with the desired number of genes in the subnetwork (<code>Step 3</code>). The significance (p-value) of observing the identified subnetwork by chance can be also estimated by a degree-preserving node permutation test.</p></li>
+<li><p><code>More Controls</code>: More parameters to fine-tune steps described above.</p></li>
+</ul>
+<blockquote>
+<p><strong>Output</strong></p>
+</blockquote>
+<ul>
+<li><a href="/app/examples/_tmp_RMD_SAgene.html">Example Output</a> includes interactive tables nd and high-quality figures for subnetwork results. A summary of input data and the runtime (computed on the server side) is also returned for the reference.</li>
+</ul>
+<hr>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:SAgene-interface"></span>
+<img src="index_files/figure-html/SAgene-interface-1.png" alt="The interface of subnetwork analysis. The `Show/Hide Info` toggle button contains the help information on how to use , including input, output and other information." width="90%" />
+<p class="caption">
+FIGURE 11.1: The interface of subnetwork analysis. The <code>Show/Hide Info</code> toggle button contains the help information on how to use , including input, output and other information.
+</p>
+</div>
+</div>
+<div id="subnetwork-results" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Subnetwork Results<a href="subnetwork-analyser-genes.html#subnetwork-results" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Under the tab <code>Input gene-level summary data</code>, <code>An interactive table</code> lists user-input summary data.</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:SAgene-results-input"></span>
+<img src="index_files/figure-html/SAgene-results-input-1.png" alt="The user-input summary under the tab `Input gene-level summary data` returned for the exploration." width="95%" />
+<p class="caption">
+FIGURE 11.2: The user-input summary under the tab <code>Input gene-level summary data</code> returned for the exploration.
+</p>
+</div>
+<br>
+<hr>
+<ul>
+<li>Under the tab <code>Output: subnetwork</code>, <code>A network visualisation</code> of the subnetwork and <code>An interactive table</code> for the subnetwork genes.</li>
+</ul>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:SAgene-results-output"></span>
+<img src="index_files/figure-html/SAgene-results-output-1.png" alt="The subnetwork, with genes/nodes color-coded by input gene significance information under the tab `Output: subnetwork`." width="95%" />
+<p class="caption">
+FIGURE 11.3: The subnetwork, with genes/nodes color-coded by input gene significance information under the tab <code>Output: subnetwork</code>.
+</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="enrichment-analyser-domains.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="subnetwork-analyser-snps.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "serif",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

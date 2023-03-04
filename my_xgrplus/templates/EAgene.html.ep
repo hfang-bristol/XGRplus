@@ -1,0 +1,392 @@
+% layout 'default', tab => '/XGRplus/EAgene';
+% title 'EAgene - performing enrichment analysis for genes using ontologies';
+
+% content_for css => begin
+	
+	<link type="text/css" href="https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css" rel="stylesheet">
+	<style>
+		td.highlight {
+			font-weight: bold;
+			color: blue;
+		}
+	</style>
+% end
+% content_for scripts => begin
+	
+	<script type="text/javascript">
+	
+		$(document).ready(function(){
+			
+			// For results container
+			var jfile = '<%= $ajax_txt_file %>';
+			var post_flag = '<%= $post_flag %>';
+			if(jfile != ''){
+				// show results
+				$("#results-container").addClass("in");
+				// hide form
+				$("#form-container").removeClass("in");
+			}else{
+				// error only occurs after the submit
+				if(post_flag==1){
+					// show error
+					$("#error-container").addClass("in");
+				}
+			}
+
+		});
+	</script>
+	
+% end
+
+
+<%
+my $ajax_txt_file='';
+my $post_flag='';
+
+my $info='
+<h5>Input</h5>
+<ul>
+<li>(<b>Step 1</b>): Input a list of genes, for example, <a href="/app/examples/eg_EAgene.txt" download="/app/examples/eg_EAgene.txt" target="/app/examples/eg_EAgene.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspExample Input</a>. Please ensure that the gene identifiers provided are official symbols; otherwise, the error messages will be prompted.
+<li>(<b>Step 2</b>): Choose from a list of supported ontologies.
+<li>(<b>More Controls</b>): Use additional parameters to fine-tune the steps described above.
+</ul>
+
+<h5>Output</h5>
+<ul>
+<li>(<a href="/app/examples/_tmp_RMD_EAgene.html" download="/app/examples/_tmp_RMD_EAgene.html" target="/app/examples/_tmp_RMD_EAgene.html"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspExample Output</a>) includes interactive tables and high-quality figures presenting the enrichment results. A summary of the input data and the runtime (computed on the server side) is also returned for reference.
+</ul>
+
+<h5>Other information</h5>
+<ul>
+<li>The text box at <b>Step 1</b> is pre-filled with the provided example when the interface page is first-visited or refreshed.
+<li>Before clicking the <b>SUBMIT</b> button, please replace the example with your own data <b>EVERY TIME</b>.
+<li>For bug reports and inquiries, please send an email <a href="mailto:fh12355@rjh.com.cn"><i class="fa fa-envelope-o"></i></a> to get your feedback (also we want to learn about strengths and weaknesses).
+</ul>
+';
+
+my $default_obo='GOBP';
+my $i=0;
+my $obo_order;
+$obo_order->{"GOBP"}=$i++;
+$obo_order->{"GOMF"}=$i++;
+$obo_order->{"GOCC"}=$i++;
+$obo_order->{"KEGG"}=$i++;
+$obo_order->{"REACTOME"}=$i++;
+$obo_order->{"MsigdbC2CPall"}=$i++;
+$obo_order->{"MitoPathway"}=$i++;
+$obo_order->{"EnrichrConsensusTFs"}=$i++;
+$obo_order->{"EnrichrTRRUST"}=$i++;
+$obo_order->{"MDODD"}=$i++;
+$obo_order->{"DO"}=$i++;
+$obo_order->{"EF"}=$i++;
+$obo_order->{"HPPA"}=$i++;
+$obo_order->{"MP"}=$i++;
+$obo_order->{"DGIdb"}=$i++;
+$obo_order->{"Bucket"}=$i++;
+$obo_order->{"ChEMBL"}=$i++;
+$obo_order->{"SF"}=$i++;
+$obo_order->{"FA"}=$i++;
+$obo_order->{"Pfam"}=$i++;
+$obo_order->{"IPR"}=$i++;
+$obo_order->{"IDPO"}=$i++;
+$obo_order->{"MsigdbH"}=$i++;
+$obo_order->{"PSG"}=$i++;
+
+my $obos={
+    GOBP => "Gene Ontology Biological Process (GOBP)",
+    GOMF => "Gene Ontology Molecular Function (GOMF)",
+    GOCC => "Gene Ontology Cellular Component (GOCC)",
+    
+    KEGG => "KEGG pathways (KEGG)",
+    REACTOME => "REACTOME pathways (REACTOME)",
+	MsigdbC2CPall => "MSIGDB pathways (MSIGDBpath)",
+	MitoPathway => "MitoPathway pathways (MITOPATH)",
+    
+	EnrichrConsensusTFs => "ENRICHR Consensus TFs (CTF)",
+	EnrichrTRRUST => "ENRICHR TRRUST TFs (TRRUST)",
+    
+    MDODD => "Mondo Disease Ontology (MONDO)",
+    DO => "Disease Ontology (DO)",
+    EF => "Experimental Factor Ontology (EFO)",
+    
+    HPPA => "Human Phenotype Ontology (HPO)",
+    MP => "Mammalian Phenotype Ontology (MPO)",
+    
+    DGIdb => "DGIdb druggable categories (DGIdb)",
+    Bucket => "Target tractability buckets (Bucket)",
+    ChEMBL => "ChEMBL drug indications buckets (ChEMBL)",
+
+    SF => "SCOP superfamily domains (SCOPsf)",
+    FA => "SCOP family domains (SCOPfa)",
+    Pfam => "Pfam domains (Pfam)",
+    IPR => "InterPro domains (InterPro)",
+    IDPO => "Intrinsically Disordered Proteins Ontology (IDPO)",
+    
+    MsigdbH => "MSIGDB hallmarks (MSIGDBh)",
+    PSG => "Phylostratigraphy (PSG)",
+    
+};
+
+my $example_genes='
+IL27
+SULT1A1
+RUNX3
+NPAS3
+MTCO1P2
+ICOSLG
+MIR4425
+MIR6731
+LTBR
+TNFRSF1A
+ERAP1
+ERAP2
+MALRD1
+TYK2
+PTGER4
+LINC00603
+ZMIZ1
+ANTXR2
+GPR25
+KIF21B
+TRI-AAT7-2
+TBKBP1
+KPNB1
+RPL31P10
+NOS2
+IL12B
+TBX21
+IL23R
+NKX2-3
+IL1R1
+IL1R2
+ANO6
+B3GNT2
+BACH2
+FCGR2A
+CSF2RB
+GPR65
+SH2B3
+GPR35
+UBE2E3
+NPEPPS
+RPSAP64
+ETS2
+RPL23AP12
+MICA
+IL6R
+RPL13AP14
+EDIL3
+LOC101927156
+PTCHD3P3
+CEP57L1
+ADRA1B
+RNU4ATAC2P
+TMEM17
+MIR5192
+PSMG1
+CARD9
+';
+%>
+
+<div class="container">
+	<div class="jumbotron">
+	
+		<div class="text-right">
+			% if(1){
+				<a href="javascript:newWin('/app/examples/_tmp_RMD_EAgene.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/enrichment-analyser-genes---eag.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+			% }else{
+				<a href="javascript:newWin('/app/examples/_tmp_RMD_EAgene.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/index.html#enrichment-analyser-genes', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+			% }
+		</div>
+	
+		<div class="text-center">
+			<h3><a href="/XGRplus/EAgene"><i class="fa fa-play-circle fa-lg"></i>&nbsp;&nbsp;ENRICHMENT ANALYSER (GENES) - EAG</a>&nbsp;:&nbsp;Identifying enriched ontology terms from input gene list</h3>
+		</div>
+	</div>
+</div>
+
+<!-- error text -->
+<div id="error-container" class="container collapse">
+	<div id="errorText" style="display: block">
+		<p class="text_justify">
+		
+<h5>Error Messages: your input at Step 1</h5>
+<ul>
+<li>Please check your input genes (<b>official symbols</b>); otherwise, they will be disregarded.
+<li>Before clicking the <strong>SUBMIT</strong> button, please paste your own data at Step 1 <strong>EVERY TIME</strong>. Note that the text box at Step 1 is pre-filled with the provided example when the interface page is first-visited or refreshed.
+<li>If the above issues are resolved, and you still receive the error messages, it simply means that no enrichment has been returned.
+</ul>
+
+		</p>
+	</div>
+</div>
+
+<hr>
+	
+<!-- progress bar -->
+<div id="progress-container" class="container collapse">
+	<div class="progress progress-striped active">
+		<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+			<i class="fa fa-cog fa-spin fa-lg"></i>&nbsp;&nbsp;EAG analysing your input gene list ... 
+		</div>
+	</div>
+</div>
+
+
+<!-- form -->
+<div id="form-container" class="container collapse in">
+	
+	<a id="displayText" href="javascript:toggle();" class="btn btn-primary btn-sm active">Show Info</a>
+	
+	<div id="toggleText" style="display: none">
+		<p class="text_justify">
+			<%== $info %>
+		</p>
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+			
+			<form id="submit-form" class="form-horizontal" enctype="multipart/form-data" method="POST">
+				
+				<p><strong>Step 1</strong>: Paste your genes (official symbols).</p>
+				
+				<div class="form-group">
+					<div class="col-sm-12">
+						<textarea id="genelist" name="genelist" class="form-control table" rows="4" required="required"><%== $example_genes %></textarea>
+					</div>
+				</div>
+
+				<p><strong>Step 2</strong>: Choose which ontology to use.</p>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="obo">Ontology:</label>
+					<div class="col-sm-7">
+						<select name="obo" id="obo" class="form-control">
+							% foreach my $obo (sort{$obo_order->{$a} <=> $obo_order->{$b}} keys %$obo_order) {
+							% my $selected = ($obo eq $default_obo)? ' SELECTED':'';
+							% if ($obo eq 'GOBP'){
+								<OPTGROUP LABEL="Functions">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'KEGG'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Pathways">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'EnrichrConsensusTFs'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Regulators">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>	
+							% }elsif ($obo eq 'MDODD'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Diseases">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'HPPA'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Phenotypes">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'DGIdb'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Drugs">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'SF'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Domains & Disorders">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'MsigdbH'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Hallmarks & Evolution">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'PSG'){
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+								</OPTGROUP>
+							% }else{
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }
+							%}
+						</select>
+					</div>
+				</div>
+				
+				<!-- Advanced begin ################### -->
+				<div class="form-group" id="advanced-toggle">
+					<div class="col-md-12">
+						 
+						<button type="button" class="btn btn-default btn-block" style="text-align:left" data-toggle="collapse" data-target="#more-options">
+							<i class="fa fa-chevron-circle-down fa-lg"></i> <strong class="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="Specify additional parameters for more controls">More Controls</strong></a>
+						</button>
+						
+						<div id="more-options" class="row collapse">
+							<div class="col-md-12" style="border: 1px solid #fff">
+
+								<!-- min overlap -->
+								<i class="fa fa-hand-o-right fa-lg"></i>&nbsp;Minimum number of overlapped genes.
+								<div class="form-group">
+									<label class="control-label col-sm-5">Number of genes:</label>
+									<div class="col-sm-7">
+										<select name="min_overlap" class="form-control">
+											<option value="3" selected>3</a>
+											<option value="5">5</a>
+											<option value="10">10</a>
+										</select>
+									</div>			
+								</div>
+
+								<!-- FDR cutoff -->
+								<i class="fa fa-hand-o-right fa-lg"></i>&nbsp;Significance of terms.
+								<div class="form-group">
+									<label class="control-label col-sm-5">False Discovery Rate (FDR):</label>
+									<div class="col-sm-7">
+										<select name="FDR_cutoff" class="form-control">
+											<option value="5e-2">5e-2</a>
+											<option value="1e-2">1e-2</a>
+											<option value="NULL" selected>None</a>
+										</select>
+									</div>									
+								</div>
+								
+							</div>
+						</div>
+
+						
+					</div>
+				</div>
+				<!-- Advanced end ################### -->
+				
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-12 control-label" for="submit"></label>
+					<div class="col-md-12">
+						<input class="btn btn-primary btn-block active" id="submit" type="submit" value="SUBMIT" />
+					</div>
+				</div>
+				
+			</form>
+			
+		</div>
+		
+	</div>
+	
+</div>
+
+
+<div id="results-container" class="container collapse">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h3 class="my-fontfamily">Enrichment Results&nbsp;<a class="btn btn-primary btn-sm active" role="button" href="javascript:newWin('<%= $ajax_rmd_html_file %>', 'ZOOM', '909', '1169')"><i class="fa fa-search-plus fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;ZOOM</a>&nbsp;<a class="btn btn-primary btn-sm active" role="button" href="<%= $ajax_rmd_html_file %>" download="<%= $ajax_rmd_html_file %>" target="<%= $ajax_rmd_html_file %>"><i class="fa fa-cloud-download fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;DOWNLOAD .html</a></h3>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="form-group">
+			<div class="col-lg-12">
+				<div class="embed-responsive embed-responsive-4by3">
+					<iframe class="embed-responsive-item" src="<%= $ajax_rmd_html_file %>"></iframe>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+  	
+</div>
+

@@ -1,0 +1,783 @@
+% layout 'default', tab => '/XGRplus/EAsnp';
+% title 'EAsnp - SNPs linked to genes for enrichment analysis';
+
+% content_for css => begin
+	
+	<link type="text/css" href="https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css" rel="stylesheet">
+	<style>
+		td.highlight {
+			font-weight: bold;
+			color: blue;
+		}
+	</style>
+% end
+% content_for scripts => begin
+	
+	<script type="text/javascript">
+	
+		$(document).ready(function(){
+			
+			// For results container
+			var jfile = '<%= $ajax_txt_file %>';
+			var post_flag = '<%= $post_flag %>';
+			if(jfile != ''){
+				// show results
+				$("#results-container").addClass("in");
+				// hide form
+				$("#form-container").removeClass("in");
+			}else{
+				// error only occurs after the submit
+				if(post_flag==1){
+					// show error
+					$("#error-container").addClass("in");
+				}
+			}
+
+		});
+	</script>
+	
+% end
+
+
+<%
+my $ajax_txt_file='';
+my $post_flag='';
+
+my $info='
+<h5>Input</h5>
+<ul>
+<li>(<b>Step 1</b>): Input a list of SNPs, with 1st column for dbSNP rsIDs and 2nd column for their corresponding significance information (p-values between 0 and 1); for example, <a href="/app/examples/eg_EAsnp.txt" download="/app/examples/eg_EAsnp.txt" target="/app/examples/eg_EAsnp.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspExample Input</a>. The error messages will be prompted if the input is invalid.
+<li>(<b>Step 2</b>): Specify the population to include SNPs in linkage disequilibrium. By default, input SNPs with p-value < 5e−8 are considered, and additional SNPs in linkage disequilibrium (R2 >= 0.8) can be included according to the population specified.
+<li>(<b>Step 3</b>): Use genomic proximity, quantitative trait locus mapping, or promoter capture Hi-C to identify linked genes.
+<li>(<b>Step 4</b>): Choose from a list of supported ontologies.
+<li>(<b>More Controls</b>): Use additional parameters to fine-tune the steps described above.
+</ul>
+
+<h5>Output</h5>
+<ul>
+<li>(<a href="/app/examples/_tmp_RMD_EAsnp.html" download="/app/examples/_tmp_RMD_EAsnp.html" target="/app/examples/_tmp_RMD_EAsnp.html"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspExample Output</a>) includes interactive tables and high-quality figures for enrichment results. A summary of the input data and the runtime (computed on the server side) is also returned for reference.
+</ul>
+
+<h5>Other information</h5>
+<ul>
+<li>The text box at <b>Step 1</b> is pre-filled with the provided example each time when the interface page is first-visited or refreshed.
+<li>Before clicking the <b>SUBMIT</b> button, please replace the example with your own data <b>EVERY TIME</b>.
+<li>For bug reports and enquires, please send an email <a href="mailto:fh12355@rjh.com.cn"><i class="fa fa-envelope-o"></i></a> to get your feedback (also we want to learn about strengths and weaknesses). 
+</ul>
+';
+
+my $default_crosslink='proximity_20000';
+my $i=0;
+my $crosslink_order;
+$crosslink_order->{'proximity_5000'}=$i++;
+$crosslink_order->{'proximity_20000'}=$i++;
+$crosslink_order->{'proximity_50000'}=$i++;
+$crosslink_order->{'proximity_500000'}=$i++;
+$crosslink_order->{'proximity_1000000'}=$i++;
+
+$crosslink_order->{'PCHiC_PMID27863249_Activated_total_CD4_T_cells'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Endothelial_precursors'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Erythroblasts'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Fetal_thymus'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Macrophages_M0'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Macrophages_M1'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Macrophages_M2'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Megakaryocytes'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Monocytes'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Naive_B_cells'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Naive_CD4_T_cells'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Naive_CD8_T_cells'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Neutrophils'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Nonactivated_total_CD4_T_cells'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Total_B_cells'}=$i++;
+$crosslink_order->{'PCHiC_PMID27863249_Total_CD8_T_cells'}=$i++;
+
+$crosslink_order->{'PCHiC_PMID31501517_DorsolateralPrefrontalCortex'}=$i++;
+$crosslink_order->{'PCHiC_PMID31501517_H1NeuralProgenitorCell'}=$i++;
+$crosslink_order->{'PCHiC_PMID31501517_Hippocampus'}=$i++;
+
+$crosslink_order->{'PCHiC_PMID31367015_astrocytes'}=$i++;
+$crosslink_order->{'PCHiC_PMID31367015_excitatory'}=$i++;
+$crosslink_order->{'PCHiC_PMID31367015_hippocampal'}=$i++;
+$crosslink_order->{'PCHiC_PMID31367015_motor'}=$i++;
+
+$crosslink_order->{'PCHiC_PMID25938943_CD34'}=$i++;
+$crosslink_order->{'PCHiC_PMID25938943_GM12878'}=$i++;
+
+$crosslink_order->{'pQTL_Plasma'}=$i++;
+$crosslink_order->{'eQTL_eQTLGen'}=$i++;
+
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_Bcell_naive'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_CD4_Tcell_naive'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_CD4_Tcell_antiCD3CD28'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_CD8_Tcell_naive'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_CD8_Tcell_antiCD3CD28'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_NKcell_naive'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_Tfh_memory'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_Th117_memory'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_Th17_memory'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_Th1_memory'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_Th2_memory'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_Treg_memory'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_Treg_naive'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_monocyte_naive'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_Schmiedel_2018_monocyte_CD16_naive'}=$i++;
+
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Amygdala'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Anterior_cingulate_cortex_BA24'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Caudate_basal_ganglia'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Cerebellar_Hemisphere'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Cerebellum'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Cortex'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Frontal_Cortex_BA9'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Hippocampus'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Hypothalamus'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Nucleus_accumbens_basal_ganglia'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Putamen_basal_ganglia'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Spinal_cord_cervical_c1'}=$i++;
+$crosslink_order->{'eQTL_eQTLCatalogue_GTEx_V8_Brain_Substantia_nigra'}=$i++;
+
+my $crosslinks={
+	proximity_5000 => "Within 5Kb",
+	proximity_20000 => "Within 20Kb",
+	proximity_50000 => "Within 50Kb",
+	proximity_500000 => "Within 500Kb",
+	proximity_1000000 => "Within 1Mb",
+	
+	PCHiC_PMID27863249_Activated_total_CD4_T_cells => "Activated total CD4+ T cells (PMID27863249)",
+	PCHiC_PMID27863249_Endothelial_precursors => "Endothelial precursors (PMID27863249)",
+	PCHiC_PMID27863249_Erythroblasts => "Erythroblasts (PMID27863249)",
+	PCHiC_PMID27863249_Fetal_thymus => "Fetal thymus (PMID27863249)",
+    PCHiC_PMID27863249_Macrophages_M0 => "Macrophages M0 (PMID27863249)",
+    PCHiC_PMID27863249_Macrophages_M1 => "Macrophages M1 (PMID27863249)",
+    PCHiC_PMID27863249_Macrophages_M2 => "Macrophages M2 (PMID27863249)",
+    PCHiC_PMID27863249_Megakaryocytes => "Megakaryocytes (PMID27863249)",
+    PCHiC_PMID27863249_Monocytes => "Monocytes (PMID27863249)",
+	PCHiC_PMID27863249_Naive_B_cells => "Naive B cells (PMID27863249)",
+	PCHiC_PMID27863249_Naive_CD4_T_cells => "Naive CD4+ T cells (PMID27863249)",
+	PCHiC_PMID27863249_Naive_CD8_T_cells => "Naive CD8+ T cells (PMID27863249)",  
+    PCHiC_PMID27863249_Neutrophils => "Neutrophils (PMID27863249)",
+    PCHiC_PMID27863249_Nonactivated_total_CD4_T_cells => "Non-activated total CD4+ T cells (PMID27863249)",
+    PCHiC_PMID27863249_Total_B_cells => "Total B cells (PMID27863249)",
+    PCHiC_PMID27863249_Total_CD8_T_cells => "Total CD8+ T cells (PMID27863249)",
+    
+    PCHiC_PMID31501517_DorsolateralPrefrontalCortex => "Dorsolateral prefrontal cortex (PMID31501517)",
+    PCHiC_PMID31501517_H1NeuralProgenitorCell => "H1 neural progenitor cells (PMID31501517)",
+    PCHiC_PMID31501517_Hippocampus => "Hippocampus (PMID31501517)",
+    
+    PCHiC_PMID31367015_astrocytes => "Astrocytes (PMID31367015)",
+    PCHiC_PMID31367015_excitatory => "Excitatory (PMID31367015)",
+    PCHiC_PMID31367015_hippocampal => "Hippocampa (PMID31367015)",
+    PCHiC_PMID31367015_motor => "Motor (PMID31367015)",
+    
+    PCHiC_PMID25938943_CD34 => "CD34+ cells (PMID25938943)",
+    PCHiC_PMID25938943_GM12878 => "GM12878 cells (PMID25938943)",
+
+    pQTL_Plasma => "pQTL (plasma; PMID29875488)",
+    eQTL_eQTLGen => "eQTL (blood from eQTLGen; PMID34475573)",
+    
+    eQTL_eQTLCatalogue_Schmiedel_2018_Bcell_naive => "eQTL (Naive B cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_CD4_Tcell_naive => "eQTL (Naive CD4+ T cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_CD4_Tcell_antiCD3CD28 => "eQTL (Activated naive CD4+ T cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_CD8_Tcell_naive => "eQTL (Naive CD8+ T cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_CD8_Tcell_antiCD3CD28 => "eQTL (Activated naive CD8+ T cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_NKcell_naive => "eQTL (Naive NK cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_Tfh_memory => "eQTL (TFH cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_Th117_memory => "eQTL (TH1/17 cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_Th17_memory => "eQTL (TH17 cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_Th1_memory => "eQTL (TH1 cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_Th2_memory => "eQTL (TH2 cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_Treg_memory => "eQTL (Memory Treg cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_Treg_naive => "eQTL (Naive Treg cells; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_monocyte_naive => "eQTL (Classical monocytes; PMID30449622)",
+    eQTL_eQTLCatalogue_Schmiedel_2018_monocyte_CD16_naive => "eQTL (Non-classical monocytes; PMID30449622)",
+    
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Amygdala => "eQTL (Brain amygdala; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Anterior_cingulate_cortex_BA24 => "eQTL (Brain anterior cingulate cortex BA24; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Caudate_basal_ganglia => "eQTL (Brain caudate basal ganglia; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Cerebellar_Hemisphere => "eQTL (Brain cerebellar hemisphere; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Cerebellum => "eQTL (Brain cerebellum; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Cortex => "eQTL (Brain cortex; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Frontal_Cortex_BA9 => "eQTL (Brain frontal cortex BA9; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Hippocampus => "eQTL (Brain hippocampus; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Hypothalamus => "eQTL (Brain hypothalamus; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Nucleus_accumbens_basal_ganglia => "eQTL (Brain nucleus accumbens basal ganglia; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Putamen_basal_ganglia => "eQTL (Brain putamen basal ganglia; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Spinal_cord_cervical_c1 => "eQTL (Brain spinal cord cervical c1; PMID32913098)",
+    eQTL_eQTLCatalogue_GTEx_V8_Brain_Substantia_nigra => "eQTL (Brain substantia nigra; PMID32913098)",
+};
+
+my $default_pop='EUR';
+$i=0;
+my $pop_order;
+$pop_order->{"NA"}=$i++;
+$pop_order->{"AFR"}=$i++;
+$pop_order->{"AMR"}=$i++;
+$pop_order->{"EAS"}=$i++;
+$pop_order->{"EUR"}=$i++;
+$pop_order->{"SAS"}=$i++;
+my $pops={
+    NA => "Don't include SNPs in linkage disequilibrium",
+    AFR => "AFR: African",
+    AMR => "AMR: Admixed American",
+    EAS => "EAS: East Asian",
+    EUR => "EUR: European",
+    SAS => "SAS: South Asian",
+};
+
+my $default_obo='GOBP';
+$i=0;
+my $obo_order;
+$obo_order->{"GOBP"}=$i++;
+$obo_order->{"GOMF"}=$i++;
+$obo_order->{"GOCC"}=$i++;
+$obo_order->{"KEGG"}=$i++;
+$obo_order->{"REACTOME"}=$i++;
+$obo_order->{"MsigdbC2CPall"}=$i++;
+$obo_order->{"MitoPathway"}=$i++;
+$obo_order->{"EnrichrConsensusTFs"}=$i++;
+$obo_order->{"EnrichrTRRUST"}=$i++;
+$obo_order->{"MDODD"}=$i++;
+$obo_order->{"DO"}=$i++;
+$obo_order->{"EF"}=$i++;
+$obo_order->{"HPPA"}=$i++;
+$obo_order->{"MP"}=$i++;
+$obo_order->{"DGIdb"}=$i++;
+$obo_order->{"Bucket"}=$i++;
+$obo_order->{"ChEMBL"}=$i++;
+$obo_order->{"SF"}=$i++;
+$obo_order->{"FA"}=$i++;
+$obo_order->{"Pfam"}=$i++;
+$obo_order->{"IPR"}=$i++;
+$obo_order->{"IDPO"}=$i++;
+$obo_order->{"MsigdbH"}=$i++;
+$obo_order->{"PSG"}=$i++;
+
+my $obos={
+    GOBP => "Gene Ontology Biological Process (GOBP)",
+    GOMF => "Gene Ontology Molecular Function (GOMF)",
+    GOCC => "Gene Ontology Cellular Component (GOCC)",
+    
+    KEGG => "KEGG pathways (KEGG)",
+    REACTOME => "REACTOME pathways (REACTOME)",
+	MsigdbC2CPall => "MSIGDB pathways (MSIGDBpath)",
+	MitoPathway => "MitoPathway pathways (MITOPATH)",
+    
+	EnrichrConsensusTFs => "ENRICHR Consensus TFs (CTF)",
+	EnrichrTRRUST => "ENRICHR TRRUST TFs (TRRUST)",
+    
+    MDODD => "Mondo Disease Ontology (MONDO)",
+    DO => "Disease Ontology (DO)",
+    EF => "Experimental Factor Ontology (EFO)",
+    
+    HPPA => "Human Phenotype Ontology (HPO)",
+    MP => "Mammalian Phenotype Ontology (MPO)",
+    
+    DGIdb => "DGIdb druggable categories (DGIdb)",
+    Bucket => "Target tractability buckets (Bucket)",
+    ChEMBL => "ChEMBL drug indications buckets (ChEMBL)",
+
+    SF => "SCOP superfamily domains (SCOPsf)",
+    FA => "SCOP family domains (SCOPfa)",
+    Pfam => "Pfam domains (Pfam)",
+    IPR => "InterPro domains (InterPro)",
+    IDPO => "Intrinsically Disordered Proteins Ontology (IDPO)",
+    
+    MsigdbH => "MSIGDB hallmarks (MSIGDBh)",
+    PSG => "Phylostratigraphy (PSG)",
+};
+
+my $example_snps='
+snp	pvalue
+rs11190133	0.000000006
+rs10743181	0.00000002
+rs11229555	0.00000004
+rs11230563	5E-15
+rs174535	2E-11
+rs559928	8E-14
+rs568617	0.00000004
+rs11236797	3E-43
+rs7115956	8E-12
+rs4561177	0.000000001
+rs661054	2E-14
+rs7933433	1E-10
+rs11221332	2E-10
+rs1860545	3E-17
+rs11616188	3E-14
+rs7313895	4E-17
+rs11168249	0.000000006
+rs11614178	2E-34
+rs12369214	0.00000002
+rs3184504	4E-10
+rs17085007	2E-13
+rs941823	7E-11
+rs6561151	1E-22
+rs6651252	2E-17
+rs10758669	5E-43
+rs2812378	0.000000006
+rs7848647	1E-25
+rs726657	1E-14
+rs7468800	0.000000002
+rs4986790	0.00000001
+rs10870077	6E-45
+rs141992399	1E-31
+rs3124998	9E-09
+rs61839660	1E-15
+rs3118471	4E-13
+rs76913543	4E-12
+rs2104286	0.00000004
+rs2236379	9E-09
+rs2050392	0.000000002
+rs34779708	5E-29
+rs10995271	3E-48
+rs7915475	3E-10
+rs2227551	0.00000003
+rs1250573	2E-22
+rs7097656	1E-13
+rs1800682	0.000000004
+rs2497318	3E-11
+rs10748781	6E-51
+rs1847472	5E-10
+rs4946717	1E-21
+rs28701841	6E-10
+rs9491891	5E-15
+rs582757	1E-16
+rs928722	4E-14
+rs9494840	0.000000003
+rs2451258	5E-17
+rs67025039	9E-25
+rs1182188	4E-11
+rs1525735	9E-09
+rs28550029	3E-18
+rs860262	0.000000007
+rs4917129	4E-12
+rs12718244	0.000000002
+rs9297145	0.00000001
+rs6466198	1E-21
+rs7805114	5E-11
+rs4728142	2E-11
+rs2538470	2E-10
+rs10094579	2E-10
+rs1551399	4E-19
+rs2042011	0.00000004
+rs11749040	7E-28
+rs9687958	3E-16
+rs353339	5E-13
+rs71624119	0.00000002
+rs4703855	0.00000003
+rs34804116	3E-10
+rs469758	6E-54
+rs2910686	2E-21
+rs2549803	4E-12
+rs17622378	2E-55
+rs6863411	0.000000002
+rs11749391	2E-42
+rs74817271	2E-26
+rs56167332	3E-43
+rs12188300	3E-34
+rs4921482	9E-25
+rs6556411	3E-11
+rs72812861	0.00000001
+rs1267499	1E-11
+rs2328530	1E-17
+rs714830	0.000000005
+rs71559680	6E-12
+rs72928038	2E-10
+rs16841904	0.000000002
+rs7552167	0.00000001
+rs12131796	5E-41
+rs3024493	1E-38
+rs12075255	3E-11
+rs2666218	9E-10
+rs13407913	3E-18
+rs6600247	9E-29
+rs80174646	1E-143
+rs7517847	1E-98
+rs10889676	2E-24
+rs183686347	6E-14
+rs2476601	3E-12
+rs4845604	2E-16
+rs6693105	4E-24
+rs11675538	0.00000003
+rs4851529	1E-14
+rs12987977	3E-17
+rs871656	0.000000001
+rs2111485	3E-13
+rs35667974	5E-10
+rs3747517	0.000000002
+rs72871627	0.00000001
+rs17229679	3E-17
+rs6434978	1E-10
+rs34920465	3E-13
+rs2816958	4E-15
+rs6697886	2E-10
+rs2234161	2E-11
+rs3766606	9E-14
+rs6426833	7E-62
+rs3806308	1E-24
+rs4655215	8E-20
+rs1260326	2E-23
+rs925255	8E-18
+rs77981966	2E-16
+rs7608910	2E-32
+rs702872	4E-11
+rs4672505	2E-52
+rs4129267	9E-18
+rs4971079	3E-10
+rs78973538	0.00000003
+rs1333062	2E-11
+rs10800314	1E-32
+rs61802846	0.000000001
+rs6425143	1E-17
+rs4243971	0.000000005
+rs6058869	0.000000004
+rs4812833	7E-16
+rs1883832	4E-12
+rs1328454	0.000000004
+rs259964	4E-12
+rs6062496	2E-30
+rs2823288	4E-28
+rs2284553	4E-16
+rs9977672	5E-54
+rs1893592	0.000000006
+rs4456788	6E-25
+rs2266961	4E-15
+rs140135	0.000000006
+rs2143178	2E-33
+rs5757584	0.000000004
+rs1569414	6E-10
+rs10761648	6E-16
+rs10775412	3E-19
+rs28998802	7E-12
+rs9797244	1E-10
+rs9889296	5E-21
+rs35736272	6E-30
+rs12942547	2E-15
+rs12943464	2E-14
+rs3853824	0.00000002
+rs1292035	3E-11
+rs196941	8E-10
+rs17780256	6E-11
+rs66504140	0.00000002
+rs12968719	2E-26
+rs62097857	1E-11
+rs2024092	2E-18
+rs72977586	0.000000004
+rs74956615	2E-22
+rs35018800	5E-12
+rs12720356	0.000000002
+rs35074907	0.000000006
+rs4802307	2E-11
+rs679574	1E-17
+rs9554587	9E-10
+rs2145623	3E-10
+rs8006884	7E-10
+rs1569328	0.000000002
+rs11624293	2E-17
+rs16967103	0.000000005
+rs17293632	1E-16
+rs35874463	1E-11
+rs367569	5E-14
+rs11649613	3E-10
+rs7195296	3E-13
+rs7404095	0.000000003
+rs26528	3E-29
+rs11363316	4E-30
+rs11574938	5E-14
+rs1870293	1E-10
+rs2066845	6E-94
+rs2357623	4E-48
+rs72796367	1E-16
+rs2066847	0
+rs11117431	5E-16
+rs12932970	0.00000001
+rs7426056	1E-20
+rs5837881	3E-12
+rs11676348	2E-11
+rs7556897	8E-12
+rs12694846	5E-15
+rs35300242	5E-67
+rs3749171	2E-25
+rs4676406	6E-10
+rs35320439	7E-10
+rs73178598	3E-13
+rs1001007	0.00000002
+rs3197999	7E-55
+rs116046827	8E-11
+rs6781808	0.000000008
+rs11098964	0.00000002
+rs13107612	3E-10
+rs3774937	2E-18
+rs59867199	7E-20
+rs11750385	0.00000004
+rs3776414	0.000000006
+rs395157	8E-15
+rs1992661	1E-74
+';
+%>
+
+<div class="container">
+	<div class="jumbotron">
+	
+		<div class="text-right">
+			% if(1){
+				<a href="javascript:newWin('/app/examples/_tmp_RMD_EAsnp.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/enrichment-analyser-snps---eas.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+			% }else{
+				<a href="javascript:newWin('/app/examples/_tmp_RMD_EAsnp.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/index.html#enrichment-analyser-snps', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+			% }
+		</div>
+	
+		<div class="text-center">
+			<h3><a href="/XGRplus/EAsnp"><i class="fa fa-play-circle fa-lg"></i>&nbsp;&nbsp;ENRICHMENT ANALYSER (SNPS) - EAS</a>&nbsp;:&nbsp;Identifying enriched ontology terms for genes linked from input SNP list</h3>
+		</div>
+	</div>
+</div>
+
+<!-- error text -->
+<div id="error-container" class="container collapse">
+	<div id="errorText" style="display: block">
+		<p class="text_justify">
+		
+<h5>Error Messages: your input at Step 1</h5>
+<ul>
+<li>Please check your input SNPs with two columns (<b>dbSNP rsIDs</b> and <b>p-values between 0 and 1</b>); otherwise, they will be disregarded.
+<li>Before clicking the <strong>SUBMIT</strong> button, please paste your own data at Step 1 <strong>EVERY TIME</strong>. Note that the text box at Step 1 is pre-filled with the provided example when the interface page is first-visited or refreshed.
+<li>If the above issues are resolved, and you still receive the error messages, it simply means that no enrichment has been returned.
+</ul>
+
+		</p>
+	</div>
+</div>
+
+<hr>
+	
+<!-- progress bar -->
+<div id="progress-container" class="container collapse">
+	<div class="progress progress-striped active">
+		<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+			<i class="fa fa-cog fa-spin fa-lg"></i>&nbsp;&nbsp;EAS analysing your input SNP list ...
+		</div>
+	</div>
+</div>
+
+
+<!-- form -->
+<div id="form-container" class="container collapse in">
+	
+	<a id="displayText" href="javascript:toggle();" class="btn btn-primary btn-sm active">Show Info</a>
+	
+	<div id="toggleText" style="display: none">
+		<p class="text_justify">
+			<%== $info %>
+		</p>
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+			
+			<form id="submit-form" class="form-horizontal" enctype="multipart/form-data" method="POST">
+				
+				<p><strong>Step 1</strong>: Paste your SNPs (1st column for dbSNP rsIDs, 2nd for the significance info such as p-values).</p>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<textarea id="snplist" name="snplist" class="form-control table" rows="4" required="required"><%== $example_snps %></textarea>
+					</div>
+				</div>
+				
+				<p><strong>Step 2</strong>: Specify which population used to define additional SNPs in linkage disequilibrium.</p>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="pop">Population</label>
+					<div class="col-sm-7">
+						<select name="pop" id="pop" class="form-control">
+							% foreach my $pop (sort{$pop_order->{$a} <=> $pop_order->{$b}} keys %$pop_order) {
+							% my $selected = ($pop eq $default_pop)? ' SELECTED':'';
+							% if ($pop eq 'AFR'){
+								<OPTGROUP LABEL="Populations">
+								<OPTION VALUE="<%= $pop %>"<%= $selected %>><%== $pops->{$pop} %></OPTION>
+							% }elsif ($pop eq 'SAS'){
+								<OPTION VALUE="<%= $pop %>"<%= $selected %>><%== $pops->{$pop} %></OPTION>
+								</OPTGROUP>							
+							% }else{
+								<OPTION VALUE="<%= $pop %>"<%= $selected %>><%== $pops->{$pop} %></OPTION>
+							% }
+							%}
+						</select>
+					</div>
+				</div>
+				
+				<p><strong>Step 3</strong>: Identify linked genes based on genomic proximity, quantitative trait locus mapping, or promoter capture Hi-C.</p>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="distance">Linked genes supported by:</label>
+					<div class="col-sm-7">
+						<select name="crosslink" id="crosslink" class="form-control">
+							% foreach my $crosslink (sort{$crosslink_order->{$a} <=> $crosslink_order->{$b}} keys %$crosslink_order) {
+							% my $selected = ($crosslink eq $default_crosslink)? ' SELECTED':'';
+							% if ($crosslink eq 'proximity_5000'){
+								<OPTGROUP LABEL="Genomic proximity (distance-to-SNP window)">
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+							% }elsif ($crosslink eq 'PCHiC_PMID27863249_Activated_total_CD4_T_cells'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Promoter capture Hi-C datasets">
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+							% }elsif ($crosslink eq 'pQTL_Plasma'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Quantitative trait locus mapping datasets (e/pQTL)">
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+
+							% }elsif ($crosslink eq 'eQTL_eQTLCatalogue_GTEx_V8_Brain_Substantia_nigra'){
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+								</OPTGROUP>
+							% }else{
+								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
+							% }
+							%}
+						</select>
+					</div>
+				</div>
+
+				<p><strong>Step 4</strong>: Choose which ontology to use.</p>
+				<div class="form-group">
+					<label class="control-label col-sm-5" for="obo">Ontology:</label>
+					<div class="col-sm-7">
+						<select name="obo" id="obo" class="form-control">
+							% foreach my $obo (sort{$obo_order->{$a} <=> $obo_order->{$b}} keys %$obo_order) {
+							% my $selected = ($obo eq $default_obo)? ' SELECTED':'';
+							% if ($obo eq 'GOBP'){
+								<OPTGROUP LABEL="Functions">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'KEGG'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Pathways">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'EnrichrConsensusTFs'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Regulators">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>	
+							% }elsif ($obo eq 'MDODD'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Diseases">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'HPPA'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Phenotypes">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'DGIdb'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Drugs">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'SF'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Domains & Disorders">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'MsigdbH'){
+								</OPTGROUP>
+								<OPTGROUP LABEL="Hallmarks & Evolution">
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }elsif ($obo eq 'PSG'){
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+								</OPTGROUP>
+							% }else{
+								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
+							% }
+							%}
+						</select>
+					</div>
+				</div>
+				
+				<!-- Advanced begin ################### -->
+				<div class="form-group" id="advanced-toggle">
+					<div class="col-md-12">
+						 
+						<button type="button" class="btn btn-default btn-block" style="text-align:left" data-toggle="collapse" data-target="#more-options">
+							<i class="fa fa-chevron-circle-down fa-lg"></i> <strong class="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="Specify additional parameters for more controls">More Controls</strong></a>
+						</button>
+						
+						<div id="more-options" class="row collapse">
+							<div class="col-md-12" style="border: 1px solid #fff">
+
+								<!-- significance.threshold -->
+								<i class="fa fa-hand-o-right fa-lg"></i> SNP significance.
+								<div class="form-group">
+									<label class="control-label col-sm-5">P-value:</label>
+									<div class="col-sm-7">
+										<select name="significance_threshold" class="form-control">
+											<option value="1e-5">1e-5</a>
+											<option value="5e-8" selected>5e-8</a>
+											<option value="NULL">None</a>
+										</select>
+									</div>									
+								</div>
+
+								<!-- min overlap -->
+								<i class="fa fa-hand-o-right fa-lg"></i> Minimum number of overlapped genes.
+								<div class="form-group">
+									<label class="control-label col-sm-5">Number of genes:</label>
+									<div class="col-sm-7">
+										<select name="min_overlap" class="form-control">
+											<option value="3" selected>3</a>
+											<option value="5">5</a>
+											<option value="10">10</a>
+										</select>
+									</div>			
+								</div>
+
+								<!-- FDR cutoff -->
+								<i class="fa fa-hand-o-right fa-lg"></i> Term significance.
+								<div class="form-group">
+									<label class="control-label col-sm-5">False Discovery Rate (FDR):</label>
+									<div class="col-sm-7">
+										<select name="FDR_cutoff" class="form-control">
+											<option value="5e-2">5e-2</a>
+											<option value="1e-2">1e-2</a>
+											<option value="NULL" selected>None</a>
+										</select>
+									</div>									
+								</div>
+								
+							</div>
+						</div>
+
+						
+					</div>
+				</div>
+				<!-- Advanced end ################### -->
+				
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-12 control-label" for="submit"></label>
+					<div class="col-md-12">
+						<input class="btn btn-primary btn-block active" id="submit" type="submit" value="SUBMIT" />
+					</div>
+				</div>
+				
+			</form>
+			
+		</div>
+		
+	</div>
+	
+</div>
+
+
+<div id="results-container" class="container collapse">
+
+	<div class="row">
+		<div class="col-lg-12">			
+			<h3 class="my-fontfamily">Enrichment Results&nbsp;<a class="btn btn-primary btn-sm active" role="button" href="javascript:newWin('<%= $ajax_rmd_html_file %>', 'ZOOM', '909', '1169')"><i class="fa fa-search-plus fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;ZOOM</a>&nbsp;<a class="btn btn-primary btn-sm active" role="button" href="<%= $ajax_rmd_html_file %>" download="<%= $ajax_rmd_html_file %>" target="<%= $ajax_rmd_html_file %>"><i class="fa fa-cloud-download fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;DOWNLOAD .html</a></h3>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="form-group">
+			<div class="col-lg-12">
+				<div class="embed-responsive embed-responsive-4by3">
+					<iframe class="embed-responsive-item" src="<%= $ajax_rmd_html_file %>"></iframe>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+  	
+</div>
+
