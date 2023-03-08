@@ -46,7 +46,7 @@ my $post_flag='';
 my $info='
 <h5>Input</h5>
 <ul>
-<li>(<b>Steps 1 and 2</b>): Specify the domain level (<b>Step 1</b>) and provide a list of user-input domain identifiers (<b>Step 2</b>). For example, <a href="/app/examples/eg_EAdomain_SF.txt" download="/app/examples/eg_EAdomain_SF.txt" target="/app/examples/eg_EAdomain_SF.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspInput SCOP superfamily domains</a>, <a href="/app/examples/eg_EAdomain_FA.txt" download="/app/examples/eg_EAdomain_FA.txt" target="/app/examples/eg_EAdomain_FA.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspInput SCOP family domains</a>, <a href="/app/examples/eg_EAdomain_Pfam.txt" download="/app/examples/eg_EAdomain_Pfam.txt" target="/app/examples/eg_EAdomain_Pfam.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspInput Pfam family domains</a>. Please make sure that the input domain identifiers are consistent with the specified domain level; otherwise, the error messages will be prompted.
+<li>(<b>Steps 1 and 2</b>): Specify the domain level (<b>Step 1</b>) and provide a list of user-input domain identifiers (<b>Step 2</b>). For example, <a href="/app/examples/eg_EAdomain_SF.txt" download="/app/examples/eg_EAdomain_SF.txt" target="/app/examples/eg_EAdomain_SF.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspInput SCOP superfamily domains</a>, <a href="/app/examples/eg_EAdomain_FA.txt" download="/app/examples/eg_EAdomain_FA.txt" target="/app/examples/eg_EAdomain_FA.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspInput SCOP family domains</a>. Please make sure that the input domain identifiers are consistent with the specified domain level; otherwise, the error messages will be prompted.
 <li>(<b>Step 3</b>): Choose from a list of supported ontologies.
 <li>(<b>More Controls</b>): Use additional parameters to fine-tune the steps described above.
 </ul>
@@ -69,11 +69,9 @@ my $i=0;
 my $type_order;
 $type_order->{'sf'}=$i++;
 $type_order->{'fa'}=$i++;
-$type_order->{'pfam'}=$i++;
 my $types={
-	sf => "SCOP superfamily domains",
-	fa => "SCOP family domains",
-	pfam => "Pfam domains",
+	sf => "SCOP superfamily",
+	fa => "SCOP family",
 };
 
 my $default_obo='KEGG';
@@ -84,11 +82,7 @@ $obo_order->{"GOMF"}=$i++;
 $obo_order->{"GOCC"}=$i++;
 $obo_order->{"KEGG"}=$i++;
 $obo_order->{"REACTOME"}=$i++;
-$obo_order->{"PANTHER"}=$i++;
-$obo_order->{"WKPATH"}=$i++;
 $obo_order->{"MITOPATH"}=$i++;
-$obo_order->{"CTF"}=$i++;
-$obo_order->{"TRRUST"}=$i++;
 $obo_order->{"HPO"}=$i++;
 $obo_order->{"MPO"}=$i++;
 $obo_order->{"MONDO"}=$i++;
@@ -96,7 +90,6 @@ $obo_order->{"DO"}=$i++;
 $obo_order->{"EFO"}=$i++;
 $obo_order->{"DGIdb"}=$i++;
 $obo_order->{"Bucket"}=$i++;
-$obo_order->{"MSIGDB"}=$i++;
 my $obos={
     GOBP => "Gene Ontology Biological Process (GOBP)",
     GOMF => "Gene Ontology Molecular Function (GOMF)",
@@ -104,12 +97,7 @@ my $obos={
     
     KEGG => "KEGG pathways (KEGG)",
     REACTOME => "REACTOME pathways (REACTOME)",
-    PANTHER => "PANTHER pathways (PANTHER)",
-	WKPATH => "WiKiPathway pathways (WKPATH)",
 	MITOPATH => "MitoPathway pathways (MITOPATH)",
-    
-	CTF => "ENRICHR Consensus TFs (CTF)",
-	TRRUST => "ENRICHR TRRUST TFs (TRRUST)",
     
     MONDO => "Mondo Disease Ontology (MONDO)",
     DO => "Disease Ontology (DO)",
@@ -120,40 +108,33 @@ my $obos={
     
     DGIdb => "DGIdb druggable categories (DGIdb)",
     Bucket => "Target tractability buckets (Bucket)",
-    
-    MSIGDB => "MSIGDB hallmarks (MSIGDBh)",
 };
 
 my $example_domains='
-PF07654
-PF14672
-PF00605
-PF10401
-PF14820
-PF01023
-PF00619
-PF00020
-PF13676
-PF00048
-PF00008
-PF01108
-PF09294
-PF00017
-PF00969
-PF00178
-PF01017
-PF02864
-PF02865
-PF07686
-PF03770
-PF00102
-PF07714
-PF00229
-PF07716
-PF00170
-PF00173
-PF00018
-PF00169
+54452
+47266
+48726
+55550
+49417
+52200
+57586
+54117
+49879
+47655
+48092
+49842
+46785
+57959
+52129
+47986
+56104
+49265
+55856
+57184
+56112
+50044
+90229
+50729
 ';
 %>
 
@@ -162,7 +143,7 @@ PF00169
 	
 		<div class="text-right">
 			% if(1){
-				<a href="javascript:newWin('/app/examples/_tmp_RMD_EAdomain.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/enrichment-analyser-domains---ead.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+				<a href="javascript:newWin('/app/examples/_tmp_RMD_EAdomain.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example I/O</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/enrichment-analyser-domains---ead.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg fa-flip-horizontal"></span>&nbsp;User Manual</a>
 			% }else{
 				<a href="javascript:newWin('/app/examples/_tmp_RMD_EAdomain.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/index.html#enrichment-analyser-domains', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
 			% }
@@ -227,13 +208,7 @@ PF00169
 							% foreach my $type (sort{$type_order->{$a} <=> $type_order->{$b}} keys %$type_order) {
 							% my $selected = ($type eq $default_type)? ' SELECTED':'';
 							% if ($type eq 'sf'){
-								<OPTGROUP LABEL="SCOP">
 								<OPTION VALUE="<%= $type %>"<%= $selected %>><%== $types->{$type} %></OPTION>
-							% }elsif ($type eq 'pfam'){
-								</OPTGROUP>
-								<OPTGROUP LABEL="Pfam">
-								<OPTION VALUE="<%= $type %>"<%= $selected %>><%== $types->{$type} %></OPTION>
-								</OPTGROUP>
 							% }else{
 								<OPTION VALUE="<%= $type %>"<%= $selected %>><%== $types->{$type} %></OPTION>
 							% }
@@ -242,7 +217,7 @@ PF00169
 					</div>
 				</div>
 				
-				<p><strong>Step 2</strong>: Paste your domains here.</p>
+				<p><strong>Step 2</strong>: Paste your domains here. See<a href="/app/examples/eg_EAdomain_SF.txt" download="/app/examples/eg_EAdomain_SF.txt" target="/app/examples/eg_EAdomain_SF.txt">&nbspInput SCOP superfamily domains</a>, <a href="/app/examples/eg_EAdomain_FA.txt" download="/app/examples/eg_EAdomain_FA.txt" target="/app/examples/eg_EAdomain_FA.txt">Input SCOP family domains</a></p>
 				
 				<div class="form-group">
 					<div class="col-sm-12">
@@ -264,10 +239,6 @@ PF00169
 								</OPTGROUP>
 								<OPTGROUP LABEL="Pathways">
 								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
-							% }elsif ($obo eq 'CTF'){
-								</OPTGROUP>
-								<OPTGROUP LABEL="Regulators">
-								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
 							% }elsif ($obo eq 'MONDO'){
 								</OPTGROUP>
 								<OPTGROUP LABEL="Diseases">
@@ -280,11 +251,6 @@ PF00169
 								</OPTGROUP>
 								<OPTGROUP LABEL="Drugs">
 								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
-							% }elsif ($obo eq 'MSIGDB'){
-								</OPTGROUP>
-								<OPTGROUP LABEL="Hallmarks">
-								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
-								</OPTGROUP>
 							% }else{
 								<OPTION VALUE="<%= $obo %>"<%= $selected %>><%== $obos->{$obo} %></OPTION>
 							% }

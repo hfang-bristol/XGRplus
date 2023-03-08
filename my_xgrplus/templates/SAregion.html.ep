@@ -46,7 +46,7 @@ my $post_flag='';
 my $info='
 <h5>Input</h5>
 <ul>
-<li>(<b>Steps 1 and 2</b>): Specify the genome build (<b>Step 1</b>) and input a list of genomic regions (in the format of chr:start-end; in 1st column) with the significance information (p-values between 0 and 1; in 2nd column) (<b>Step 2</b>); for example, <a href="/app/examples/eg_SAregion.txt" download="/app/examples/eg_SAregion.txt" target="/app/examples/eg_SAregion.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspExample Input</a>. Please make sure that the input genomic coordinates are consistent with the specified genome build.
+<li>(<b>Steps 1 and 2</b>): Specify the genome build (<b>Step 1</b>) and input a list of genomic regions (in the format of chr:start-end; in 1st column) with the significance information (p-values between 0 and 1; in 2nd column) (<b>Step 2</b>); for example, <a href="/app/examples/eg_SAregion_PMID35751107TableS2.txt" download="/app/examples/eg_SAregion_PMID35751107TableS2.txt" target="/app/examples/eg_SAregion_PMID35751107TableS2.txt"><i class="fa fa-cloud-download fa" aria-hidden="true"></i>&nbspExample Input</a>. Please make sure that the input genomic coordinates are consistent with the specified genome build.
 <li>(<b>Step 3</b>) Use genomic proximity, enhancer-gene maps, or promoter capture Hi-C to identify linked genes.
 <li>(<b>Steps 4 and 5</b>): Identify a subnetwork of highly-scored genes from a gene network (<b>Step 4</b>), with the desired number of genes in the resulting subnetwork (<b>Step 5</b>). The significance (p-value) of observing the identified subnetwork by chance can also be estimated using a degree-preserving node permutation test.
 <li>(<b>More Controls</b>): Use additional parameters to fine-tune steps described above.
@@ -92,6 +92,7 @@ $crosslink_order->{'RGB_PCHiC_PMID27863249_Naive_CD8_T_cells'}=$i++;
 $crosslink_order->{'RGB_PCHiC_PMID27863249_Neutrophils'}=$i++;
 $crosslink_order->{'RGB_PCHiC_PMID27863249_Nonactivated_total_CD4_T_cells'}=$i++;
 $crosslink_order->{'RGB_PCHiC_PMID27863249_Total_B_cells'}=$i++;
+$crosslink_order->{'RGB_PCHiC_PMID27863249_Total_CD4_T_cells'}=$i++;
 $crosslink_order->{'RGB_PCHiC_PMID27863249_Total_CD8_T_cells'}=$i++;
 
 $crosslink_order->{'RGB_PCHiC_PMID31501517_DorsolateralPrefrontalCortex'}=$i++;
@@ -130,6 +131,7 @@ my $crosslinks={
 	RGB_PCHiC_PMID27863249_Neutrophils => "Neutrophils (PMID27863249)",
 	RGB_PCHiC_PMID27863249_Nonactivated_total_CD4_T_cells => "Nonactivated total CD4+ T cells (PMID27863249)",
 	RGB_PCHiC_PMID27863249_Total_B_cells => "Total B cells (PMID27863249)",
+	RGB_PCHiC_PMID27863249_Total_CD4_T_cells => "Total CD4+ T cells (PMID27863249)",
 	RGB_PCHiC_PMID27863249_Total_CD8_T_cells => "Total CD8+ T cells (PMID27863249)",
 	
 	RGB_PCHiC_PMID31501517_DorsolateralPrefrontalCortex => "Dorsolateral prefrontal cortex (PMID31501517)",
@@ -152,21 +154,21 @@ $net_order->{'STRING_highest'}=$i++;
 $net_order->{'STRING_high'}=$i++;
 $net_order->{'STRING_medium'}=$i++;
 $net_order->{'KEGG'}=$i++;
+$net_order->{'KEGGc_EnvironmentalProcess'}=$i++;
+$net_order->{'KEGGc_OrganismalSystem'}=$i++;
 $net_order->{'KEGGc_Metabolism'}=$i++;
 $net_order->{'KEGGc_GeneticProcess'}=$i++;
-$net_order->{'KEGGc_EnvironmentalProcess'}=$i++;
 $net_order->{'KEGGc_CellularProcess'}=$i++;
-$net_order->{'KEGGc_OrganismalSystem'}=$i++;
 my $networks={
     STRING_highest => "Functional interactions with highest confidence (0.9)",
     STRING_high => "Functional interactions with high confidence (0.7)",
     STRING_medium => "Functional interactions with medium confidence (0.4)",
     KEGG => "Pathway interactions (all)",
+    KEGGc_EnvironmentalProcess => "Pathway interactions (environmental information processing)",
+    KEGGc_OrganismalSystem => "Pathway interactions (organismal systems)",
     KEGGc_Metabolism => "Pathway interactions (metabolism)",
     KEGGc_GeneticProcess => "Pathway interactions (genetic information processing)",
-    KEGGc_EnvironmentalProcess => "Pathway interactions (environmental information processing)",
     KEGGc_CellularProcess => "Pathway interactions (cellular processes)",
-    KEGGc_OrganismalSystem => "Pathway interactions (organismal systems)",
 };
 
 my $example_regions='
@@ -398,7 +400,7 @@ chr5:40414989-40414989	1e-74
 	
 		<div class="text-right">
 			% if(1){
-				<a href="javascript:newWin('/app/examples/_tmp_RMD_SAregion.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/subnetwork-analyser-regions---sar.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+				<a href="javascript:newWin('/app/examples/_tmp_RMD_SAregion.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example I/O</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/subnetwork-analyser-regions---sar.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg fa-flip-horizontal"></span>&nbsp;User Manual</a>
 			% }else{
 				<a href="javascript:newWin('/app/examples/_tmp_RMD_SAregion.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/index.html#subnetwork-analyser-regions', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
 			% }
@@ -419,7 +421,7 @@ chr5:40414989-40414989	1e-74
 <ul>
 <li>Please check your input genomic region-level summary data with two columns (<b>chr:start-end</b> and <b>p-values between 0 and 1</b>); otherwise, they will be disregarded.
 <li>Before clicking the <strong>SUBMIT</strong> button, please paste your own data at Step 2 <strong>EVERY TIME</strong>. Note that the text box at Step 2 is pre-filled with the provided example when the interface page is first-visited or refreshed.
-<li>If the above issues are resolved, and you still receive the error messages, it simply means that no subnetwork has been returned.
+<li>If the above issues are resolved, and you still receive the error messages, it simply means that <strong>no subnetwork has been returned</strong>.
 </ul>
 
 		</p>
@@ -466,7 +468,7 @@ chr5:40414989-40414989	1e-74
 					</div>
 				</div>
 				
-				<p><strong>Step 2</strong>: Paste your genomic regions (1st column for regions formatted as chr:start-end, 2nd for the significance info).</p>
+				<p><strong>Step 2</strong>: Paste your genomic regions (1st column for regions formatted as chr:start-end, 2nd for the significance info; see<a href="/app/examples/eg_SAregion_PMID35751107TableS2.txt" download="/app/examples/eg_SAregion_PMID35751107TableS2.txt" target="/app/examples/eg_SAregion_PMID35751107TableS2.txt">&nbspExample Input</a>).</p>
 				<div class="form-group">
 					<div class="col-sm-12">
 						<textarea id="regionlist" name="regionlist" class="form-control table" rows="4" required="required"><%== $example_regions %></textarea>
@@ -481,15 +483,15 @@ chr5:40414989-40414989	1e-74
 							% foreach my $crosslink (sort{$crosslink_order->{$a} <=> $crosslink_order->{$b}} keys %$crosslink_order) {
 							% my $selected = ($crosslink eq $default_crosslink)? ' SELECTED':'';
 							% if ($crosslink eq 'proximity_5000'){
-								<OPTGROUP LABEL="Genomic proximity (distance-to-SNP window)">
+								<OPTGROUP LABEL="Genomic proximity (distance window)">
 								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
 							% }elsif ($crosslink eq 'RGB_ABC_Encode_Combined'){
 								</OPTGROUP>
-								<OPTGROUP LABEL="Enhancer-gene map (ABC) databasets">
+								<OPTGROUP LABEL="Enhancer-gene map datasets (ABC model)">
 								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
 							% }elsif ($crosslink eq 'RGB_PCHiC_PMID27863249_Activated_total_CD4_T_cells'){
 								</OPTGROUP>
-								<OPTGROUP LABEL="Promoter capture Hi-C datasets">
+								<OPTGROUP LABEL="Promoter capture Hi-C datasets (PCHi-C)">
 								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>
 							% }elsif ($crosslink eq 'RGB_PCHiC_PMID25938943_GM12878'){
 								<OPTION VALUE="<%= $crosslink %>"<%= $selected %>><%== $crosslinks->{$crosslink} %></OPTION>

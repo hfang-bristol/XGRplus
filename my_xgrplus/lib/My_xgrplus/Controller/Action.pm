@@ -761,13 +761,14 @@ R_pipeline <- function (input.file="", output.file="", domain.type="", obo="", F
 		# Forest plot
 		if(1){
 			message(sprintf("Drawing forest (%s) ...", as.character(Sys.time())), appendLF=TRUE)
-			zlim <- c(0, -log10(df_eTerm$adjp) %>% max() %>% ceiling())
-			gp_forest <- df_eTerm %>% mutate(name=str_c(id)) %>% oSEAforest(top=10, colormap="spectral.top", color.title="-log10(FDR)", zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Numbber\nof domains", wrap.width=50)		
+			#zlim <- c(0, -log10(df_eTerm$adjp) %>% max() %>% ceiling())
+			zlim <- c(0, -log10(df_eTerm$adjp) %>% quantile(0.95) %>% ceiling())
+			gp_forest <- df_eTerm %>% mutate(name=str_c(id)) %>% oSEAforest(top=10, colormap="spectral.top", color.title=expression(-log[10]("FDR")), zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Number\nof domains", wrap.width=50)		
 			output.file.forestplot.pdf <- gsub(".txt$", "_forest.pdf", output.file, perl=T)
 			#output.file.forest.pdf <-  "/Users/hfang/Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_forestplot.pdf"
-			ggsave(output.file.forestplot.pdf, gp_forest, device=cairo_pdf, width=5, height=4)
+			ggsave(output.file.forestplot.pdf, gp_forest, device=cairo_pdf, width=5, height=3.5)
 			output.file.forestplot.png <- gsub(".txt$", "_forest.png", output.file, perl=T)
-			ggsave(output.file.forestplot.png, gp_forest, type="cairo", width=5, height=4)
+			ggsave(output.file.forestplot.png, gp_forest, type="cairo", width=5, height=3.5)
 		}
 		
 		######################################
@@ -1007,11 +1008,15 @@ R_pipeline <- function (input.file="", output.file="", obo="", FDR.cutoff="", mi
 		library(tidyverse)
 		
 		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAgene.txt"
+		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAgene_GenAge.txt"
 		
 		data <- read_delim(input.file, delim="\t", col_names=F) %>% as.data.frame() %>% pull(1)
 		FDR.cutoff <- 1
 		min.overlap <- 3
 		obo <- "MDODD"
+		
+		obo <- "MitoPathway"
+		obo <- "KEGGEnvironmentalOrganismal"
 	}
 	
 	# read input file
@@ -1051,13 +1056,14 @@ R_pipeline <- function (input.file="", output.file="", obo="", FDR.cutoff="", mi
 		# Forest plot
 		if(1){
 			message(sprintf("Drawing forest (%s) ...", as.character(Sys.time())), appendLF=TRUE)
-			zlim <- c(0, -log10(df_eTerm$adjp) %>% max() %>% ceiling())
-			gp_forest <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAforest(top=10, colormap="spectral.top", color.title="-log10(FDR)", zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Numbber\nof genes", wrap.width=50)
+			#zlim <- c(0, -log10(df_eTerm$adjp) %>% max() %>% ceiling())
+			zlim <- c(0, -log10(df_eTerm$adjp) %>% quantile(0.95) %>% ceiling())
+			gp_forest <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAforest(top=10, colormap="spectral.top", color.title=expression(-log[10]("1/FDR")), zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Number\nof genes", wrap.width=50)
 			output.file.forestplot.pdf <- gsub(".txt$", "_forest.pdf", output.file, perl=T)
 			#output.file.forest.pdf <-  "/Users/hfang/Sites/XGR/XGRplus-site/app/examples/EAgene_enrichment_forestplot.pdf"
-			ggsave(output.file.forestplot.pdf, gp_forest, device=cairo_pdf, width=5, height=4)
+			ggsave(output.file.forestplot.pdf, gp_forest, device=cairo_pdf, width=5, height=3.5)
 			output.file.forestplot.png <- gsub(".txt$", "_forest.png", output.file, perl=T)
-			ggsave(output.file.forestplot.png, gp_forest, type="cairo", width=5, height=4)
+			ggsave(output.file.forestplot.png, gp_forest, type="cairo", width=5, height=3.5)
 		}
 		
 		######################################
@@ -1332,7 +1338,7 @@ R_pipeline <- function (input.file="", output.file="", network="", subnet.size="
 			zlim <- c(0, floor(max(vec)/10)*10)
 		}
 		
-		gp_rating <- oGGnetwork(g=subg, node.label="name", node.label.size=3, node.label.color="black", node.label.alpha=0.95, node.label.padding=0.5, node.label.arrow=0, node.label.force=0.4, node.shape=19, node.xcoord="xcoord", node.ycoord="ycoord", node.color="logP", node.color.title="-log10(P)", colormap="spectral.top", zlim=zlim, node.size.range=5, title="", edge.color="steelblue4", edge.color.alpha=0.5, edge.size=0.3, edge.curve=0.05)
+		gp_rating <- oGGnetwork(g=subg, node.label="name", node.label.size=3, node.label.color="black", node.label.alpha=0.95, node.label.padding=0.5, node.label.arrow=0, node.label.force=0.4, node.shape=19, node.xcoord="xcoord", node.ycoord="ycoord", node.color="logP", node.color.title=expression(-log[10]("pvalue")), colormap="spectral.top", zlim=zlim, node.size.range=5, title="", edge.color="steelblue4", edge.color.alpha=0.5, edge.size=0.3, edge.curve=0.05)
 		
 		
 		# *_crosstalk.txt
@@ -1594,27 +1600,33 @@ R_pipeline <- function (input.file="", output.file="", population="", crosslink=
 		library(GenomicRanges)
 		library(igraph)
 		
-		## for eg_SAregion.txt
 		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAsnp.txt"
+		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAsnp_IND.txt"
+		
+		#####################
+		# for eg_SAregion.txt
 		data <- read_delim(input.file, delim="\t") %>% as.data.frame() %>% select(1:2)
 		GR.SNP <- oRDS("dbSNP_Common", placeholder=placeholder)
 		ind <- match(data$snp, names(GR.SNP))
 		gr <- GR.SNP[ind[!is.na(ind)]]
 		df_gr <- gr %>% as.data.frame() %>% as_tibble(rownames="snp") %>% transmute(snp,region=str_c(seqnames,":",start,"-",end))
 		df_gr %>% inner_join(data, by="snp") %>% select(region,pvalue) %>% write_delim("~/Sites/XGR/XGRplus-site/app/examples/eg_SAregion.txt", delim="\t")
+		#####################
 		
-		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_SAsnp.txt"
+		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAsnp_IND.txt"
 		data <- read_delim(input.file, delim="\t") %>% as.data.frame() %>% select(1:2)
 		
 		LD.customised <- oRDS("GWAS_LD.EUR", placeholder=placeholder) %>% as.data.frame()
 		significance.threshold=5e-5
-		distance.max=2000
+		distance.max=20000
 		relative.importance=c(1/3,1/3,1/3)
 		
 		crosslink <- "pQTL_Plasma"
 		crosslink <- "PCHiC_PMID27863249_Activated_total_CD4_T_cells"
+		crosslink <- "proximity_20000"
 		
 		network <- "STRING_high"
+		network <- "KEGG"
 		subnet.size <- 30
 	}
 	
@@ -1676,7 +1688,7 @@ R_pipeline <- function (input.file="", output.file="", population="", crosslink=
 		vec <- V(subg)$significance %>% as.numeric()
 		vec[vec==0] <- min(vec[vec!=0])
 		V(subg)$logP <- -log10(vec)
-	
+
 		subg <- subg %>% oLayout(c("layout_with_kk","graphlayouts.layout_with_stress")[2])
 		
 		df_subg <- subg %>% oIG2TB("nodes") %>% transmute(Genes=name, Pvalue=as.numeric(significance), Description=description) %>% arrange(Pvalue)
@@ -1948,6 +1960,8 @@ R_pipeline <- function (input.file="", output.file="", population="", crosslink=
 		library(GenomicRanges)
 		
 		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAsnp.txt"
+		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAsnp_IND.txt"
+		
 		data <- read_delim(input.file, delim="\t") %>% as.data.frame() %>% select(1:2)
 		
 		LD.customised <- oRDS("GWAS_LD.EUR", placeholder=placeholder) %>% as.data.frame()
@@ -1961,6 +1975,8 @@ R_pipeline <- function (input.file="", output.file="", population="", crosslink=
 		FDR.cutoff <- 0.05
 		min.overlap <- 3
 		obo <- "GOMF"
+		
+		obo <- "KEGGEnvironmentalOrganismal"
 	}
 	
 	# read input file
@@ -2040,13 +2056,14 @@ R_pipeline <- function (input.file="", output.file="", population="", crosslink=
 		# Forest plot
 		if(1){
 			message(sprintf("Drawing forest (%s) ...", as.character(Sys.time())), appendLF=TRUE)
-			zlim <- c(0, -log10(df_eTerm$adjp) %>% max() %>% ceiling())
-			gp_forest <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAforest(top=10, colormap="spectral.top", color.title="-log10(FDR)", zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Numbber\nof genes", wrap.width=50)
+			#zlim <- c(0, -log10(df_eTerm$adjp) %>% max() %>% ceiling())
+			zlim <- c(0, -log10(df_eTerm$adjp) %>% quantile(0.95) %>% ceiling())
+			gp_forest <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAforest(top=10, colormap="spectral.top", color.title=expression(-log[10]("FDR")), zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Number\nof genes", wrap.width=50)
 			output.file.forestplot.pdf <- gsub(".txt$", "_forest.pdf", output.file, perl=T)
 			#output.file.forest.pdf <-  "/Users/hfang/Sites/XGR/XGRplus-site/app/examples/EAsnp_enrichment_forestplot.pdf"
-			ggsave(output.file.forestplot.pdf, gp_forest, device=cairo_pdf, width=5, height=4)
+			ggsave(output.file.forestplot.pdf, gp_forest, device=cairo_pdf, width=5, height=3.5)
 			output.file.forestplot.png <- gsub(".txt$", "_forest.png", output.file, perl=T)
-			ggsave(output.file.forestplot.png, gp_forest, type="cairo", width=5, height=4)
+			ggsave(output.file.forestplot.png, gp_forest, type="cairo", width=5, height=3.5)
 		}
 		
 		######################################
@@ -2291,10 +2308,14 @@ R_pipeline <- function (input.file="", output.file="", build.conversion="", cros
 		placeholder <- "/Users/hfang/Sites/SVN/github/bigdata_fdb"
 		placeholder <- "/Users/hfang/Sites/SVN/github/bigdata_openxgr"
 		
-		guid=NULL
-		verbose=TRUE
+		#####################
+		# for eg_EAregion_PMID35751107TableS2.txt
+		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_SAregion_PMID35751107TableS2.txt"
+		res <- read_delim(input.file, delim="\t") %>% filter(padj<0.05) %>% mutate(chr=str_replace_all(region,":.*","")) %>% mutate(start=str_replace_all(region,".*:|-.*","") %>% as.numeric()) %>% mutate(end=str_replace_all(region,".*-","") %>% as.numeric())
+		res %>% select(chr,start,end) %>% write_delim("~/Sites/XGR/XGRplus-site/app/examples/eg_EAregion_PMID35751107TableS2.txt", delim="\t")
+		#####################
 		
-		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAregion.txt"
+		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAregion_PMID35751107TableS2.txt"
 		data <- read_delim(input.file, delim="\t") %>% as.data.frame() %>% select(1:3)
 		
 		format <- "data.frame"
@@ -2364,13 +2385,14 @@ R_pipeline <- function (input.file="", output.file="", build.conversion="", cros
 		# Forest plot
 		if(1){
 			message(sprintf("Drawing forest (%s) ...", as.character(Sys.time())), appendLF=TRUE)
-			zlim <- c(0, -log10(df_eTerm$adjp) %>% max() %>% ceiling())
-			gp_forest <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAforest(top=10, colormap="spectral.top", color.title="-log10(FDR)", zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Numbber\nof genes", wrap.width=50)		
+			#zlim <- c(0, -log10(df_eTerm$adjp) %>% max() %>% ceiling())
+			zlim <- c(0, -log10(df_eTerm$adjp) %>% quantile(0.95) %>% ceiling())
+			gp_forest <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAforest(top=10, colormap="spectral.top", color.title=expression(-log[10]("FDR")), zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Number\nof genes", wrap.width=50)		
 			output.file.forestplot.pdf <- gsub(".txt$", "_forest.pdf", output.file, perl=T)
 			#output.file.forest.pdf <-  "/Users/hfang/Sites/XGR/XGRplus-site/app/examples/EAregion_enrichment_forestplot.pdf"
-			ggsave(output.file.forestplot.pdf, gp_forest, device=cairo_pdf, width=5, height=4)
+			ggsave(output.file.forestplot.pdf, gp_forest, device=cairo_pdf, width=5, height=3.5)
 			output.file.forestplot.png <- gsub(".txt$", "_forest.png", output.file, perl=T)
-			ggsave(output.file.forestplot.png, gp_forest, type="cairo", width=5, height=4)
+			ggsave(output.file.forestplot.png, gp_forest, type="cairo", width=5, height=3.5)
 		}
 		
 		######################################

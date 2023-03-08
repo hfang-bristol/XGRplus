@@ -111,7 +111,7 @@
 				  		<br>
 				  		
 				  		<li>
-				  		<a href="/XGRplusbooklet/index.html" class="my-tooltip" data-toggle="tooltip" data-placement="auto bottom" title="Providing the user manual for XGR+" target="manual"><i class="fa fa-book fa-lg"></i>&nbsp;&nbsp;&nbsp;User Manual</a>
+				  		<a href="/XGRplusbooklet/index.html" class="my-tooltip" data-toggle="tooltip" data-placement="auto bottom" title="Providing the user manual for XGR+" target="manual"><i class="fa fa-book fa-lg fa-flip-horizontal"></i>&nbsp;&nbsp;&nbsp;User Manual</a>
 				  		</li>
 						
 						<li role="separator" class="divider"></li>
@@ -183,7 +183,7 @@
 		  	<hr>
 		  	
 		  	<footer class="text-center">
-				2023&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/index.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-1x"></span>&nbsp;User Manual</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/XGRplus/help">XGR+</a>&nbsp;&nbsp;a web-server update for enhanced genomic summary data interpretation leveraging ontologies and networks&nbsp;&nbsp;|&nbsp;&nbsp;Prof. Hai Fang&nbsp;<a href="mailto:fh12355@rjh.com.cn">(<i class="fa fa-envelope-o"></i>)</a>
+				2023&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/index.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-1x fa-flip-horizontal"></span>&nbsp;User Manual</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/XGRplus/help">XGR+</a>&nbsp;&nbsp;a web-server update for enhanced genomic summary data interpretation leveraging ontologies and networks&nbsp;&nbsp;|&nbsp;&nbsp;Prof. Hai Fang&nbsp;<a href="mailto:fh12355@rjh.com.cn">(<i class="fa fa-envelope-o"></i>)</a>
 		  	</footer>
 		  	
 		<!-- end container theme-showcase -->

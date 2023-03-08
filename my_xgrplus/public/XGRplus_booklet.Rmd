@@ -43,9 +43,9 @@ grid.raster(img)
 
 > **Motivation**
 
-We are pleased to introduce an updated version of our XGR software, which has gained increasing popularity in genomics research since its first release (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)). This update features a newly designed web server, called XGR Plus or XGR+, now made available [here](http://www.genomicsummary.pro/XGRplus) to all users for free and without any login requirements. It enables almost real-time enrichment and subnetwork analyses for user-input lists of genes, SNPs, genomic regions, or protein domains, leveraging ontologies, networks, and many other knowledgebase resources, such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps.
+We are pleased to introduce an updated version of our XGR software, which has gained increasing popularity in genomics research since its first release (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)). This update features a newly designed web server, called XGR Plus or XGR+, now made available [here](http://www.genomicsummary.pro/XGRplus) to all users for free and without any login requirements. It enables almost real-time enrichment and subnetwork analyses for a user-input list of genes, SNPs, genomic regions, or protein domains, leveraging ontologies, networks, and many other knowledgebase resources, such as functional genomic datasets about e/pQTL, promoter capture Hi-C, and enhancer-gene maps. Besides, the web server is user-friendly, very suitable for users who are unfamiliar with coding.
 
-One of the major challenges in genomics research is how to bridge the gap between generated genomic summary data and downstream knowledge discovery. We define genomic summary data as a list of genes or SNPs (more generally, genomic regions), along with their significance levels (e.g., p-values). We are leading the field in making sense of genomic summary data for knowledge discovery through developing approaches and tools that have been verified to be efficient and effective, including XGR (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)), dnet (see [Genome Medicine 2014](https://www.ncbi.nlm.nih.gov/pubmed/25246945)), Priority index (see [Nature Genetics 2019](https://www.ncbi.nlm.nih.gov/pubmed/31253980)), and dcGO (see [Nucleic Acids Research 2013](https://www.ncbi.nlm.nih.gov/pubmed/23161684)).
+One of the major challenges in genomics research is how to bridge the gap between generated genomic summary data and downstream knowledge discovery. We define genomic summary data as a list of genes or SNPs (more generally, genomic regions), along with their significance levels (e.g. p-values). We are leading the field in making sense of genomic summary data for knowledge discovery through developing approaches and tools that have been verified to be efficient and effective, including XGR (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)), dnet (see [Genome Medicine 2014](https://www.ncbi.nlm.nih.gov/pubmed/25246945)), Priority index (see [Nature Genetics 2019](https://www.ncbi.nlm.nih.gov/pubmed/31253980)), and dcGO (see [Nucleic Acids Research 2013](https://www.ncbi.nlm.nih.gov/pubmed/23161684)).
 
 Building upon our previous approaches that have stood the test of time (with most of citations received in the past two years), and also incorporating the growing knowledgebase of ontologies and networks, XGR+ offers seven analysers for enrichment and subnetwork analyses, each doing specific interpretations tailored to genomic summary data at the gene, SNP, genomic region, and protein domain levels.
 
@@ -104,10 +104,12 @@ if(1){
 <hr>
 
 ```{r, eval=TRUE, echo=FALSE}
-c1 <- c("ENRICHMENT ANALYSER (GENES) - EAG","ENRICHMENT ANALYSER (SNPS) - EAS","ENRICHMENT ANALYSER (REGIONS) - EAR","ENRICHMENT ANALYSER (DOMAINS) - EAD","SUBNETWORK ANALYSER (GENES) - SAG","SUBNETWORK ANALYSER (SNPS) - SAS","SUBNETWORK ANALYSER (REGIONS) - SAR")
-c2 <- c("~9 seconds","~55 seconds","~20 seconds","~2 seconds","~47 seconds","~55 seconds","~23 seconds")
-df_runtime <- tibble(Analysers=c1, 'Runtime (Server)'=c2)
-knitr::kable(df_runtime, caption="A summary of the runtime (on the server side) per tool estimated using Google Chrome.", row.names=FALSE, align='c')
+#c1 <- c("ENRICHMENT ANALYSER (GENES) - EAG","ENRICHMENT ANALYSER (SNPS) - EAS","ENRICHMENT ANALYSER (REGIONS) - EAR","ENRICHMENT ANALYSER (DOMAINS) - EAD","SUBNETWORK ANALYSER (GENES) - SAG","SUBNETWORK ANALYSER (SNPS) - SAS","SUBNETWORK ANALYSER (REGIONS) - SAR")
+c1 <- c("EAG","EAS","EAR","EAD","SAG","SAS","SAR")
+c2 <- c("ENRICHMENT ANALYSER (GENES)","ENRICHMENT ANALYSER (SNPS)","ENRICHMENT ANALYSER (REGIONS)","ENRICHMENT ANALYSER (DOMAINS)","SUBNETWORK ANALYSER (GENES)","SUBNETWORK ANALYSER (SNPS)","SUBNETWORK ANALYSER (REGIONS)")
+c3 <- c("~9 seconds","~55 seconds","~20 seconds","~2 seconds","~47 seconds","~55 seconds","~23 seconds")
+df_runtime <- tibble(Analysers=c1, Description=c2, 'Runtime'=c3)
+knitr::kable(df_runtime, caption="A summary of the runtime (computed on the server side) per analyser.", row.names=FALSE, align='c')
 ```
 
 
@@ -135,7 +137,7 @@ grid.raster(img)
 
 # HELP BUTTONS
 
-Each user-request interface features a toggle button labelled `Show/Hide Info`. This button contains information on how to use the interface, including details on input, output, and other relevant information. Additionally, there is an `Example Input/Output` button that showcases example inputs and outputs. For example, the screenshot below displays the `SUBNETWORK ANALYSER (REGIONS)` interface.
+Each user-request interface features a toggle button labelled `Show/Hide Info`. This button contains information on how to use the interface, including details on input, output, and other relevant information. Additionally, there is an `Example I/O` button that showcases example inputs and outputs. For example, the screenshot below displays the `Show/Hide Info` toggle button in the `SUBNETWORK ANALYSER (REGIONS)` interface.
 
 <hr>
 
@@ -148,11 +150,11 @@ grid.raster(img)
 
 # ERROR MESSAGES
 
-The error messages will be displayed, for example, if the input into the `SUBNETWORK ANALYSER (REGIONS)` is invalid (see the screenshot below). Notably, in the results page, a summary of input data is also returned to the users for reference.
+The error messages will be displayed, for example, if the input data into the `SUBNETWORK ANALYSER (REGIONS)` is invalid (see the screenshot below). Notably, in the results page, a summary of input data is also returned to the users for reference.
 
 <hr>
 
-```{r SAregion-error, fig.cap="The screenshot for the error messages shown when the input is invalid, for example, in the `SUBNETWORK ANALYSER (REGIONS)` interface.", fig.width=10, fig.height=3.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+```{r SAregion-error, fig.cap="The screenshot for the error messages shown when the input is invalid, taking as example, the `SUBNETWORK ANALYSER (REGIONS)` interface.", fig.width=10, fig.height=3.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAregion.error.png")
@@ -172,6 +174,8 @@ grid.raster(img)
 - `Step 2`: Select from a list of supported ontologies.
 
 - `More Controls`: Use additional parameters to fine-tune the above steps.
+
+- `SUBMIT`: click the SUBMIT button to execute the analysis.
 
 > **Output**
 
@@ -214,7 +218,7 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. The downloadable PDF file is also provided.
+- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. The downloadable pdf file is also provided.
 
 ```{r EAgene-results-forestplot, fig.cap="A forest plot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
@@ -226,7 +230,7 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the tab `Output: dotplot`, `An dotplot` illustrates enriched ontology terms. The downloadable PDF file is also provided.
+- Under the tab `Output: dotplot`, `An dotplot` illustrates enriched ontology terms. The downloadable pdf file is also provided.
 
 ```{r EAgene-results-dotplot, fig.cap="A dotplot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
@@ -252,6 +256,8 @@ grid.raster(img)
 - `Step 4`: Select from a list of supported ontologies.
 
 - `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+- `SUBMIT`: click the SUBMIT button to execute the analysis.
 
 > **Output**
 
@@ -306,7 +312,7 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable PDF file is also provided.
+- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
 
 ```{r EAsnp-results-forestplot, fig.cap="A forest plot for enriched ontology terms under the `Output: forest plot` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
@@ -318,7 +324,7 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable PDF file is also provided.
+- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
 
 ```{r EAsnp-results-dotplot, fig.cap="A dotplot for enriched ontology terms under the `Output: dotplot` tab.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
@@ -342,6 +348,8 @@ grid.raster(img)
 - `Step 4`: Select from a list of supported ontologies.
 
 - `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+- `SUBMIT`: click the SUBMIT button to execute the analysis.
 
 > **Output**
 
@@ -396,7 +404,7 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable PDF file is also provided.
+- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
 
 ```{r EAregion-results-forestplot, fig.cap="A forest plot illustrating enriched ontology terms displayed under the `Output: forest plot` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
@@ -408,7 +416,7 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable PDF file is also provided.
+- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
 
 ```{r EAregion-results-dotplot, fig.cap="A dotplot illustrating enriched ontology terms displayed under the `Output: dotplot` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
@@ -430,6 +438,8 @@ grid.raster(img)
 - `Step 3`: Select from a list of supported ontologies.
 
 - `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+- `SUBMIT`: click the SUBMIT button to execute the analysis.
 
 > **Output**
 
@@ -472,7 +482,7 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable PDF file is also available.
+- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable pdf file is also available.
 
 ```{r EAdomain-results-forestplot, fig.cap="A forest plot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
@@ -484,7 +494,7 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable PDF file is also available.
+- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable pdf file is also available.
 
 ```{r EAdomain-results-dotplot, fig.cap="A dotplot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
@@ -506,6 +516,8 @@ grid.raster(img)
 - `Step 2` and `Step 3`: Identify a subnetwork of highly-scored genes from a gene network (`Step 2`), with the desired number of genes in the resulting subnetwork (`Step 3`). The significance (p-value) of observing the identified subnetwork by chance can also be estimated by a degree-preserving node permutation test.
 
 - `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+- `SUBMIT`: click the SUBMIT button to execute the analysis.
 
 > **Output**
 
@@ -562,6 +574,8 @@ grid.raster(img)
 - `Step 4` and `Step 5`: A subnetwork of highly-scored genes is identified from a gene network (`Step 4`), with the desired number of genes in the resulting subnetwork (`Step 5`). The significance (p-value) of observing the identified subnetwork by chance can also be estimated by a degree-preserving node permutation test.
 
 - `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+- `SUBMIT`: click the SUBMIT button to execute the analysis.
 
 > **Output**
 
@@ -628,6 +642,8 @@ grid.raster(img)
 - `Step 4` and `Step 5`: A subnetwork of highly-scored genes is identified from a gene network (`Step 4`), with the desired number of genes in the resulting subnetwork (`Step 5`). The significance (p-value) of observing the identified subnetwork by chance can also be estimated by a degree-preserving node permutation test.
 
 - `More Controls`: Use additional parameters to fine-tune the steps described above.
+
+- `SUBMIT`: click the SUBMIT button to execute the analysis.
 
 > **Output**
 

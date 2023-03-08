@@ -54,11 +54,11 @@ data_input %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bf
 
 ## **Output: subnetwork**
 
-> **A network visualisation** of the subnetwork, with `r ls_rmd$vcount` genes/nodes color-coded based on input gene significance information.`r if(ls_rmd$combinedP<1){str_c(" The significance (empirical p-value) of observing the identified crosstalk by chance is ",as.character(ls_rmd$combinedP),", as estimated by a degree-preserving node permutation test. ")}` An editable PDF file is also available for download.
+> **A network visualisation** of the subnetwork, with `r ls_rmd$vcount` genes/nodes color-coded based on input gene significance information.`r if(ls_rmd$combinedP<1){str_c(" The significance (empirical p-value) of observing the identified crosstalk by chance is ",as.character(ls_rmd$combinedP),", as estimated by a degree-preserving node permutation test. ")}` An editable pdf file is also available for download.
 
 
 ```{r}
-hlink_pdf <- oAuxEmbed(ls_rmd$pdf_crosstalk, link.text="Download PDF")
+hlink_pdf <- oAuxEmbed(ls_rmd$pdf_crosstalk, link.text="DOWNLOAD .pdf")
 ```
 <div class="text-right">`r hlink_pdf`</div>
 

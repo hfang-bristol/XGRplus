@@ -54,7 +54,7 @@ data_input %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bf
 
 ## **Output: enriched terms**
 
-> **An interactive table** that displays enriched ontology terms. Each enriched term (the columns `Ontology`, `Term ID` and `Term Name`) has the enrichment Z-score (`Z-score`), the enrichment significance level (`FDR`), the number (`Num`) and list (`Members`) of member domains that overlap with your input domains.
+> **An interactive table** that displays enriched ontology terms. Each enriched term (the columns `Ontology`, `Term ID` and `Term Name`) has the enrichment Z-score (`Z-score`), the enrichment significance level (`FDR`), odds ratio (`Odds ratio`) and 95% confidence intervals (`95% CI`), the number (`Num`) and list (`Members`) of member domains that overlap with your input domains. The table is sorted by FDR ascendingly.
 
 ```{r}
 #filename <- str_c('~/Sites/XGR/XGRplus-site/app/examples/', 'dcGO_enrichment.xlsx')
@@ -62,24 +62,45 @@ filename <- ls_rmd$xlsx_enrichment
 
 message(sprintf("'%s' '%s' (%s) ...", filename, getwd(), as.character(Sys.time())), appendLF=TRUE)
 
-tb <- openxlsx::read.xlsx(filename) %>% as_tibble() %>% transmute(Ontology=namespace, `Term ID`=name, `Term Name`=id, `Z-score`=zscore, FDR=signif(adjp,digits=4), Num=nO, Members=overlap) %>% arrange(FDR)
+tb <- openxlsx::read.xlsx(filename) %>% as_tibble() %>% transmute(Ontology=namespace, `Term ID`=name, `Term Name`=id, `Z-score`=zscore, FDR=signif(adjp,digits=4), `Odds ratio`=or, `95% CI`=str_c('[',CIl,', ',CIu,']'), Num=nO, Members=overlap) %>% arrange(FDR)
 
 tb %>% DT::datatable(options=list(pageLength=2,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
 ```
 
 
-## **Output: forest plot**
+## **Output: dotplot**
 
-> **A forest plot** of enriched ontology terms identified using Fisher's exact test. An editable PDF file is also available for download.
+> **A dotplot** of enriched ontology terms identified using Fisher's exact test. An editable pdf file is also available for download.
 
 ```{r}
-#hlink_pdf <- oAuxEmbed("~Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_forestplot.pdf", link.text="Download PDF")
-hlink_pdf <- oAuxEmbed(ls_rmd$pdf_forestplot, link.text="Download PDF")
+#hlink_pdf <- oAuxEmbed("~Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_dotplot.pdf", link.text="Download PDF")
+hlink_pdf <- oAuxEmbed(ls_rmd$pdf_dotplot, link.text="DOWNLOAD .pdf")
 ```
 <div class="text-right">`r hlink_pdf`</div>
 
 
-```{r forest, fig.cap="Forest plot for enriched ontology terms (the top 10).", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
+```{r dotplot, fig.cap="A dotplot of enriched ontology terms. The dots colored in dark red represent the terms with FDR < 0.05, indicating statistical significance. The top 5 significant terms (ordered by FDR ascendingly) are labelled for easier interpretation.", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
+library(png)
+library(grid)
+#filename <- str_c('"~Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_dotplot.png')
+filename <- ls_rmd$png_dotplot
+img <- readPNG(filename)
+grid.raster(img)
+```
+
+
+## **Output: forest plot**
+
+> **A forest plot** of enriched ontology terms identified using Fisher's exact test. An editable pdf file is also available for download.
+
+```{r}
+#hlink_pdf <- oAuxEmbed("~Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_forestplot.pdf", link.text="Download PDF")
+hlink_pdf <- oAuxEmbed(ls_rmd$pdf_forestplot, link.text="DOWNLOAD .pdf")
+```
+<div class="text-right">`r hlink_pdf`</div>
+
+
+```{r forest, fig.cap="Forest plot for enriched ontology terms (ordered by odds ratio descendingly).", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
 library(png)
 library(grid)
 #filename <- str_c('"~Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_forestplot.png')
@@ -88,23 +109,3 @@ img <- readPNG(filename)
 grid.raster(img)
 ```
 
-
-## **Output: dotplot**
-
-> **A dotplot** of enriched ontology terms identified using Fisher's exact test. An editable PDF file is also available for download.
-
-```{r}
-#hlink_pdf <- oAuxEmbed("~Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_dotplot.pdf", link.text="Download PDF")
-hlink_pdf <- oAuxEmbed(ls_rmd$pdf_dotplot, link.text="Download PDF")
-```
-<div class="text-right">`r hlink_pdf`</div>
-
-
-```{r dotplot, fig.cap="A dotplot of enriched ontology terms. The dots colored in dark red represent the terms with FDR < 0.05, indicating statistical significance. The top 5 significant terms are labelled for easier interpretation.", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
-library(png)
-library(grid)
-#filename <- str_c('"~Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_dotplot.png')
-filename <- ls_rmd$png_dotplot
-img <- readPNG(filename)
-grid.raster(img)
-```

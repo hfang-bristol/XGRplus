@@ -15,7 +15,7 @@
 
 		<div class="text-right">
 			% if(1){
-				<a href="javascript:newWin('/XGRplusbooklet/index.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
+				<a href="javascript:newWin('/XGRplusbooklet/index.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg fa-flip-horizontal"></span>&nbsp;User Manual</a>
 			% }
 		</div>
 
@@ -45,13 +45,13 @@
 			 <div class = "panel-body">
 				
 				<fieldset>
-				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;We are pleased to introduce XGR+, an updated version of our previously established XGR software that has gained increasing popularity. XGR+ is a newly designed web server that offers real-time enrichment and subnetwork analyses for a user-input list of genes, SNPs, genomic regions, or protein domains, through leveraging ontologies, networks and many others (such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps). This new website is free and open to all users, and does not require users to log in.</h5>
+				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;We are pleased to introduce XGR+, an updated version of our previously established XGR software that has gained increasing popularity. XGR+ is a newly designed web server that offers real-time enrichment and subnetwork analyses for a user-input list of genes, SNPs, genomic regions, or protein domains, through leveraging ontologies, networks, and many other datasets (such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps). This new website is free and open to all users, and does not require users to log in.</h5>
 				</fieldset>
 				
 				<br>
 				
 				<fieldset>
-				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;One of the major bottlenecks for genomics research is how to bridge the widening gap between generated genomic summary data and downstream knowledge discovery. We define genomic summary data as a list of genes or SNPs (more generally, genomic regions), along with their significance level (e.g. p-values). We are at the forefront of making sense of genomic summary data for knowledge discovery through developing approaches and tools that have been shown to be efficient and effective; these tool include dcGO, dnet, XGR, and Pi.</h5>
+				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;One of the major bottlenecks for genomics research is how to bridge the widening gap between generated genomic summary data and downstream knowledge discovery. We define genomic summary data as a list of genes or SNPs (more generally, genomic regions), along with their significance level (e.g. p-values). We are at the forefront of making sense of genomic summary data for knowledge discovery through developing approaches and tools that have been shown to be efficient and effective. These tools and approaches include dcGO, dnet, XGR, and Pi; see below PUBLICATIONS (KEY OR RELATED).</h5>
 				</fieldset>
 				
 				<br>
@@ -73,7 +73,7 @@
 				<br>
 				
 				<fieldset>
-				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;Please refer to <a href="https://hfang-bristol.github.io/XGRplus" target="github"><i class="fa fa-github fa-1x"></i>&nbsp;Source Code</a> and <a href="/XGRplusbooklet/index.html" target="use manual"><i class="fa fa-book fa-1x"></i>&nbsp;User Manual</a> for step-by-step instructions on how to build and use XGR+, respectively.</h5>
+				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;Please refer to <a href="https://hfang-bristol.github.io/XGRplus" target="github"><i class="fa fa-github fa-1x"></i>&nbsp;Source Code</a> and <a href="/XGRplusbooklet/index.html" target="use manual"><i class="fa fa-book fa-1x fa-flip-horizontal"></i>&nbsp;User Manual</a> for step-by-step instructions on how to build and use XGR+, respectively.</h5>
 				</fieldset>
 				
 				<br>
