@@ -467,7 +467,7 @@ rs568617	0.00000004
 	
 		<div class="text-right">
 			% if(1){
-				<a href="javascript:newWin('/app/examples/_tmp_RMD_SAsnp.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example I/O</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/subnetwork-analyser-snps---sas.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg fa-flip-horizontal"></span>&nbsp;User Manual</a>
+				<a href="javascript:newWin('/app/examples/_tmp_RMD_SAsnp.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example IO</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/subnetwork-analyser-snps---sas.html', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg fa-flip-horizontal"></span>&nbsp;User Manual</a>
 			% }else{
 				<a href="javascript:newWin('/app/examples/_tmp_RMD_SAsnp.html', 'Example', '909', '1169')"><i class="fa fa-key fa-lg" aria-hidden="true"></i>&nbsp;Example Input/Output</a>&nbsp;&nbsp;&nbsp;<a href="javascript:newWin('/XGRplusbooklet/index.html#subnetwork-analyser-snps', 'XGRplusbooklet', '909', '1169')"><span class="fa fa-book fa-lg"></span>&nbsp;User Manual</a>
 			% }

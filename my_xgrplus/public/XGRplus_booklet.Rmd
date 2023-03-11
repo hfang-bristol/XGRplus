@@ -162,7 +162,7 @@ The error messages will be displayed, for example, if the input data into the `S
 
 <hr>
 
-```{r SAregion-error, fig.cap="The screenshot for the error messages shown when the input is invalid, taking as example, the `SUBNETWORK ANALYSER (REGIONS)` interface.", fig.width=10, fig.height=3.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+```{r SAregion-error, fig.cap="The screenshot for the error messages will be shown when the input is invalid, taking as an example, the `SUBNETWORK ANALYSER (REGIONS)` interface.", fig.width=10, fig.height=3.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAregion.error.png")
@@ -349,7 +349,7 @@ grid.raster(img)
 
 > **Input**
 
-- `Step 1` and `Step 2`: Enter a list of genomic regions. Please ensure that input genomic coordinates (`Step 2`) are consistent with the genome build (`Step 1`)
+- `Step 1` and `Step 2`: Enter a list of genomic regions. Please ensure that input genomic coordinates (`Step 2`) are consistent with the genome build (`Step 1`).
 
 - `Step 3`: Use genomic proximity, quantitative trait locus mapping, or promoter capture Hi-C to identify linked genes.
 
