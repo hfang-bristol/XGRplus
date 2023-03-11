@@ -37,7 +37,7 @@ q('no')
 # {.tabset .tabset-fade}
 
 
-## **Input domain information**
+## **Input Domain Information**
 Completed on `r format(Sys.time(), "%a %b %d %X %Y")` (`r Sys.timezone()`), with the runtime of `r ls_rmd$runtime`.
 
 > **An interactive table** for user-input domains (n=`r nrow(ls_rmd$data_input)`, being processed). The table includes three columns: 1st column `Identifier` for domain identifiers, 2nd column `Level` for domain level, and 3rd column `Description` for domain description.
@@ -52,7 +52,7 @@ data_input %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bf
 ```
 
 
-## **Output: enriched terms**
+## **Output: Enriched Terms**
 
 > **An interactive table** that displays enriched ontology terms. Each enriched term (the columns `Ontology`, `Term ID` and `Term Name`) has the enrichment Z-score (`Z-score`), the enrichment significance level (`FDR`), odds ratio (`Odds ratio`) and 95% confidence intervals (`95% CI`), the number (`Num`) and list (`Members`) of member domains that overlap with your input domains. The table is sorted by FDR ascendingly.
 
@@ -68,7 +68,7 @@ tb %>% DT::datatable(options=list(pageLength=2,searchHighlight=T,dom='Bfrtip',bu
 ```
 
 
-## **Output: dotplot**
+## **Output: Dotplot**
 
 > **A dotplot** of enriched ontology terms identified using Fisher's exact test. An editable pdf file is also available for download.
 
@@ -79,7 +79,7 @@ hlink_pdf <- oAuxEmbed(ls_rmd$pdf_dotplot, link.text="DOWNLOAD .pdf")
 <div class="text-right">`r hlink_pdf`</div>
 
 
-```{r dotplot, fig.cap="A dotplot of enriched ontology terms. The dots colored in dark red represent the terms with FDR < 0.05, indicating statistical significance. The top 5 significant terms (ordered by FDR ascendingly) are labelled for easier interpretation.", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
+```{r dotplot, fig.cap="A dotplot of enriched ontology terms. The dots colored in dark green represent the terms with FDR < 0.05, indicating statistical significance. The top 5 significant terms (ordered by FDR ascendingly) are labelled for easier interpretation.", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
 library(png)
 library(grid)
 #filename <- str_c('"~Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_dotplot.png')
@@ -89,7 +89,7 @@ grid.raster(img)
 ```
 
 
-## **Output: forest plot**
+## **Output: Forest Plot**
 
 > **A forest plot** of enriched ontology terms identified using Fisher's exact test. An editable pdf file is also available for download.
 

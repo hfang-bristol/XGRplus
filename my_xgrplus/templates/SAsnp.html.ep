@@ -551,7 +551,7 @@ rs568617	0.00000004
 					</div>
 				</div>
 				
-				<p><strong>Step 3</strong>: Identify linked genes based on genomic proximity, quantitative trait locus mapping, or promoter capture Hi-C.</p>
+				<p><strong>Step 3</strong>: Identify linked genes based on genomic proximity, promoter capture Hi-C, or quantitative trait locus mapping.</p>
 				<div class="form-group">
 					<label class="control-label col-sm-5" for="distance">Linked genes supported by:</label>
 					<div class="col-sm-7">
@@ -618,14 +618,6 @@ rs568617	0.00000004
 							<option value="50">50</a>	
 						</select>
 					</div>
-					
-					<label class="control-label col-sm-5" for="network">Significance of the subnetwork:</label>
-					<div class="col-sm-7">
-						<select name="subnet_sig" id="subnet_sig" class="form-control">
-							<option value="no" selected>Don't test</a>	
-							<option value="yes">Degree-preserving node permutation test</a>
-						</select>
-					</div>
 				</div>
 				
 				<!-- Advanced begin ################### -->
@@ -636,11 +628,13 @@ rs568617	0.00000004
 							<i class="fa fa-chevron-circle-down fa-lg"></i> <strong class="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="Specify additional parameters for more controls">More Controls</strong></a>
 						</button>
 						
+						<br>
+						
 						<div id="more-options" class="row collapse">
 							<div class="col-md-12" style="border: 1px solid #fff">
 
 								<!-- significance.threshold -->
-								<i class="fa fa-hand-o-right fa-lg"></i> SNP significance.
+								<i class="fa fa-check-circle-o fa-lg"></i> SNP significance.
 								<div class="form-group">
 									<label class="control-label col-sm-5">P-value:</label>
 									<div class="col-sm-7">
@@ -648,6 +642,18 @@ rs568617	0.00000004
 											<option value="1e-5">1e-5</a>
 											<option value="5e-8" selected>5e-8</a>
 											<option value="NULL">None</a>
+										</select>
+									</div>									
+								</div>
+								
+								<!-- subnet.sig -->
+								<i class="fa fa-check-circle-o fa-lg"></i> Significance of the subnetwork.
+								<div class="form-group">
+									<label class="control-label col-sm-5">Test:</label>
+									<div class="col-sm-7">
+										<select name="subnet_sig" class="form-control">
+											<option value="no" selected>Don't test</a>	
+											<option value="yes">Degree-preserving node permutation test</a>
 										</select>
 									</div>									
 								</div>

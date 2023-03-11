@@ -751,7 +751,7 @@ R_pipeline <- function (input.file="", output.file="", domain.type="", obo="", F
 		
 		# Dotplot
 		message(sprintf("Drawing dotplot (%s) ...", as.character(Sys.time())), appendLF=TRUE)
-		gp_dotplot <- df_eTerm %>% mutate(name=str_c(id)) %>% oSEAdotplot(FDR.cutoff=0.05, label.top=5, size.title="Number of domains", label.direction.y=c("left","right","none")[3])
+		gp_dotplot <- df_eTerm %>% mutate(name=str_c(id)) %>% oSEAdotplot(FDR.cutoff=0.05, label.top=5, size.title="Number of domains", label.direction.y=c("left","right","none")[3], colors=c("#95c11f","#026634"))
 		output.file.dotplot.pdf <- gsub(".txt$", "_dotplot.pdf", output.file, perl=T)
 		#output.file.dotplot.pdf <-  "/Users/hfang/Sites/XGR/XGRplus-site/app/examples/EAdomain_enrichment_dotplot.pdf"
 		ggsave(output.file.dotplot.pdf, gp_dotplot, device=cairo_pdf, width=5, height=4)
@@ -1008,7 +1008,7 @@ R_pipeline <- function (input.file="", output.file="", obo="", FDR.cutoff="", mi
 		library(tidyverse)
 		
 		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAgene.txt"
-		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAgene_GenAge.txt"
+		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_EAgene_PMID29121237GenAge.txt"
 		
 		data <- read_delim(input.file, delim="\t", col_names=F) %>% as.data.frame() %>% pull(1)
 		FDR.cutoff <- 1
@@ -1017,6 +1017,8 @@ R_pipeline <- function (input.file="", output.file="", obo="", FDR.cutoff="", mi
 		
 		obo <- "MitoPathway"
 		obo <- "KEGGEnvironmentalOrganismal"
+		
+		obo <- "IDPO"
 	}
 	
 	# read input file
@@ -1036,9 +1038,15 @@ R_pipeline <- function (input.file="", output.file="", obo="", FDR.cutoff="", mi
 
 	if(class(eset)=="eSET"){
 		# *_enrichment.txt
-		df_eTerm <- eset %>% oSEAextract() %>% filter(adjp < FDR.cutoff)
-		df_eTerm %>% write_delim(output.file, delim="\t")
-		
+		df_eTerm <- eset %>% oSEAextract() %>% filter(adjp < FDR.cutoff)		
+		####################
+		if(nrow(df_eTerm)==0){
+			return(NULL)
+		}else{
+			df_eTerm %>% write_delim(output.file, delim="\t")
+		}
+		####################
+				
 		# *_enrichment.xlsx
 		output.file.enrichment <- gsub(".txt$", ".xlsx", output.file, perl=T)
 		df_eTerm %>% openxlsx::write.xlsx(output.file.enrichment)
@@ -1046,7 +1054,7 @@ R_pipeline <- function (input.file="", output.file="", obo="", FDR.cutoff="", mi
 		
 		# Dotplot
 		message(sprintf("Drawing dotplot (%s) ...", as.character(Sys.time())), appendLF=TRUE)
-		gp_dotplot <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAdotplot(FDR.cutoff=0.05, label.top=5, size.title="Number of genes", label.direction.y=c("left","right","none")[3])
+		gp_dotplot <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAdotplot(FDR.cutoff=0.05, label.top=5, size.title="Number of genes", label.direction.y=c("left","right","none")[3], colors=c("#95c11f","#026634"))
 		output.file.dotplot.pdf <- gsub(".txt$", "_dotplot.pdf", output.file, perl=T)
 		#output.file.dotplot.pdf <-  "/Users/hfang/Sites/XGR/XGRplus-site/app/examples/EAgene_enrichment_dotplot.pdf"
 		ggsave(output.file.dotplot.pdf, gp_dotplot, device=cairo_pdf, width=5, height=4)
@@ -1058,7 +1066,7 @@ R_pipeline <- function (input.file="", output.file="", obo="", FDR.cutoff="", mi
 			message(sprintf("Drawing forest (%s) ...", as.character(Sys.time())), appendLF=TRUE)
 			#zlim <- c(0, -log10(df_eTerm$adjp) %>% max() %>% ceiling())
 			zlim <- c(0, -log10(df_eTerm$adjp) %>% quantile(0.95) %>% ceiling())
-			gp_forest <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAforest(top=10, colormap="spectral.top", color.title=expression(-log[10]("1/FDR")), zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Number\nof genes", wrap.width=50)
+			gp_forest <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAforest(top=10, colormap="spectral.top", color.title=expression(-log[10]("FDR")), zlim=zlim, legend.direction=c("auto","horizontal","vertical")[3], sortBy=c("or","none")[1], size.title="Number\nof genes", wrap.width=50)
 			output.file.forestplot.pdf <- gsub(".txt$", "_forest.pdf", output.file, perl=T)
 			#output.file.forest.pdf <-  "/Users/hfang/Sites/XGR/XGRplus-site/app/examples/EAgene_enrichment_forestplot.pdf"
 			ggsave(output.file.forestplot.pdf, gp_forest, device=cairo_pdf, width=5, height=3.5)
@@ -1719,7 +1727,7 @@ R_pipeline <- function (input.file="", output.file="", population="", crosslink=
 		## R at /Users/hfang/Sites/XGR/XGRplus-site/my_xgrplus/public
 		## but outputs at public/tmp/eV2CG.SNPs.STRING_high.72959383_priority.xlsx
 		######################################
-		message(sprintf("RMD (%s) ...", as.character(Sys.time())), appendLF=TRUE)
+		message(sprintf("RMD %s %f (%s) ...", subnet.sig, combinedP, as.character(Sys.time())), appendLF=TRUE)
 		
 		if(1){
 		
@@ -1775,7 +1783,7 @@ ls_tmp <- lapply(vec, function(x) source(x))
 vec <- list.files(path='/Users/hfang/Sites/XGR/OpenXGR/R', pattern='.r', full.names=T)
 ls_tmp <- lapply(vec, function(x) source(x))
 
-R_pipeline(input.file=\"$input_filename\", output.file=\"$output_filename\", population=\"$population\", crosslink=\"$crosslink\", significance.threshold=\"$significance_threshold\", network=\"$network\", subnet.size=\"$subnet_size\", subnet.sig=\"$subnet_sig=\", placeholder=\"$placeholder\", host.port=\"$host_port\")
+R_pipeline(input.file=\"$input_filename\", output.file=\"$output_filename\", population=\"$population\", crosslink=\"$crosslink\", significance.threshold=\"$significance_threshold\", network=\"$network\", subnet.size=\"$subnet_size\", subnet.sig=\"$subnet_sig\", placeholder=\"$placeholder\", host.port=\"$host_port\")
 
 endT <- Sys.time()
 runTime <- as.numeric(difftime(strptime(endT, '%Y-%m-%d %H:%M:%S'), strptime(startT, '%Y-%m-%d %H:%M:%S'), units='secs'))
@@ -2037,7 +2045,13 @@ R_pipeline <- function (input.file="", output.file="", population="", crosslink=
 
 		# *_enrichment.txt
 		df_eTerm <- eset %>% oSEAextract() %>% filter(adjp < FDR.cutoff)
-		df_eTerm %>% write_delim(output.file, delim="\t")
+		####################
+		if(nrow(df_eTerm)==0){
+			return(NULL)
+		}else{
+			df_eTerm %>% write_delim(output.file, delim="\t")
+		}
+		####################
 		
 		# *_enrichment.xlsx
 		output.file.enrichment <- gsub(".txt$", ".xlsx", output.file, perl=T)
@@ -2046,7 +2060,7 @@ R_pipeline <- function (input.file="", output.file="", population="", crosslink=
 		
 		# Dotplot
 		message(sprintf("Drawing dotplot (%s) ...", as.character(Sys.time())), appendLF=TRUE)
-		gp_dotplot <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAdotplot(FDR.cutoff=0.05, label.top=5, size.title="Number of genes", label.direction.y=c("left","right","none")[3])
+		gp_dotplot <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAdotplot(FDR.cutoff=0.05, label.top=5, size.title="Number of genes", label.direction.y=c("left","right","none")[3], colors=c("#95c11f","#026634"))
 		output.file.dotplot.pdf <- gsub(".txt$", "_dotplot.pdf", output.file, perl=T)
 		#output.file.dotplot.pdf <-  "/Users/hfang/Sites/XGR/XGRplus-site/app/examples/EAsnp_enrichment_dotplot.pdf"
 		ggsave(output.file.dotplot.pdf, gp_dotplot, device=cairo_pdf, width=5, height=4)
@@ -2375,7 +2389,7 @@ R_pipeline <- function (input.file="", output.file="", build.conversion="", cros
 		
 		# Dotplot
 		message(sprintf("Drawing dotplot (%s) ...", as.character(Sys.time())), appendLF=TRUE)
-		gp_dotplot <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAdotplot(FDR.cutoff=0.05, label.top=5, size.title="Number of genes", label.direction.y=c("left","right","none")[3])
+		gp_dotplot <- df_eTerm %>% mutate(name=str_c(name)) %>% oSEAdotplot(FDR.cutoff=0.05, label.top=5, size.title="Number of genes", label.direction.y=c("left","right","none")[3], colors=c("#95c11f","#026634"))
 		output.file.dotplot.pdf <- gsub(".txt$", "_dotplot.pdf", output.file, perl=T)
 		#output.file.dotplot.pdf <-  "/Users/hfang/Sites/XGR/XGRplus-site/app/examples/EAregion_enrichment_dotplot.pdf"
 		ggsave(output.file.dotplot.pdf, gp_dotplot, device=cairo_pdf, width=5, height=4)
@@ -2640,16 +2654,18 @@ R_pipeline <- function (input.file="", output.file="", significance.threshold=""
 		guid=NULL
 		verbose=TRUE
 		
-		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_SAregion.txt"
+		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_SAregion_PMID35751107TableS2.txt"
 		data <- read_delim(input.file, delim="\t") %>% as.data.frame() %>% select(1:2)
 		
 		format <- "data.frame"
 		build.conversion <- c(NA,"hg38.to.hg19","hg18.to.hg19")
 		
 		significance.threshold=5e-2
+		significance.threshold=NULL
 		
 		crosslink <- "proximity_20000"
 		crosslink <- "RGB.PCHiC_PMID27863249_Combined"
+		crosslink <- "RGB_ABC_Encode_Combined"
 		network <- "STRING_high"
 		subnet.size <- 30
 
@@ -2728,7 +2744,7 @@ R_pipeline <- function (input.file="", output.file="", significance.threshold=""
 		## R at /Users/hfang/Sites/XGR/XGRplus-site/my_xgrplus/public
 		## but outputs at public/tmp/eV2CG.Regions.STRING_high.72959383_priority.xlsx
 		######################################
-		message(sprintf("RMD (%s) ...", as.character(Sys.time())), appendLF=TRUE)
+		message(sprintf("RMD %s %f (%s) ...", subnet.sig, combinedP, as.character(Sys.time())), appendLF=TRUE)
 		
 		if(1){
 		

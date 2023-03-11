@@ -37,7 +37,7 @@ q('no')
 # {.tabset .tabset-fade}
 
 
-## **Input genomic region information**
+## **Input Genomic Region-Level Summary Data**
 Completed on: `r format(Sys.time(), "%a %b %d %X %Y")` (`r Sys.timezone()`), with the runtime of (`r ls_rmd$runtime`).
 
 > **An interactive table** for user-input genomic regions (n=`r nrow(ls_rmd$data_input)`, being processed). This table has four columns: with 1st column `Input GR` for input genomic regions in the format of `chr:start-end` (genome build `hg19`), 2nd column `Chromosome` for the chromosome, 3rd column `Length` for the region length (bp), 4nd column `Pvalue` for use-input significance information.
@@ -52,7 +52,7 @@ data_input %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bf
 ```
 
 
-## **Output: linked genes**
+## **Output: Linked Genes**
 
 > **Linked Gene table** contains information on genes (n=`r ls_rmd$num_LG`, linked from the input genomic regions), including the column `GScores` (ranged from 1 to 10) that quantifies the degree to which genes are likely modulated by input genomic regions. `Linked genes` are sorted by their linked gene scores and are hyperlinked to [GeneCards](https://www.genecards.org) for further information. Please refer to **`Evidence table`** for details on the linking evidence.
 
@@ -81,7 +81,7 @@ tb %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bfrtip',bu
 ```
 
 
-## **Output: subnetwork**
+## **Output: Gene Subnetwork**
 
 > **A network visualisation** of the subnetwork, with `r ls_rmd$vcount` genes/nodes color-coded by linked gene scores (ranged from 1 to 10).`r if(ls_rmd$combinedP<1){str_c(" The significance (empirical p-value) of observing the identified crosstalk by chance is ",as.character(ls_rmd$combinedP),", as estimated by a degree-preserving node permutation test. ")}` An editable pdf file is also available for download.
 

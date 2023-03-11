@@ -534,7 +534,7 @@ rs568617	0.00000004
 		</div>
 	
 		<div class="text-center">
-			<h3><a href="/XGRplus/EAsnp"><i class="fa fa-play-circle fa-lg"></i>&nbsp;&nbsp;ENRICHMENT ANALYSER (SNPS) - EAS</a>&nbsp;:&nbsp;Identifying enriched ontology terms for genes linked from input SNP list</h3>
+			<h3><a href="/XGRplus/EAsnp"><i class="fa fa-play-circle fa-lg"></i>&nbsp;&nbsp;ENRICHMENT ANALYSER (SNPS) - EAS</a>&nbsp;:&nbsp;Identifying enriched ontology terms for genes linked from input SNPs</h3>
 		</div>
 	</div>
 </div>
@@ -611,7 +611,7 @@ rs568617	0.00000004
 					</div>
 				</div>
 				
-				<p><strong>Step 3</strong>: Identify linked genes based on genomic proximity, quantitative trait locus mapping, or promoter capture Hi-C.</p>
+				<p><strong>Step 3</strong>: Identify linked genes based on genomic proximity, promoter capture Hi-C, or quantitative trait locus mapping.</p>
 				<div class="form-group">
 					<label class="control-label col-sm-5" for="distance">Linked genes supported by:</label>
 					<div class="col-sm-7">
@@ -698,11 +698,13 @@ rs568617	0.00000004
 							<i class="fa fa-chevron-circle-down fa-lg"></i> <strong class="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="Specify additional parameters for more controls">More Controls</strong></a>
 						</button>
 						
+						<br>
+						
 						<div id="more-options" class="row collapse">
 							<div class="col-md-12" style="border: 1px solid #fff">
 
 								<!-- significance.threshold -->
-								<i class="fa fa-hand-o-right fa-lg"></i> SNP significance.
+								<i class="fa fa-check-circle-o fa-lg"></i> SNP significance.
 								<div class="form-group">
 									<label class="control-label col-sm-5">P-value:</label>
 									<div class="col-sm-7">
@@ -715,20 +717,19 @@ rs568617	0.00000004
 								</div>
 
 								<!-- min overlap -->
-								<i class="fa fa-hand-o-right fa-lg"></i> Minimum number of overlapped genes.
+								<i class="fa fa-check-circle-o fa-lg"></i> Minimum number of overlapped genes.
 								<div class="form-group">
 									<label class="control-label col-sm-5">Number of genes:</label>
 									<div class="col-sm-7">
 										<select name="min_overlap" class="form-control">
 											<option value="3" selected>3</a>
 											<option value="5">5</a>
-											<option value="10">10</a>
 										</select>
 									</div>			
 								</div>
 
 								<!-- FDR cutoff -->
-								<i class="fa fa-hand-o-right fa-lg"></i> Term significance.
+								<i class="fa fa-check-circle-o fa-lg"></i> Term significance.
 								<div class="form-group">
 									<label class="control-label col-sm-5">False Discovery Rate (FDR):</label>
 									<div class="col-sm-7">

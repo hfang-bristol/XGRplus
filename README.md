@@ -94,8 +94,8 @@ sudo su
 # here enter your password
 
 # install pandoc
-wget https://github.com/jgm/pandoc/releases/download/2.18/pandoc-2.18-linux-amd64.tar.gz
-tar xvzf pandoc-2.18-linux-amd64.tar.gz --strip-components 1 -C /usr/local/
+wget https://github.com/jgm/pandoc/releases/download/3.1/pandoc-3.1-linux-amd64.tar.gz
+tar xvzf pandoc-3.1-linux-amd64.tar.gz --strip-components 1 -C /usr/local/
 
 # use pandoc to render R markdown
 R

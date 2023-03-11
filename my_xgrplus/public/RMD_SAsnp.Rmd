@@ -37,7 +37,7 @@ q('no')
 # {.tabset .tabset-fade}
 
 
-## **Input SNP-level summary data**
+## **Input SNP-Level Summary Data**
 Completed on: `r format(Sys.time(), "%a %b %d %X %Y")` (`r Sys.timezone()`), with the runtime of (`r ls_rmd$runtime`).
 
 > **An interactive table** for user-input SNPs (n=`r nrow(ls_rmd$data_input)`, being processed). This table has three columns: 1st column `SNPs` for dbSNP rsIDs (hyperlinked to `dbSNP`), 2nd column `P-values` for use-input significance information, and 3rd column `Locus` for genomic locations (the genome build `hg19`).
@@ -52,7 +52,7 @@ data_input %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bf
 ```
 
 
-## **Output: linked genes**
+## **Output: Linked Genes**
 
 > **Linked Gene table** contains information on genes (n=`r ls_rmd$num_LG`, linked from the input SNPs), including the column `GScores` (ranged from 1 to 10) that quantifies the degree to which genes are responsible for genetic associations. `Linked genes` are sorted by their linked gene scores and are hyperlinked to [GeneCards](https://www.genecards.org) for further information. Please refer to **`Evidence table`** for details on the linking evidence.
 
@@ -81,7 +81,7 @@ tb %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bfrtip',bu
 ```
 
 
-## **Output: subnetwork**
+## **Output: Gene Subnetwork**
 
 > **A network visualisation** of the subnetwork, with `r ls_rmd$vcount` genes/nodes color-coded by linked gene scores (ranged from 1 to 10).`r if(ls_rmd$combinedP<1){str_c(" The significance (empirical p-value) of observing the identified crosstalk by chance is ",as.character(ls_rmd$combinedP),", as estimated by a degree-preserving node permutation test. ")}` An editable pdf file is also available for download.
 

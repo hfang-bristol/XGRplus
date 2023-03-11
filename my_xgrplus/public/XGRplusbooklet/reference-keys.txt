@@ -1,8 +1,8 @@
 fig:logo
-tab:unnamed-chunk-3
-tab:unnamed-chunk-4
 fig:app-front
 fig:app-iphone
+tab:unnamed-chunk-3
+tab:unnamed-chunk-4
 fig:SAregion-help
 fig:SAregion-error
 fig:EAgene-interface
@@ -39,9 +39,9 @@ fig:SAregion-results-input
 fig:SAregion-results-link
 fig:SAregion-results-output
 index
-compatibility-runtime
 landing-frontpage
 mobile-first-webserver
+compatibility-runtime
 help-buttons
 error-messages
 enrichment-analyser-genes---eag

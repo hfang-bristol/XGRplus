@@ -43,7 +43,7 @@ grid.raster(img)
 
 > **Motivation**
 
-We are pleased to introduce an updated version of our XGR software, which has gained increasing popularity in genomics research since its first release (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)). This update features a newly designed web server, called XGR Plus or XGR+, now made available [here](http://www.genomicsummary.pro/XGRplus) to all users for free and without any login requirements. It enables almost real-time enrichment and subnetwork analyses for a user-input list of genes, SNPs, genomic regions, or protein domains, leveraging ontologies, networks, and many other knowledgebase resources, such as functional genomic datasets about e/pQTL, promoter capture Hi-C, and enhancer-gene maps. Besides, the web server is user-friendly, very suitable for users who are unfamiliar with coding.
+We are very pleased to introduce an updated version of our XGR software, which has gained increasing popularity in genomic summary data interpretation since its first release (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)). This update features a newly designed web server, called XGR PLUS or XGR+, now made available [here](http://www.genomicsummary.pro/XGRplus) to all users for free and without any login requirements. It enables almost real-time enrichment and subnetwork analyses for a user-input list of genes, SNPs, genomic regions, or protein domains, leveraging ontologies, networks, and knowledgebase resources about functional genomic datasets, such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps. Besides, the web server is user-friendly, very suitable for users who are unfamiliar with coding.
 
 One of the major challenges in genomics research is how to bridge the gap between generated genomic summary data and downstream knowledge discovery. We define genomic summary data as a list of genes or SNPs (more generally, genomic regions), along with their significance levels (e.g. p-values). We are leading the field in making sense of genomic summary data for knowledge discovery through developing approaches and tools that have been verified to be efficient and effective, including XGR (see [Genome Medicine 2016](https://www.ncbi.nlm.nih.gov/pubmed/27964755)), dnet (see [Genome Medicine 2014](https://www.ncbi.nlm.nih.gov/pubmed/25246945)), Priority index (see [Nature Genetics 2019](https://www.ncbi.nlm.nih.gov/pubmed/31253980)), and dcGO (see [Nucleic Acids Research 2013](https://www.ncbi.nlm.nih.gov/pubmed/23161684)).
 
@@ -51,13 +51,13 @@ Building upon our previous approaches that have stood the test of time (with mos
 
 > **Enrichment Analysers**
 
-- [ENRICHMENT ANALYSER (GENES) - EAG], identifies ontology terms enriched for the input gene list; see [Example Output](/app/examples/_tmp_RMD_EAgene.html)
+- [ENRICHMENT ANALYSER (GENES) - EAG], identifies ontology terms enriched for input genes; see [Example Output](/app/examples/_tmp_RMD_EAgene.html)
 
-- [ENRICHMENT ANALYSER (SNPS) - EAS], identifies ontology terms enriched for genes linked from the input SNP list; see [Example Output](/app/examples/_tmp_RMD_EAsnp.html)
+- [ENRICHMENT ANALYSER (SNPS) - EAS], identifies ontology terms enriched for genes linked from input SNPs; see [Example Output](/app/examples/_tmp_RMD_EAsnp.html)
 
-- [ENRICHMENT ANALYSER (REGIONS) - EAR], identifies ontology terms enriched for genes linked from the input genomic region list; see [Example Output](/app/examples/_tmp_RMD_EAregion.html)
+- [ENRICHMENT ANALYSER (REGIONS) - EAR], identifies ontology terms enriched for genes linked from input genomic regions; see [Example Output](/app/examples/_tmp_RMD_EAregion.html)
 
-- [ENRICHMENT ANALYSER (DOMAINS) - EAD], identifies ontology terms enriched for the input protein domain list; see [Example Output](/app/examples/_tmp_RMD_EAdomain.html)
+- [ENRICHMENT ANALYSER (DOMAINS) - EAD], identifies ontology terms enriched for input protein domains; see [Example Output](/app/examples/_tmp_RMD_EAdomain.html)
 
 > **Subnetwork Analysers**
 
@@ -84,6 +84,31 @@ bookdown::render_book("now.XGRplus_booklet.Rmd", c("bookdown::gitbook","bookdown
 q('no')
 ####################################################
 ```
+
+
+# LANDING FRONTPAGE
+
+```{r app-front, fig.cap="The landing frontpage of the XGR+ webserver.", fig.width=10, fig.height=5.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.app.front.png")
+grid.raster(img)
+```
+
+
+# MOBILE-FIRST WEBSERVER
+
+The XGR+ is designed as a mobile-first and responsive webserver (`frontend`). It is backed by a real-time Perl web framework (`backend`) that facilitates nearly zero-effort interface updates and maintenance.
+
+<hr>
+
+```{r app-iphone, fig.cap="The screenshots for the XGR+ visited using Google Chrome in iPhone. Left: the frontpage; Right: the help page.", fig.width=10, fig.height=7.4, echo=FALSE, eval=TRUE, fig.align="center",out.width="80%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.XGRplus.app.iphone.png")
+grid.raster(img)
+```
+
 
 # COMPATIBILITY & RUNTIME
 
@@ -113,28 +138,6 @@ knitr::kable(df_runtime, caption="A summary of the runtime (computed on the serv
 ```
 
 
-# LANDING FRONTPAGE
-
-```{r app-front, fig.cap="The landing frontpage of the XGR+ webserver.", fig.width=10, fig.height=5.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
-library(png)
-library(grid)
-img <- readPNG("booklet.XGRplus.app.front.png")
-grid.raster(img)
-```
-
-# MOBILE-FIRST WEBSERVER
-
-The XGR+ is designed as a mobile-first and responsive webserver (`frontend`). It is backed by a real-time Perl web framework (`backend`) that facilitates nearly zero-effort interface updates and maintenance.
-
-<hr>
-
-```{r app-iphone, fig.cap="The screenshots for the XGR+ visited using Google Chrome in iPhone. Left: the frontpage; Right: the help page.", fig.width=10, fig.height=7.4, echo=FALSE, eval=TRUE, fig.align="center",out.width="80%"}
-library(png)
-library(grid)
-img <- readPNG("booklet.XGRplus.app.iphone.png")
-grid.raster(img)
-```
-
 # HELP BUTTONS
 
 Each user-request interface features a toggle button labelled `Show/Hide Info`. This button contains information on how to use the interface, including details on input, output, and other relevant information. Additionally, there is an `Example I/O` button that showcases example inputs and outputs. For example, the screenshot below displays the `Show/Hide Info` toggle button in the `SUBNETWORK ANALYSER (REGIONS)` interface.
@@ -147,6 +150,7 @@ library(grid)
 img <- readPNG("booklet.XGRplus.SAregion.help.png")
 grid.raster(img)
 ```
+
 
 # ERROR MESSAGES
 

@@ -37,10 +37,10 @@ q('no')
 # {.tabset .tabset-fade}
 
 
-## **Input gene information**
+## **Input Gene Information**
 Completed on `r format(Sys.time(), "%a %b %d %X %Y")` (`r Sys.timezone()`), with the runtime of `r ls_rmd$runtime`.
 
-> **An interactive table** for user-input genes (n=`r nrow(ls_rmd$data_input)`, being processed). The table includes two columns: 1st column `Genes` for gene symbols, and 2nd column `Description` for gene description. Each gene listed in the column `Genes` is hyperlinked to its corresponding `GeneCards` page.
+> **An interactive table** for user-input genes (n=`r nrow(ls_rmd$data_input)`, being processed). The table includes two columns: 1st column `Genes` for gene symbols, and 2nd column `Description` for gene description. Each gene listed in the column `Genes` is hyperlinked to its corresponding [GeneCards](https://www.genecards.org) page.
 
 ```{r}
 #input.file <- "~/Sites/XGR/XGRplus-site/my_xgrplus/public/app/examples/eg_EAgene.txt"
@@ -52,7 +52,7 @@ data_input %>% DT::datatable(options=list(pageLength=5,searchHighlight=T,dom='Bf
 ```
 
 
-## **Output: enriched terms**
+## **Output: Enriched Terms**
 
 > **An interactive table** that displays enriched ontology terms. Each enriched term (the columns `Ontology`, `Term ID`, and `Term Name`) has the enrichment Z-score (`Z-score`), the significance level of the enrichment (`FDR`), odds ratio (`Odds ratio`) and 95% confidence intervals (`95% CI`), the number (`Num`) and list (`Members`) of member genes that overlap with your input genes. The table is sorted by FDR ascendingly.
 
@@ -66,11 +66,11 @@ message(sprintf("'%s' '%s' (%s) ...", filename, getwd(), as.character(Sys.time()
 
 tb <- openxlsx::read.xlsx(filename) %>% as_tibble() %>% transmute(Ontology=namespace, `Term ID`=id, `Term Name`=name, `Z-score`=zscore, FDR=signif(adjp,digits=4), `Odds ratio`=or, `95% CI`=str_c('[',CIl,', ',CIu,']'), Num=nO, Members=overlap) %>% arrange(FDR)
 
-tb %>% DT::datatable(options=list(pageLength=2,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
+tb %>% DT::datatable(options=list(pageLength=1,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
 ```
 
 
-## **Output: dotplot**
+## **Output: Dotplot**
 
 > **A dotplot** of enriched ontology terms identified using Fisher's exact test. An editable pdf file is also available for download.
 
@@ -81,7 +81,7 @@ hlink_pdf <- oAuxEmbed(ls_rmd$pdf_dotplot, link.text="DOWNLOAD .pdf")
 <div class="text-right">`r hlink_pdf`</div>
 
 
-```{r dotplot, fig.cap="A dotplot of enriched ontology terms. The dots colored in dark red represent the terms with FDR < 0.05, indicating statistical significance. The top 5 significant terms (ordered by FDR ascendingly) are labelled for easier interpretation.", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
+```{r dotplot, fig.cap="A dotplot of enriched ontology terms. The dots colored in dark green represent the terms with FDR < 0.05, indicating statistical significance. The top 5 significant terms (ordered by FDR ascendingly) are labelled for easier interpretation.", fig.width=5, fig.height=4, echo=FALSE, eval=T, fig.align="center",out.width="55%"}
 library(png)
 library(grid)
 #filename <- str_c('"~Sites/XGR/XGRplus-site/app/examples/EAgene_enrichment_dotplot.png')
@@ -91,7 +91,7 @@ grid.raster(img)
 ```
 
 
-## **Output: forest plot**
+## **Output: Forest Plot**
 
 > **A forest plot** of enriched ontology terms identified using Fisher's exact test. An editable pdf file is also available for download.
 

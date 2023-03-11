@@ -4319,15 +4319,40 @@ BAI2	0.999604486
 							<option value="50">50</a>	
 						</select>
 					</div>
-					
-					<label class="control-label col-sm-5" for="network">Significance of the subnetwork:</label>
-					<div class="col-sm-7">
-						<select name="subnet_sig" id="subnet_sig" class="form-control">
-							<option value="no" selected>Don't test</a>	
-							<option value="yes">Degree-preserving node permutation test</a>
-						</select>
+				</div>
+				
+				<!-- Advanced begin ################### -->
+				<div class="form-group" id="advanced-toggle">
+					<div class="col-md-12">
+						 
+						<button type="button" class="btn btn-default btn-block" style="text-align:left" data-toggle="collapse" data-target="#more-options">
+							<i class="fa fa-chevron-circle-down fa-lg"></i> <strong class="my-tooltip" data-toggle="tooltip" data-placement="auto right" title="Specify additional parameters for more controls">More Controls</strong></a>
+						</button>
+						
+						<br>
+						
+						<div id="more-options" class="row collapse">
+							<div class="col-md-12" style="border: 1px solid #fff">
+								
+								<!-- subnet.sig -->
+								<i class="fa fa-check-circle-o fa-lg"></i> Significance of the subnetwork.
+								<div class="form-group">
+									<label class="control-label col-sm-5">Test:</label>
+									<div class="col-sm-7">
+										<select name="subnet_sig" class="form-control">
+											<option value="no" selected>Don't test</a>	
+											<option value="yes">Degree-preserving node permutation test</a>
+										</select>
+									</div>									
+								</div>
+								
+							</div>
+						</div>
+
+						
 					</div>
 				</div>
+				<!-- Advanced end ################### -->
 				
 				<!-- Button -->
 				<div class="form-group">
