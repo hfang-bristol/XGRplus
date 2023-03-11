@@ -140,7 +140,7 @@ my $crosslinks={
 	
 	RGB_PCHiC_PMID31367015_astrocytes => "Astrocytes (PMID31367015)",
 	RGB_PCHiC_PMID31367015_excitatory => "Excitatory (PMID31367015)",
-	RGB_PCHiC_PMID31367015_hippocampal => "Hippocampa (PMID31367015)",
+	RGB_PCHiC_PMID31367015_hippocampal => "Hippocampal (PMID31367015)",
 	RGB_PCHiC_PMID31367015_motor => "Motor (PMID31367015)",
     
     RGB_PCHiC_PMID25938943_CD34 => "CD34+ cells (PMID25938943)",
@@ -815,7 +815,7 @@ chr6	163651419	163653419
 				<div class="form-group">
 					<label class="col-md-12 control-label" for="submit"></label>
 					<div class="col-md-12">
-						<input class="btn btn-primary btn-block active" id="submit" type="submit" value="Submit" />
+						<input class="btn btn-primary btn-block active" id="submit" type="submit" value="SUBMIT" />
 					</div>
 				</div>
 				

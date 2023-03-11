@@ -4226,7 +4226,7 @@ BAI2	0.999604486
 		</div>
 	
 		<div class="text-center">
-			<h3><a href="/XGRplus/SAgene"><i class="fa fa-play-circle fa-lg"></i>&nbsp;&nbsp;SUBNETWORK ANALYSER (GENES) - SAG</a>&nbsp;:&nbsp;Identifying a gene subnetwork based on gene-level summary data</h3>
+			<h3><a href="/XGRplus/SAgene"><i class="fa fa-play-circle fa-lg"></i>&nbsp;&nbsp;SUBNETWORK ANALYSER (GENES) - SAG</a>&nbsp;:&nbsp;Identifying a gene subnetwork based on input gene-level summary data</h3>
 		</div>
 	</div>
 </div>
@@ -4358,7 +4358,7 @@ BAI2	0.999604486
 				<div class="form-group">
 					<label class="col-md-12 control-label" for="submit"></label>
 					<div class="col-md-12">
-						<input class="btn btn-primary btn-block active" id="submit" type="submit" value="Submit" />
+						<input class="btn btn-primary btn-block active" id="submit" type="submit" value="SUBMIT" />
 					</div>
 				</div>
 				

@@ -57,7 +57,7 @@
 				<br>
 				
 				<fieldset>
-				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;XGR+ builds upon our previous approaches (with most of citations received in the past two years) and the expanding knowledgebase of ontologies and networks. It includes seven analysers, each doing specific interpretations tailored to genomic summary data at the gene, SNP, genomic region, or protein domain level. These includes four enrichment analysers that identify enriched ontology terms and three subnetwork analysers that identify gene subnetworks, described below:
+				<h5 class="about_title"><i class="fa fa-minus fa-1x"></i>&nbsp;&nbsp;XGR+ builds upon our previous approaches (with most of citations received in the past two years) and the expanding knowledgebase of ontologies and networks. It includes seven analysers, each doing specific interpretations tailored to genomic summary data at the gene, SNP, genomic region, or protein domain level. These include four enrichment analysers that identify enriched ontology terms and three subnetwork analysers that identify gene subnetworks, described below:
 				<ul>
 				<li><a href="/XGRplus/EAgene" target="EAgene"><i class="fa fa-play-circle fa-1x"></i>&nbsp;ENRICHMENT ANALYSER (GENES) - EAG</a>, identifying enriched ontology terms from input gene list;
 				<li><a href="/XGRplus/EAsnp" target="EAsnp"><i class="fa fa-play-circle fa-1x"></i>&nbsp;ENRICHMENT ANALYSER (SNPS) - EAS</a>, identifying enriched ontology terms for genes linked from input SNP list;
@@ -79,7 +79,7 @@
 				<br>
 				
 				<fieldset>
-<table cellspacing='0' cellpadding='0' width=90%>
+<table cellspacing='0' cellpadding='0' width=97%>
 <tr>
 <td align=center><IMG src="/app/img/XGRplus.about.png" class="img_responsive">
 </td>

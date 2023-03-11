@@ -169,7 +169,7 @@ my $crosslinks={
 
     PCHiC_PMID31367015_astrocytes => "Astrocytes (PMID31367015)",
     PCHiC_PMID31367015_excitatory => "Excitatory (PMID31367015)",
-    PCHiC_PMID31367015_hippocampal => "Hippocampa (PMID31367015)",
+    PCHiC_PMID31367015_hippocampal => "Hippocampal (PMID31367015)",
     PCHiC_PMID31367015_motor => "Motor (PMID31367015)",
     
     PCHiC_PMID25938943_CD34 => "CD34+ cells (PMID25938943)",
@@ -551,7 +551,7 @@ rs568617	0.00000004
 					</div>
 				</div>
 				
-				<p><strong>Step 3</strong>: Identify linked genes based on genomic proximity, promoter capture Hi-C, or quantitative trait locus mapping.</p>
+				<p><strong>Step 3</strong>: Identify linked genes based on genomic proximity, promoter capture Hi-C, or quantitative trait locus.</p>
 				<div class="form-group">
 					<label class="control-label col-sm-5" for="distance">Linked genes supported by:</label>
 					<div class="col-sm-7">

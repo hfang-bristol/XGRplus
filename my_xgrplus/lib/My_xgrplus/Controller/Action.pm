@@ -1016,9 +1016,10 @@ R_pipeline <- function (input.file="", output.file="", obo="", FDR.cutoff="", mi
 		obo <- "MDODD"
 		
 		obo <- "MitoPathway"
+		obo <- "IDPO"
 		obo <- "KEGGEnvironmentalOrganismal"
 		
-		obo <- "IDPO"
+		
 	}
 	
 	# read input file
@@ -1309,7 +1310,7 @@ R_pipeline <- function (input.file="", output.file="", network="", subnet.size="
 		library(tidyverse)
 		library(igraph)
 		
-		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_SAgene.txt"
+		input.file <- "~/Sites/XGR/XGRplus-site/app/examples/eg_SAgene_PMID27863249hORG.txt"
 		data <- read_delim(input.file, delim=" ") %>% as.data.frame() %>% select(1:2)
 		network <- "STRING_high"
 		subnet.size <- 30

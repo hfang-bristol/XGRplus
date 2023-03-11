@@ -88,12 +88,13 @@ q('no')
 
 # LANDING FRONTPAGE
 
-```{r app-front, fig.cap="The landing frontpage of the XGR+ webserver.", fig.width=10, fig.height=5.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+```{r app-front, fig.cap="The landing frontpage of the XGR+ webserver.", fig.width=10, fig.height=6.6, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.app.front.png")
 grid.raster(img)
 ```
+
 
 
 # MOBILE-FIRST WEBSERVER
@@ -108,6 +109,7 @@ library(grid)
 img <- readPNG("booklet.XGRplus.app.iphone.png")
 grid.raster(img)
 ```
+
 
 
 # COMPATIBILITY & RUNTIME
@@ -132,10 +134,11 @@ if(1){
 #c1 <- c("ENRICHMENT ANALYSER (GENES) - EAG","ENRICHMENT ANALYSER (SNPS) - EAS","ENRICHMENT ANALYSER (REGIONS) - EAR","ENRICHMENT ANALYSER (DOMAINS) - EAD","SUBNETWORK ANALYSER (GENES) - SAG","SUBNETWORK ANALYSER (SNPS) - SAS","SUBNETWORK ANALYSER (REGIONS) - SAR")
 c1 <- c("EAG","EAS","EAR","EAD","SAG","SAS","SAR")
 c2 <- c("ENRICHMENT ANALYSER (GENES)","ENRICHMENT ANALYSER (SNPS)","ENRICHMENT ANALYSER (REGIONS)","ENRICHMENT ANALYSER (DOMAINS)","SUBNETWORK ANALYSER (GENES)","SUBNETWORK ANALYSER (SNPS)","SUBNETWORK ANALYSER (REGIONS)")
-c3 <- c("~9 seconds","~55 seconds","~20 seconds","~2 seconds","~47 seconds","~55 seconds","~23 seconds")
+c3 <- c("~5 seconds","~50 seconds","~20 seconds","~5 seconds","~20 seconds","~50 seconds","~25 seconds")
 df_runtime <- tibble(Analysers=c1, Description=c2, 'Runtime'=c3)
 knitr::kable(df_runtime, caption="A summary of the runtime (computed on the server side) per analyser.", row.names=FALSE, align='c')
 ```
+
 
 
 # HELP BUTTONS
@@ -150,6 +153,7 @@ library(grid)
 img <- readPNG("booklet.XGRplus.SAregion.help.png")
 grid.raster(img)
 ```
+
 
 
 # ERROR MESSAGES
@@ -198,9 +202,9 @@ grid.raster(img)
 
 ## Enrichment Results
 
-- Under the `Input gene information` tab, `An interactive table` displays the user-input gene list.
+- Under the `Input Gene Information` tab, `An interactive table` displays the user-input gene list.
 
-```{r EAgene-results-input, fig.cap="The user-input data displayed under the `Input gene information` tab returned for exploration.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAgene-results-input, fig.cap="The user-input data displayed under the `Input Gene Information` tab returned for exploration.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAgene.results_input.png")
@@ -210,9 +214,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: enriched terms` tab, `An interactive table` lists enriched ontology terms.
+- Under the `Output: Enriched Terms` tab, `An interactive table` lists enriched ontology terms.
 
-```{r EAgene-results-output, fig.cap="An interactive table listing enriched ontology terms under the `Output: enriched terms` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAgene-results-output, fig.cap="An interactive table listing enriched ontology terms under the `Output: Enriched Terms` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAgene.results_output.png")
@@ -222,24 +226,24 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. The downloadable pdf file is also provided.
+- Under the tab `Output: Dotplot`, `An dotplot` illustrates enriched ontology terms. The downloadable pdf file is also provided.
 
-```{r EAgene-results-forestplot, fig.cap="A forest plot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAgene-results-dotplot, fig.cap="A dotplot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
-img <- readPNG("booklet.XGRplus.EAgene.results_forestplot.png")
+img <- readPNG("booklet.XGRplus.EAgene.results_dotplot.png")
 grid.raster(img)
 ```
 
 <br>
 <hr>
 
-- Under the tab `Output: dotplot`, `An dotplot` illustrates enriched ontology terms. The downloadable pdf file is also provided.
+- Under the `Output: Forest Plot` tab, `A forest plot` illustrates enriched ontology terms. The downloadable pdf file is also provided.
 
-```{r EAgene-results-dotplot, fig.cap="A dotplot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAgene-results-forestplot, fig.cap="A forest plot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
-img <- readPNG("booklet.XGRplus.EAgene.results_dotplot.png")
+img <- readPNG("booklet.XGRplus.EAgene.results_forestplot.png")
 grid.raster(img)
 ```
 
@@ -280,9 +284,9 @@ grid.raster(img)
 
 ## Enrichment Results
 
-- Under the `Input SNP information` tab, `An interactive table` lists the user-input SNPs.
+- Under the `Input SNP Information` tab, `An interactive table` lists the user-input SNPs.
 
-```{r EAsnp-results-input, fig.cap="The user-input data under the `Input SNP information` tab returned for exploration.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAsnp-results-input, fig.cap="The user-input data under the `Input SNP Information` tab returned for exploration.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAsnp.results_input.png")
@@ -292,9 +296,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: linked genes` tab, `An interactive table` lists genes linked from the input SNPs.
+- Under the `Output: Linked Genes` tab, `An interactive table` lists genes linked from the input SNPs.
 
-```{r EAsnp-results-link, fig.cap="An interactive table listing genes linked from the input SNPs under the `Output: linked genes` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAsnp-results-link, fig.cap="An interactive table listing genes linked from the input SNPs under the `Output: Linked Genes` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAsnp.results_link.png")
@@ -304,9 +308,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: enriched terms` tab, `An interactive table` lists enriched ontology terms.
+- Under the `Output: Enriched Terms` tab, `An interactive table` lists enriched ontology terms.
 
-```{r EAsnp-results-output, fig.cap="An interactive table lists enriched ontology terms under the `Output: enriched terms` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAsnp-results-output, fig.cap="An interactive table lists enriched ontology terms under the `Output: Enriched Terms` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAsnp.results_output.png")
@@ -316,24 +320,24 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
+- Under the `Output: Dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
 
-```{r EAsnp-results-forestplot, fig.cap="A forest plot for enriched ontology terms under the `Output: forest plot` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAsnp-results-dotplot, fig.cap="A dotplot for enriched ontology terms under the `Output: Dotplot` tab.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
-img <- readPNG("booklet.XGRplus.EAsnp.results_forestplot.png")
+img <- readPNG("booklet.XGRplus.EAsnp.results_dotplot.png")
 grid.raster(img)
 ```
 
 <br>
 <hr>
 
-- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
+- Under the `Output: Forest Plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
 
-```{r EAsnp-results-dotplot, fig.cap="A dotplot for enriched ontology terms under the `Output: dotplot` tab.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAsnp-results-forestplot, fig.cap="A forest plot for enriched ontology terms under the `Output: Forest Plot` tab.", fig.width=10, fig.height=7.3, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
-img <- readPNG("booklet.XGRplus.EAsnp.results_dotplot.png")
+img <- readPNG("booklet.XGRplus.EAsnp.results_forestplot.png")
 grid.raster(img)
 ```
 
@@ -372,9 +376,9 @@ grid.raster(img)
 
 ## Enrichment Results
 
-- Under the `Input genomic region information` tab, `An interactive table` lists user-input genomic regions.
+- Under the `Input Genomic Region Information` tab, `An interactive table` lists user-input genomic regions.
 
-```{r EAregion-results-input, fig.cap="The user-input data displayed under the `Input genomic region information` tab for exploration.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAregion-results-input, fig.cap="The user-input data displayed under the `Input Genomic Region Information` tab for exploration.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAregion.results_input.png")
@@ -384,9 +388,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: linked genes` tab, `An interactive table` lists genes linked from the input genomic regions.
+- Under the `Output: Linked Genes` tab, `An interactive table` lists genes linked from the input genomic regions.
 
-```{r EAregion-results-link, fig.cap="An interactive table listing genes linked from the input genomic regions under the `Output: linked genes` tab.", fig.width=10, fig.height=6.6, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAregion-results-link, fig.cap="An interactive table listing genes linked from the input genomic regions under the `Output: Linked Genes` tab.", fig.width=10, fig.height=6.6, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAregion.results_link.png")
@@ -396,9 +400,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: enriched terms` tab, `An interactive table` lists enriched ontology terms.
+- Under the `Output: Enriched Terms` tab, `An interactive table` lists enriched ontology terms.
 
-```{r EAregion-results-output, fig.cap="An interactive table listing enriched ontology terms displayed under the `Output: enriched terms` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAregion-results-output, fig.cap="An interactive table listing enriched ontology terms displayed under the `Output: Enriched Terms` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAregion.results_output.png")
@@ -408,24 +412,24 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
+- Under the `Output: Dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
 
-```{r EAregion-results-forestplot, fig.cap="A forest plot illustrating enriched ontology terms displayed under the `Output: forest plot` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAregion-results-dotplot, fig.cap="A dotplot illustrating enriched ontology terms displayed under the `Output: Dotplot` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
-img <- readPNG("booklet.XGRplus.EAregion.results_forestplot.png")
+img <- readPNG("booklet.XGRplus.EAregion.results_dotplot.png")
 grid.raster(img)
 ```
 
 <br>
 <hr>
 
-- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
+- Under the `Output: Forest Plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable pdf file is also provided.
 
-```{r EAregion-results-dotplot, fig.cap="A dotplot illustrating enriched ontology terms displayed under the `Output: dotplot` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAregion-results-forestplot, fig.cap="A forest plot illustrating enriched ontology terms displayed under the `Output: Forest Plot` tab.", fig.width=10, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
-img <- readPNG("booklet.XGRplus.EAregion.results_dotplot.png")
+img <- readPNG("booklet.XGRplus.EAregion.results_forestplot.png")
 grid.raster(img)
 ```
 
@@ -462,9 +466,9 @@ grid.raster(img)
 
 ## Enrichment Results
 
-- Under the `Input domain information` tab, `An interactive table` lists the user-input domains.
+- Under the `Input Domain Information` tab, `An interactive table` lists the user-input domains.
 
-```{r EAdomain-results-input, fig.cap="The user-input data under the `Input domain information` tab, which is available for exploration.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAdomain-results-input, fig.cap="The user-input data under the `Input Domain Information` tab, which is available for exploration.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAdomain.results_input.png")
@@ -474,9 +478,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: enriched terms` tab, `An interactive table` lists enriched ontology terms.
+- Under the `Output: Enriched Terms` tab, `An interactive table` lists enriched ontology terms.
 
-```{r EAdomain-results-output, fig.cap="An interactive table that lists enriched ontology terms under the `Output: enriched terms` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAdomain-results-output, fig.cap="An interactive table that lists enriched ontology terms under the `Output: Enriched Terms` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.EAdomain.results_output.png")
@@ -486,24 +490,24 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: forest plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable pdf file is also available.
+- Under the `Output: Dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable pdf file is also available.
 
-```{r EAdomain-results-forestplot, fig.cap="A forest plot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAdomain-results-dotplot, fig.cap="A dotplot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
-img <- readPNG("booklet.XGRplus.EAdomain.results_forestplot.png")
+img <- readPNG("booklet.XGRplus.EAdomain.results_dotplot.png")
 grid.raster(img)
 ```
 
 <br>
 <hr>
 
-- Under the `Output: dotplot` tab, `A dotplot` illustrates enriched ontology terms. A downloadable pdf file is also available.
+- Under the `Output: Forest Plot` tab, `A forest plot` illustrates enriched ontology terms. A downloadable pdf file is also available.
 
-```{r EAdomain-results-dotplot, fig.cap="A dotplot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r EAdomain-results-forestplot, fig.cap="A forest plot for enriched ontology terms.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
-img <- readPNG("booklet.XGRplus.EAdomain.results_dotplot.png")
+img <- readPNG("booklet.XGRplus.EAdomain.results_forestplot.png")
 grid.raster(img)
 ```
 
@@ -540,9 +544,9 @@ grid.raster(img)
 
 ## Subnetwork Results
 
-- Under the `Input gene-level summary data` tab, `An interactive table` lists user-input summary data.
+- Under the `Input Gene-Level Summary Data` tab, `An interactive table` lists user-input summary data.
 
-```{r SAgene-results-input, fig.cap="The user-input summary under the `Input gene-level summary data` tab returned for exploration.", fig.width=10, fig.height=6.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r SAgene-results-input, fig.cap="The user-input summary under the `Input Gene-Level Summary Data` tab returned for exploration.", fig.width=10, fig.height=6.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAgene.results_input.png")
@@ -552,9 +556,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: subnetwork` tab, `A network visualisation` of the subnetwork is provided, along with `An interactive table` for the subnetwork genes.
+- Under the `Output: Gene Subnetwork` tab, `A network visualisation` of the subnetwork is provided, along with `An interactive table` for the subnetwork genes.
 
-```{r SAgene-results-output, fig.cap="Visualisation of the identified subnetwork, with genes/nodes color-coded by input gene significance information under the `Output: subnetwork` tab.", fig.width=10, fig.height=6.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r SAgene-results-output, fig.cap="Visualisation of the identified subnetwork, with genes/nodes color-coded by input gene significance information under the `Output: Gene Subnetwork` tab.", fig.width=10, fig.height=6.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAgene.results_output.png")
@@ -598,9 +602,9 @@ grid.raster(img)
 
 ## Subnetwork Results
 
-- Under the `Input SNP information` tab, `An interactive table` displays user-input summary data.
+- Under the `Input SNP-Level Summary Data` tab, `An interactive table` displays user-input summary data.
 
-```{r SAsnp-results-input, fig.cap="`An interactive table` displaying user-input summary under the `Input SNP information` tab returned for exploration.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r SAsnp-results-input, fig.cap="`An interactive table` displaying user-input summary under the `Input SNP-Level Summary Data` tab returned for exploration.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAsnp.results_input.png")
@@ -610,9 +614,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the tab `Output: linked genes`, `An interactive table` lists genes linked from the input SNPs.
+- Under the tab `Output: Linked Genes`, `An interactive table` lists genes linked from the input SNPs.
 
-```{r SAsnp-results-link, fig.cap="An interactive table listing genes linked from input SNPs under the `Output: linked genes` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r SAsnp-results-link, fig.cap="An interactive table listing genes linked from input SNPs under the `Output: Linked Genes` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAsnp.results_link.png")
@@ -622,9 +626,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: subnetwork` tab, `A network visualisation` of the subnetwork is provided, along with `An interactive table` for the subnetwork genes.
+- Under the `Output: Gene Subnetwork` tab, `A network visualisation` of the subnetwork is provided, along with `An interactive table` for the subnetwork genes.
 
-```{r SAsnp-results-output, fig.cap="A network visualisation of the resulting subnetwork, with genes/nodes color-coded by linked gene scores (ranged from 1 to 10) under the `Output: subnetwork` tab.", fig.width=10, fig.height=7.7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r SAsnp-results-output, fig.cap="A network visualisation of the resulting subnetwork, with genes/nodes color-coded by linked gene scores (ranged from 1 to 10) under the `Output: Gene Subnetwork` tab.", fig.width=10, fig.height=7.7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAsnp.results_output.png")
@@ -666,9 +670,9 @@ grid.raster(img)
 
 ## Subnetwork Results
 
-- Under the `Input genomic region information` tab, `An interactive table` lists user-input summary data.
+- Under the `Input Genomic Region-Level Summary Data` tab, `An interactive table` lists user-input summary data.
 
-```{r SAregion-results-input, fig.cap="User-input summary data under the `Input genomic regions information` tab returned for exploration.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r SAregion-results-input, fig.cap="User-input summary data under the `Input Genomic Region-Level Summary Data` tab returned for exploration.", fig.width=10, fig.height=7.2, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAregion.results_input.png")
@@ -678,9 +682,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: linked genes` tab, `An interactive table` lists genes linked from the input genomic regions.
+- Under the `Output: Linked Genes` tab, `An interactive table` lists genes linked from the input genomic regions.
 
-```{r SAregion-results-link, fig.cap="An interactive table listing genes linked from the input genomic regions under the `Output: linked genes` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r SAregion-results-link, fig.cap="An interactive table listing genes linked from the input genomic regions under the `Output: Linked Genes` tab.", fig.width=10, fig.height=6.8, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAregion.results_link.png")
@@ -690,9 +694,9 @@ grid.raster(img)
 <br>
 <hr>
 
-- Under the `Output: subnetwork` tab, `A network visualisation` of the identified subnetwork is provided, along with `An interactive table` for the subnetwork genes.
+- Under the `Output: Gene Subnetwork` tab, `A network visualisation` of the identified subnetwork is provided, along with `An interactive table` for the subnetwork genes.
 
-```{r SAregion-results-output, fig.cap="A network visualisation of the resulting subnetwork under the `Output: subnetwork` tab, with genes/nodes color-coded by linked gene scores, which range from 1 to 10.", fig.width=10, fig.height=7.7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
+```{r SAregion-results-output, fig.cap="A network visualisation of the resulting subnetwork under the `Output: Gene Subnetwork` tab, with genes/nodes color-coded by linked gene scores, which range from 1 to 10.", fig.width=10, fig.height=7.7, echo=FALSE, eval=TRUE, fig.align="center",out.width="95%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.XGRplus.SAregion.results_output.png")

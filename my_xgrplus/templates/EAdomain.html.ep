@@ -215,7 +215,7 @@ my $example_domains='
 					</div>
 				</div>
 				
-				<p><strong>Step 2</strong>: Paste your domains here. See<a href="/app/examples/eg_EAdomain_SF.txt" download="/app/examples/eg_EAdomain_SF.txt" target="/app/examples/eg_EAdomain_SF.txt">&nbspInput SCOP superfamily domains</a>, <a href="/app/examples/eg_EAdomain_FA.txt" download="/app/examples/eg_EAdomain_FA.txt" target="/app/examples/eg_EAdomain_FA.txt">Input SCOP family domains</a></p>
+				<p><strong>Step 2</strong>: Paste your domains here; See<a href="/app/examples/eg_EAdomain_SF.txt" download="/app/examples/eg_EAdomain_SF.txt" target="/app/examples/eg_EAdomain_SF.txt">&nbspInput SCOP superfamily domains</a>, <a href="/app/examples/eg_EAdomain_FA.txt" download="/app/examples/eg_EAdomain_FA.txt" target="/app/examples/eg_EAdomain_FA.txt">Input SCOP family domains</a></p>
 				
 				<div class="form-group">
 					<div class="col-sm-12">
